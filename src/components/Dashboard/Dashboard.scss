@@ -1,0 +1,45 @@
+@import './../../styles/variable.scss';
+
+.sumary-block {
+  margin: 0;
+  .bgd {
+    padding: 0;
+    .inner {
+      overflow: hidden;
+      color: $color-white;
+      border-radius: 10px;
+      height: 100px;
+      padding: 10px;
+      margin: 0 5px
+    }
+    .ttl {
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+    .number {
+      display: block;
+      margin-top: 5px;;
+      font-size: 16px;
+    }
+    &.col-cut-book .inner {
+      background: #2d2587!important;
+      background: linear-gradient(45deg,#4638c2,#2d2587)!important;
+      border-color: #2d2587!important;
+    }
+    &.bgd-2 .inner{
+      background: #4280b4!important;
+      background: linear-gradient(45deg,#4799eb,#4280b4)!important;
+      border-color: #4280b4!important;
+    }
+    &.bgd-3 .inner{
+      background: #dd9124!important;
+      background: linear-gradient(45deg,#e1a82d,#dd9124)!important;
+      border-color: #dd9124!important;
+    }
+    &.bgd-4 .inner {
+      background: #c14f4f!important;
+      background: linear-gradient(45deg,#d16767,#c14f4f)!important;
+      border-color: #c14f4f!important;
+    }
+  }
+}

@@ -1,0 +1,81 @@
+@import './../../../styles/variable.scss';
+@import './../../../styles/common.scss';
+
+.info-user {
+  width: 230px;
+  background-color: $color-black-1;
+  border: solid 1px $color-white;
+  .popover-header {
+    padding: 10px 15px;
+    background-color: $color-black-1;
+    &:before {content: none;}
+  }
+  .popover-body {
+    padding: 0;
+    li {
+      .fa {min-width: 30px;}
+      p {
+        padding: 8px 20px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      a {
+        display: block;
+        padding: 12px 20px;
+        border-bottom-left-radius: .3rem;
+        border-bottom-right-radius: .3rem;
+        &:hover {background-color: $color-blue;}
+      }
+    }
+    .logout {
+      margin-top: 20px;
+      border-top: solid 1px $color-white;
+    }
+  }
+}
+
+header {
+  height: 60px;
+  background-color: $color-dark-gray;
+  border-bottom: solid 1px rgba(0, 0, 21, .2);
+  .inner {
+    align-items: center;
+    height: 100%;
+  }
+  .btn-menu {
+    @extend .reset-button;
+    .fa-bars:before {
+      font-size: 25px;
+      color: $color-white;
+    }
+  }
+  .avatar {
+    .btn-user {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      background-color: hsla(0, 0%, 100%, .5);
+      border-radius: 50%;
+      font-size: 16px;
+      text-align: center;
+      font-weight: bold;
+      transition: .3s;
+      border: solid 2px $color-white;
+      &:before {
+        content: '';
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: $color-green ;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        z-index: 2;
+      }
+      &:active, &:focus {box-shadow: none;}
+    }
+  }
+  .ttl-help {font-size: 20px;}
+}

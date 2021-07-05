@@ -1,0 +1,57 @@
+@import './../../../styles/variable.scss';
+
+.side-bar-block {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 10;
+  width: 250px;
+  height: 100vh;
+  background-color: $color-dark-gray;
+  .ttl-side-bar {
+    height: 60px;
+    padding: 15px 20px;
+    font-size: 20px;
+    background-color: rgba(0, 0, 21, .2);
+    .fa-industry:before {font-size: 30px;}
+  }
+  .link-dashboard {
+    display: block;
+    padding: 12px 15px 15px;
+    background-color: hsla(0, 0%, 100%, .5);
+    .fa-tachometer:before {font-size: 20px;}
+    &:hover {background-color: $color-blue;}
+  }
+  .ttl-article {padding: 20px 15px 0;}
+  .list-menu {
+    margin-top: 10px;;
+    a {
+      position: relative;
+      display: block;
+      padding: 15px 30px;
+      &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 100%;
+        bottom: 0;
+        z-index: 1;
+        height: 1px;
+        background-color: $color-white;
+        transition-duration: .3s;
+        transition-property: right;
+      }
+      &:hover {
+        background-color: $color-blue;
+        &:before {right: 0;}
+      }
+    }
+    .active a {
+      background-color: $color-blue;
+      &:before {
+        right: 0;
+      }
+    }
+  }
+}
