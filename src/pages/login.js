@@ -60,7 +60,7 @@ const LoginPage = () => {
     <div className="login-page">
       <div className="bgd-login"></div>
       <div className="inner">
-        <i class="fa fa-user-circle-o icon-user" aria-hidden="true"></i>
+        <i className="fa fa-user-circle-o icon-user" aria-hidden="true"></i>
         <h1 className="ttl-login text-center">Quản lý sổ sách</h1>
         <Form className="form-login" onSubmit={handleSubmit(submitFormUser)}>
           <Form.Group controlId="email">
