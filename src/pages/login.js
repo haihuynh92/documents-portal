@@ -2,7 +2,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { CURRENT_USER } from 'constant/currentUser';
 import React, { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import FontAwesome from "react-fontawesome";
 import { useForm } from "react-hook-form";
 import "styles/common.scss";
 import * as yup from 'yup';
@@ -61,7 +60,7 @@ const LoginPage = () => {
     <div className="login-page">
       <div className="bgd-login"></div>
       <div className="inner">
-        <FontAwesome name="user-circle-o" size="4x" className="icon-user" />
+        <i class="fa fa-user-circle-o icon-user" aria-hidden="true"></i>
         <h1 className="ttl-login text-center">Quản lý sổ sách</h1>
         <Form className="form-login" onSubmit={handleSubmit(submitFormUser)}>
           <Form.Group controlId="email">
