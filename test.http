@@ -1,12 +1,18 @@
-GET http://localhost:3000/users
+###
+GET https://manage-documents.herokuapp.com/cosomays/
+###
+DELETE https://manage-documents.herokuapp.com/cosomays/5292b8ad-12f5-73e0-5447-879f44cfdd0d
 
 ###
-POST http://localhost:3000/users
+# @name post product
+PUT https://manage-documents.herokuapp.com/cosomays/3c1eeded-f275-1251-5987-45f817cb7df1
 Content-Type: application/json
 
 {
-  "fullName": "1",
-  "gender": false,
-  "nationality": "somali",
-  "like": 25
+  "macs": "ffasdf",
+  "tencs": "fsdfasdf",
+  "diachi": "asdfsdafs",
+  "sdt": "32424234",
+  "ghichu": "ok em trai",
+  "id": "3c1eeded-f275-1251-5987-45f817cb7df1"
 }

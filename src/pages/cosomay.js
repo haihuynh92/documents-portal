@@ -5,7 +5,7 @@ import React, { useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import DanhSach from 'components/CoSoMay/DanhSach';
 import { useDispatch, useSelector } from 'react-redux';
-import { DanhSachCoSoMay } from 'actions/cosomay';
+import { danhSachCoSoMay } from 'actions/cosomay';
 
 const CoSoMay = () => {
 
@@ -13,12 +13,8 @@ const CoSoMay = () => {
   const DSCoSoMay = useSelector(state => state.coSoMayReducer);
 
   useEffect(() => {
-    
-    dispatch(DanhSachCoSoMay());
-
+    dispatch(danhSachCoSoMay());
   }, [dispatch]);
-
-
 
   return (
     <div className="wrapper-container">
@@ -28,7 +24,7 @@ const CoSoMay = () => {
         <Header/>
         <div className="outer">
           <Container fluid>
-            <DanhSach listCSM={DSCoSoMay} />
+            <DanhSach listCSM={DSCoSoMay.data} />
           </Container>
         </div>
         <Footer />

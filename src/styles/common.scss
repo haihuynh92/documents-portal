@@ -140,12 +140,14 @@ body {
 input:-webkit-autofill,
 input:-webkit-autofill:hover, 
 input:-webkit-autofill:focus, 
-input:-webkit-autofill:active
-{
- -webkit-box-shadow: 0 0 0 30px $color-white inset !important;
-}
-input:-internal-autofill-selected {
-  background-color: transparent !important;
+input:-webkit-autofill:active {-webkit-box-shadow: 0 0 0 30px $color-white inset !important;}
+input:-internal-autofill-selected {background-color: transparent !important;}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0; 
 }
 
 /*===== COMMON =====*/
@@ -188,6 +190,8 @@ a {
   color: $color-red;
 }
 
+.modal-backdrop {background-color: $color-white;}
+
 .form-group {
   input {
     color: $color-white;
@@ -202,6 +206,18 @@ a {
       background-color: transparent;
     }
     &.invalid {border-color: $color-red;}
+  }
+  textarea {
+    margin-top: 10px;
+    height: 200px;
+    background-color: rgba(255, 255, 255, .5);
+    color: $color-black;
+    border: 0;
+    &:focus {
+      background-color: rgba(255, 255, 255, .5);
+      box-shadow: none;
+      color: $color-black;
+    }
   }
   label {
     color: $color-white;
@@ -326,13 +342,8 @@ a {
     padding: 10px 20px;
     background-color: $color-black-1;
     border-color: $color-black-3;
-    .modal-title {font-size: 18px;}
+    .modal-title {font-size: 20px;}
   }
-  .modal-body {
-    background-color: $color-black-2;
-  }
-  // .modal-footer {
-  //   border-color: $color-black-3;
-  //   background-color: $color-black-1;
-  // }
+  .modal-body, .modal-footer {background-color: $color-black-2;}
+  .modal-footer {border-color: $color-black-3;}
 }

@@ -8,7 +8,7 @@ import "styles/common.scss";
 import * as yup from 'yup';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
-import _ from "lodash";
+import { find } from "lodash";
 
 const LoginPage = () => {
   let validationSchema = yup.object().shape({
@@ -32,7 +32,7 @@ const LoginPage = () => {
 
   
   const submitFormUser = (data) => {
-    const validUser = _.find(listUser, { 'email': data.email, 'password': data.password });
+    const validUser = find(listUser, { 'email': data.email, 'password': data.password });
     
     if (validUser?.email && validUser?.password) {
       localStorage.setItem(CURRENT_USER, JSON.stringify(validUser));
@@ -89,11 +89,8 @@ const LoginPage = () => {
               className={`${errors.password ? 'invalid' : ''}`}
             />
           </Form.Group>
-          <Button type="submit" className="mr-2">
+          <Button type="submit">
             Đăng nhập
-          </Button>
-          <Button variant="danger" type="button">
-            Đăng ký
           </Button>
         </Form>
       </div>

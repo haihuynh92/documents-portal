@@ -42,7 +42,7 @@ const Header = (props) => {
                     <li>
                       <p>
                         <i className="fa fa-map-marker" aria-hidden="true"></i>
-                        Việt Nam
+                        HCM City, Việt Nam
                       </p>
                     </li>
                     <li className="logout">
