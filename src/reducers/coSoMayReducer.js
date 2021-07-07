@@ -1,5 +1,4 @@
 import { toastInfo } from "actions/notification";
-import { findIndex } from "lodash";
 
 const { createSlice } = require("@reduxjs/toolkit");
 
@@ -13,18 +12,16 @@ const cosomay = createSlice({
       state.data = action.payload;
     },
     themCS: (state, action) => {
-      toastInfo('Thêm dữ liệu thành công!')
-      state.data.push(action.payload);
+      toastInfo('Thêm dữ liệu thành công!');
+      return;
     },
     capNhatCS: (state, action) => {
-      toastInfo('Cập nhật dữ liệu thành công!')
-      var index = findIndex(state.data, x => x.id === action.payload.id);
-      state.data[index] = action.payload;
+      toastInfo('Cập nhật dữ liệu thành công!');
+      return;
     },
     xoaCS: (state, action) => {
       toastInfo('Xóa thành công!');
-      var index = findIndex(state.data, x => x.id === action.payload);
-      state.data.splice(index, 1);
+      return;
     }
   }
 });

@@ -107,7 +107,6 @@ const DanhSach = (props) => {
     setItemDelete(detail);
     handleShowDelete();
   }
-  
   const onDeleteCSM = () => {
     dispatch(XoaCS(itemDelete.id));
     handleCloseDelete();

@@ -29,7 +29,8 @@ export function* themCoSoMay(action) {
     if (result.status === 201) {
       yield delay(1000);
       yield put(hideLoading());
-      yield put(themCS(payload.data));
+      yield layDSCoSoMay();
+      yield put(themCS());
     }
   } catch (error) {
     throw new Error(error);
@@ -44,7 +45,8 @@ export function* capNhatCoSoMay(action) {
     if (result.status === 200) {
       yield delay(1000);
       yield put(hideLoading());
-      yield put(capNhatCS(action.payload.data));
+      yield layDSCoSoMay();
+      yield put(capNhatCS());
     }
   } catch (error) {
     throw new Error(error);
@@ -59,7 +61,8 @@ export function* xoaCoSoMay(action) {
     if (result.status === 200) {
       yield delay(1000);
       yield put(hideLoading());
-      yield put(xoaCS(action.payload.id));
+      yield layDSCoSoMay();
+      yield put(xoaCS());
     }
   } catch (error) {
     throw new Error(error);
