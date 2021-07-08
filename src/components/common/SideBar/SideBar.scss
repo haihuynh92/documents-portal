@@ -25,7 +25,8 @@
   }
   .ttl-article {padding: 20px 15px 0;}
   .list-menu {
-    margin-top: 10px;;
+    margin-top: 10px;
+    .fa {min-width: 20px;}
     a {
       position: relative;
       display: block;
@@ -49,9 +50,7 @@
     }
     .active a {
       background-color: $color-blue;
-      &:before {
-        right: 0;
-      }
+      &:before {right: 0;}
     }
   }
 }

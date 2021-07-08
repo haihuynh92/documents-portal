@@ -227,6 +227,13 @@ a {
       color: $color-red;
     }
   }
+  .prefix {
+    position: absolute;
+    bottom: 24px;
+    right: 15px;
+    font-size: 12px;
+    + input {padding-right: 40px;}
+  }
 }
 
 // login page
@@ -291,6 +298,32 @@ a {
   }
 }
 
+.not-found-page {
+  height: 300px;
+  background-color: $color-black-2;
+  padding: 100px 40px 100px 210px;
+  .inner {
+    position: relative;
+    left: 50%;
+    width: 600px;
+    margin-left: -350px;
+    padding-left: 60px;
+  }
+  .fa {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    z-index: 1;
+    margin-top: -60px;
+    color: $color-orange;
+    font-size: 120px;
+  }
+  p {
+    font-size: 30px;
+    text-align: center;
+  }
+}
+
 .empty-block {
   padding: 20px;
   .title-empty {
@@ -304,6 +337,7 @@ a {
 
 .main-content {
   margin-left: 250px;
+  padding-bottom: 80px;
   > .outer {padding: 20px 0;}
 }
 
@@ -316,7 +350,8 @@ a {
     background-color: $color-black-1;
     border-bottom: solid 1px $color-black-3;
     align-items: center;
-    .ttl-list {font-size: 16px;}
+    .ttl-list {font-size: 18px;}
+    .fa-list-alt {font-size: 30px;}
   }
   .body-heading {background-color: $color-black-2;}
 }
@@ -324,6 +359,16 @@ a {
 .custom-table {
   margin-bottom: 0;
   .th-stt {width: 40px;}
+  .th-ma {
+    max-width: 110px;
+    min-width: 110px;
+    width: 110px;
+  }
+  .th-action {
+    max-width: 100px;
+    min-width: 100px;
+    width: 100px;
+  }
   .button-control {
     font-size: 20px;
     color: $color-white;
@@ -347,4 +392,98 @@ a {
   }
   .modal-body, .modal-footer {background-color: $color-black-2;}
   .modal-footer {border-color: $color-black-3;}
+}
+
+.pagination-custom {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  .ant-pagination-disabled {display: none;}
+  .ant-pagination-item {
+    width: 32px;
+    height: 32px;
+    > a {
+      display: block;
+      width: 100%;
+      padding: 5px;
+      text-align: center;
+      cursor: pointer;
+      &:hover {
+        border: solid 1px $color-green;
+        color: $color-green;
+      }
+    }
+  }
+  .ant-pagination-item-active > a {
+    border: solid 1px $color-green;
+    color: $color-green;
+  }
+
+  .ant-pagination-next,
+  .ant-pagination-prev {
+    margin: 0;
+    .ant-pagination-item-link {
+      width: 32px;
+      height: 32px;
+      border: 0;
+      padding: 0;
+      background-color: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      &:hover {
+        .anticon {
+          border-top: solid 2px $color-green;
+          border-right: solid 2px $color-green;
+        }
+      }
+    }
+    .anticon {
+      width: 10px;
+      height: 10px;
+      border-top: solid 2px $color-white;
+      border-right: solid 2px $color-white;
+      svg {display: none;}
+    }
+  }
+  .ant-pagination-next .anticon {
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+  .ant-pagination-prev .anticon {
+    -webkit-transform: rotate(-135deg);
+    -moz-transform: rotate(-135deg);
+    transform: rotate(-135deg);
+  }
+
+  .ant-pagination-jump-next, .ant-pagination-jump-prev {
+    width: 32px;
+    height: 32px;
+    .ant-pagination-item-link, .ant-pagination-item-container {
+      display: block;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+    .ant-pagination-item-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ant-pagination-item-link:hover {
+      .anticon svg {
+        width: auto;
+        height: auto;
+        color: $color-green;
+      }
+      .ant-pagination-item-ellipsis {display: none;}
+    }
+    .anticon svg {
+      width: 0;
+      height: 0;
+      transition-duration: .3s;
+      transition-property: width, height;
+    }
+  }
 }

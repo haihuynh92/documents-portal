@@ -19,9 +19,15 @@ const SideBar = () => {
       <div className="inner">
         <h2 className="ttl-article">Quản lý</h2>
         <ul className="list-menu">
-          <li className={`${history.location.pathname === "/cosomay" ? "active" : ""}`}>
-            <Link to="/cosomay">
-              <i className="fa fa-book mr-2"></i>
+          <li className={`${history.location.pathname === "/danhsachmahang" ? "active" : ""}`}>
+            <Link to="/danhsachmahang">
+              <i className="fa fa-id-card mr-2" aria-hidden="true"></i>
+              Mã hàng
+            </Link>
+          </li>
+          <li className={`${history.location.pathname === "/danhsachcosomay" ? "active" : ""}`}>
+            <Link to="/danhsachcosomay">
+              <i className="fa fa-address-book mr-2"></i>
               Cơ sở may
             </Link>
           </li>

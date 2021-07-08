@@ -1,25 +1,28 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { capNhatCS, themCS, XoaCS } from 'actions/cosomay';
+import { capNhatMH, themMH, XoaMH } from 'actions/mahang';
+import { Pagination } from "antd";
 import Empty from 'components/common/Empty/Empty';
-import CSItem from 'components/CoSoMay/CSItem';
+import Search from 'components/common/Search/Search';
+import moment from 'moment';
 import React, { useState } from 'react';
 import { Button, Col, Form, Modal, Row, Table } from 'react-bootstrap';
-import { useForm } from "react-hook-form";
+import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
-import './csm.scss';
-import moment from 'moment';
+import './mahang.scss';
+import MHItem from './MHItem';
 
-const DanhSachCSM = (props) => {
-  const { DSCSM } = props;
+const DanhSachMH = (props) => {
+  const { DSMH, infoPag, handlePaging, onSearchMH } = props;
   const dispatch = useDispatch();
   const dateNow = moment().format('DD/MM/YYYY hh:mm:ss');
   const [valDefault, setValDefault] = useState({
     id: '',
-    macs: '',
-    tencs: '',
-    diachi: '',
-    sdt: '',
+    mahang: '',
+    tenhang: '',
+    giamay: '',
+    gianhap: '',
+    giagiao: '',
     ghichu: '',
     ngaytao: dateNow
   });
@@ -30,28 +33,26 @@ const DanhSachCSM = (props) => {
     setIsShow(false);
     setValDefault({
       id: '',
-      macs: '',
-      tencs: '',
-      diachi: '',
-      sdt: '',
+      mahang: '',
+      tenhang: '',
+      giamay: '',
+      gianhap: '',
+      giagiao: '',
       ghichu: '',
       ngaytao: dateNow
     });
   };
   const handleShow = () => setIsShow(true);
 
-  const phoneRegExp = /^(([0-9]){10})$/;
-
   let validationSchema = yup.object().shape({
-    macs: yup.string().required('Mã bắt buộc!'),
-    tencs: yup.string().required('Tên bắt buộc!'),
-    sdt: yup.string().matches(phoneRegExp, 'Số điện thoại không đúng!')
+    mahang: yup.string().required('Mã bắt buộc!'),
+    tenhang: yup.string().required('Tên bắt buộc!')
   });
   const { register, handleSubmit, errors } = useForm({
     mode: 'onSubmit',
     resolver: yupResolver(validationSchema)
   });
-  
+
   // input change
   const handleChange = (e) => {
     setValDefault({
@@ -59,6 +60,7 @@ const DanhSachCSM = (props) => {
       [e.target.name]: e.target.value
     });
   }
+
   // handleKeyPress
   const handleKeyPress = (e) => {
     if (e.which < 48 || e.which > 57) {
@@ -67,24 +69,31 @@ const DanhSachCSM = (props) => {
   };
 
   // save and update
-  const luuCoSo = (data) => {
+  const luuMaHang = (data) => {
     if (!!valDefault?.id) {
       data.id = valDefault.id;
-      dispatch(capNhatCS(data));
+      dispatch(capNhatMH(data, {
+        page: 1,
+        limit: infoPag?._limit
+      }));
     } else {
-      dispatch(themCS(data));
+      dispatch(themMH(data, {
+        page: 1,
+        limit: infoPag?._limit
+      }));
     }
     handleClose();
   }
 
   // get detail
-  const onGetDetailCSM = (detail) => {
+  const onGetDetailMH = (detail) => {
     setValDefault({
       id: detail.id,
-      macs: detail.macs.trim(),
-      tencs: detail.tencs.trim(),
-      diachi: detail.diachi.trim(),
-      sdt: detail.sdt.trim(),
+      mahang: detail.mahang.trim(),
+      tenhang: detail.tenhang.trim(),
+      giamay: detail.giamay.trim(),
+      gianhap: detail.gianhap.trim(),
+      giagiao: detail.giagiao.trim(),
       ghichu: detail.ghichu.trim(),
       ngaytao: dateNow
     });
@@ -92,17 +101,18 @@ const DanhSachCSM = (props) => {
   }
 
   // show list
-  const showDSCSM = (list) => {
+  const showDSMH = (list) => {
     var result = null;
 
-    result = list.map((item, index) => {
+    result = list.data.map((item, index) => {
       return (
-        <CSItem
-          key={index}
+        <MHItem
+          key={item.id}
           index={index}
           item={item}
-          confirmDeleteCSM={confirmDeleteCSM}
-          getDetailCSM={onGetDetailCSM}
+          currPage={list.pagination?._page}
+          confirmDeleteMH={confirmDeleteMH}
+          getDetailMH={onGetDetailMH}
         />
       );
     });
@@ -116,12 +126,15 @@ const DanhSachCSM = (props) => {
   const handleCloseDelete = () => setIsShowDelete(false);
   const handleShowDelete = () => setIsShowDelete(true);
 
-  const confirmDeleteCSM = (detail) => {
+  const confirmDeleteMH = (detail) => {
     setItemDelete(detail);
     handleShowDelete();
   }
-  const onDeleteCSM = () => {
-    dispatch(XoaCS(itemDelete.id));
+  const onDeleteMH = () => {
+    dispatch(XoaMH(itemDelete.id, {
+      page: infoPag?._page,
+      limit: infoPag?._limit
+    }));
     handleCloseDelete();
   }
 
@@ -130,12 +143,18 @@ const DanhSachCSM = (props) => {
       <div className="title-heading d-flex-between">
         <p className="ttl-list">
           <i className="fa fa-list-alt mr-2" aria-hidden="true"></i>
-          Danh sách cơ sở may
+          Danh sách mã hàng
         </p>
-        <Button variant="success" size="sm" className="btn-add" onClick={handleShow}>
-          <i className="fa fa-plus mr-2" aria-hidden="true"></i>
-          Thêm
-        </Button>
+        <div className="d-flex-between">
+          <Search
+            onSearch={onSearchMH}
+            placeholder="Tìm kiếm tên hàng ..."
+          />
+          <Button variant="success" size="sm" className="btn-add ml-5" onClick={handleShow} >
+            <i className="fa fa-plus mr-2" aria-hidden="true"></i>
+            Thêm
+          </Button>
+        </div>
         <Modal
           show={isShow}
           onHide={handleClose}
@@ -145,10 +164,10 @@ const DanhSachCSM = (props) => {
           size="lg"
         >
           <Modal.Header closeButton>
-            <Modal.Title>{`${!!valDefault?.id ? 'Cập nhật' : 'Thêm'} cơ sở may`}</Modal.Title>
+            <Modal.Title>{`${!!valDefault?.id ? 'Cập nhật' : 'Thêm'} mã hàng`}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Form onSubmit={handleSubmit(luuCoSo)}>
+            <Form onSubmit={handleSubmit(luuMaHang)}>
               <Form.Control 
                 type="hidden"
                 name="ngaytao"
@@ -157,69 +176,87 @@ const DanhSachCSM = (props) => {
               />
               <Row>
                 <Col sm="6">
-                  <Form.Group controlId="macs">
-                    <Form.Label>Mã Cơ Sở <span>*</span></Form.Label>
+                  <Form.Group controlId="mahang">
+                    <Form.Label>Mã hàng<span>*</span></Form.Label>
                     <Form.Control
                       type="text"
-                      name="macs"
+                      name="mahang"
                       autoComplete="off"
                       autoFocus
                       ref={register}
                       onChange={handleChange}
                       maxLength={10}
-                      defaultValue={valDefault.macs}
-                      className={`${errors?.macs ? 'invalid' : ''}`}
+                      defaultValue={valDefault.mahang}
+                      className={`${errors?.mahang ? 'invalid' : ''}`}
                     />
-                    {errors?.macs?.type === 'required' && <p className="error-msg font-bold">{errors?.macs?.message}</p>}
+                    {errors?.mahang?.type === 'required' && <p className="error-msg font-bold">{errors?.mahang?.message}</p>}
                   </Form.Group>
                 </Col>
 
                 <Col sm="6">
-                  <Form.Group controlId="tencs">
-                    <Form.Label>Tên Cơ Sở <span>*</span></Form.Label>
+                  <Form.Group controlId="tenhang">
+                    <Form.Label>Tên hàng<span>*</span></Form.Label>
                     <Form.Control
                       type="text"
-                      name="tencs"
+                      name="tenhang"
                       autoComplete="off"
                       ref={register}
                       onChange={handleChange}
-                      defaultValue={valDefault.tencs}
-                      className={`${errors?.tencs ? 'invalid' : ''}`}
+                      defaultValue={valDefault.tenhang}
+                      className={`${errors.tenhang ? 'invalid' : ''}`}
                     />
-                    {errors?.tencs?.type === 'required' && <p className="error-msg font-bold">{errors?.tencs?.message}</p>}
+                    {errors?.tenhang?.type === 'required' && <p className="error-msg font-bold">{errors?.tenhang?.message}</p>}
                   </Form.Group>
                 </Col>
               </Row>
 
               <Row>
                 <Col sm="6">
-                  <Form.Group controlId="sdt">
-                    <Form.Label>Số điện thoại <span>*</span></Form.Label>
+                  <Form.Group controlId="giamay">
+                    <Form.Label>Giá may</Form.Label>
+                    <span className="prefix">VNĐ</span>
                     <Form.Control
-                      type="tel"
-                      name="sdt"
+                      type="text"
+                      name="giamay"
                       autoComplete="off"
                       ref={register}
                       onChange={handleChange}
                       onKeyPress={handleKeyPress}
-                      maxLength={10}
-                      defaultValue={valDefault.sdt}
-                      className={`${errors?.sdt ? 'invalid' : ''}`}
+                      defaultValue={valDefault.giamay}
                     />
-                    {errors?.sdt?.type === 'matches' && <p className="error-msg font-bold">{errors?.sdt?.message}</p>}
                   </Form.Group>
                 </Col>
 
                 <Col sm="6">
-                  <Form.Group controlId="diachi">
-                    <Form.Label>Địa chỉ</Form.Label>
+                  <Form.Group controlId="gianhap">
+                    <Form.Label>Giá nhập</Form.Label>
+                    <span className="prefix">VNĐ</span>
                     <Form.Control
                       type="text"
-                      name="diachi"
+                      name="gianhap"
                       autoComplete="off"
                       ref={register}
                       onChange={handleChange}
-                      defaultValue={valDefault.diachi}
+                      onKeyPress={handleKeyPress}
+                      defaultValue={valDefault.gianhap}
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col sm="6">
+                  <Form.Group controlId="giagiao">
+                    <Form.Label>Giá giao</Form.Label>
+                    <span className="prefix">VNĐ</span>
+                    <Form.Control
+                      type="text"
+                      name="giagiao"
+                      autoComplete="off"
+                      ref={register}
+                      onChange={handleChange}
+                      onKeyPress={handleKeyPress}
+                      defaultValue={valDefault.giagiao}
                     />
                   </Form.Group>
                 </Col>
@@ -253,25 +290,39 @@ const DanhSachCSM = (props) => {
         </Modal>
       </div>
       <div className="body-heading">
-        {DSCSM.length ?
-          <Table striped bordered hover responsive variant="dark" className="custom-table table-csm">
+        {!!DSMH.data ?
+          <Table striped bordered hover responsive variant="dark" className="custom-table table-mahang">
             <thead>
               <tr>
                 <th className="th-stt text-center">STT</th>
-                <th className="th-ma text-center">Mã CS</th>
-                <th className="th-tencs text-center">Tên cơ sở</th>
-                <th className="th-dc">Địa chỉ</th>
-                <th className="th-sdt text-center">SĐT</th>
+                <th className="th-ma text-center">Mã hàng</th>
+                <th className="th-tenhang">Tên hàng</th>
+                <th className="th-gia text-center">Giá may</th>
+                <th className="th-gia text-center">Giá nhập</th>
+                <th className="th-gia text-center">Giá giao</th>
                 <th>Ghi chú</th>
                 <th className="text-center th-action">Hành động</th>
               </tr>
             </thead>
             <tbody>
-              {showDSCSM(DSCSM)}
+              {showDSMH(DSMH)}
             </tbody>
-          </Table> : <Empty />
+          </Table> 
+          : <Empty />
         }
       </div>
+      {!!DSMH.data &&
+        <Pagination
+          defaultPageSize={infoPag?._limit}
+          className="pagination pagination-custom"
+          size="small"
+          total={infoPag?._totalRows}
+          showSizeChanger={false}
+          onChange={handlePaging}
+          current={infoPag?._page}
+          showTitle={false}
+        />
+      }
 
       <Modal
         show={isShowDelete}
@@ -284,11 +335,11 @@ const DanhSachCSM = (props) => {
           <Modal.Title>Xác nhận</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>Bạn có chắc là xóa tên cơ sở "<span className="font-bold">{itemDelete.tencs}</span>" này không?</p>
+          <p>Bạn có chắc là xóa mã hàng "<span className="font-bold">{itemDelete.mahang}</span>" này không?</p>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" size="sm" onClick={handleCloseDelete}>Hủy</Button>
-          <Button variant="danger" size="sm" onClick={onDeleteCSM}>Xóa</Button>
+          <Button variant="danger" size="sm" onClick={onDeleteMH}>Xóa</Button>
         </Modal.Footer>
       </Modal>
 
@@ -296,4 +347,4 @@ const DanhSachCSM = (props) => {
   );
 };
 
-export default DanhSachCSM;
+export default DanhSachMH;

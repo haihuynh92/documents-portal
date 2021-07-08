@@ -4,7 +4,6 @@ import ReactHtmlParser from 'react-html-parser';
 
 
 const CSItem = (props) => {
-
   const { index, item, getDetailCSM, confirmDeleteCSM } = props;
 
   return (

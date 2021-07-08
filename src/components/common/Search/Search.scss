@@ -1,0 +1,25 @@
+@import './../../../styles/variable.scss';
+
+.search-form {
+  min-width: 300px;
+  .form-group {
+    position: relative;
+    margin: 0;
+  }
+  .form-control {
+    padding-right: 40px;
+    &:focus {
+      color: $color-orange;
+      + .fa-search {color: $color-orange;}
+    }
+  }
+  .fa-search {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    z-index: 1;
+    margin-top: -10px;
+    color: $color-white;
+    font-size: 20px;
+  }
+}

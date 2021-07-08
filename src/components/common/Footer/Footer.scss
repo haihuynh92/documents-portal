@@ -1,6 +1,11 @@
 @import './../../../styles/variable.scss';
 
 footer {
+  position: fixed;
+  bottom: 0;
+  left: 250px;
+  right: 0;
+  z-index: 10;
   .inner {
     padding-top: 20px;
     padding-bottom: 20px;;

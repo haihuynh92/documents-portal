@@ -1,7 +1,7 @@
 import axiosClient from './axiosClient';
 
 export const layDSCoSoMayApi = () => {
-  return axiosClient.get('/cosomays');
+  return axiosClient.get('/cosomays?_sort=ngaytao&_order=desc');
 };
 
 export const themCoSoMayApi = (dataPost) => {
