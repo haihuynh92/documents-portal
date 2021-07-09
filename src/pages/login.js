@@ -13,7 +13,7 @@ const LoginPage = () => {
   let validationSchema = yup.object().shape({
     email: yup.string()
       .required()
-      .email('Email không hợp lệ...!'),
+      .email('Email không hợp lệ'),
     password: yup.string().required()
   });
   const { register, handleSubmit, errors } = useForm({
@@ -74,7 +74,7 @@ const LoginPage = () => {
               onChange={handleChange}
               className={`${errors.email ? 'invalid' : ''}`}
             />
-            {errors.email?.type === 'email' && <p className="error-msg font-bold">{errors.email.message}</p>}
+            {errors.email?.type === 'email' && <p className="error-msg font-bold"><i className="fa fa-exclamation mr-1" aria-hidden="true"></i>{errors.email.message}</p>}
           </Form.Group>
 
           <Form.Group controlId="password">

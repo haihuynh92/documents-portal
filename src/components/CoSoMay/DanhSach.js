@@ -1,14 +1,15 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { capNhatCS, themCS, XoaCS } from 'actions/cosomay';
 import Empty from 'components/common/Empty/Empty';
+import ErrorMsg from 'components/common/ErrorMsg/ErrorMsg';
 import CSItem from 'components/CoSoMay/CSItem';
+import moment from 'moment';
 import React, { useState } from 'react';
 import { Button, Col, Form, Modal, Row, Table } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
 import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
 import './csm.scss';
-import moment from 'moment';
 
 const DanhSachCSM = (props) => {
   const { DSCSM } = props;
@@ -21,9 +22,8 @@ const DanhSachCSM = (props) => {
     diachi: '',
     sdt: '',
     ghichu: '',
-    ngaytao: dateNow
+    ngaytao: ''
   });
-
   const [isShow, setIsShow] = useState(false);
 
   const handleClose = () => {
@@ -35,17 +35,23 @@ const DanhSachCSM = (props) => {
       diachi: '',
       sdt: '',
       ghichu: '',
-      ngaytao: dateNow
+      ngaytao: ''
     });
   };
-  const handleShow = () => setIsShow(true);
+  const handleShow = () => {
+    setValDefault({
+      ...valDefault,
+      ngaytao: dateNow
+    });
+    setIsShow(true);
+  }
 
   const phoneRegExp = /^(([0-9]){10})$/;
 
   let validationSchema = yup.object().shape({
-    macs: yup.string().required('Mã bắt buộc!'),
-    tencs: yup.string().required('Tên bắt buộc!'),
-    sdt: yup.string().matches(phoneRegExp, 'Số điện thoại không đúng!')
+    macs: yup.string().required('Mã bắt buộc'),
+    tencs: yup.string().required('Tên bắt buộc'),
+    sdt: yup.string().matches(phoneRegExp, 'Số điện thoại không đúng')
   });
   const { register, handleSubmit, errors } = useForm({
     mode: 'onSubmit',
@@ -88,7 +94,7 @@ const DanhSachCSM = (props) => {
       ghichu: detail.ghichu.trim(),
       ngaytao: dateNow
     });
-    handleShow();
+    setIsShow(true);
   }
 
   // show list
@@ -161,6 +167,7 @@ const DanhSachCSM = (props) => {
                     <Form.Label>Mã Cơ Sở <span>*</span></Form.Label>
                     <Form.Control
                       type="text"
+                      placeholder="Nhập mã"
                       name="macs"
                       autoComplete="off"
                       autoFocus
@@ -170,7 +177,7 @@ const DanhSachCSM = (props) => {
                       defaultValue={valDefault.macs}
                       className={`${errors?.macs ? 'invalid' : ''}`}
                     />
-                    {errors?.macs?.type === 'required' && <p className="error-msg font-bold">{errors?.macs?.message}</p>}
+                    {errors?.macs?.type === 'required' && <ErrorMsg msgError={errors?.macs?.message} />}
                   </Form.Group>
                 </Col>
 
@@ -179,6 +186,7 @@ const DanhSachCSM = (props) => {
                     <Form.Label>Tên Cơ Sở <span>*</span></Form.Label>
                     <Form.Control
                       type="text"
+                      placeholder="Nhập tên"
                       name="tencs"
                       autoComplete="off"
                       ref={register}
@@ -186,7 +194,7 @@ const DanhSachCSM = (props) => {
                       defaultValue={valDefault.tencs}
                       className={`${errors?.tencs ? 'invalid' : ''}`}
                     />
-                    {errors?.tencs?.type === 'required' && <p className="error-msg font-bold">{errors?.tencs?.message}</p>}
+                    {errors?.tencs?.type === 'required' && <ErrorMsg msgError={errors?.tencs?.message} />}
                   </Form.Group>
                 </Col>
               </Row>
@@ -197,6 +205,7 @@ const DanhSachCSM = (props) => {
                     <Form.Label>Số điện thoại <span>*</span></Form.Label>
                     <Form.Control
                       type="tel"
+                      placeholder="Nhập số điện thoại"
                       name="sdt"
                       autoComplete="off"
                       ref={register}
@@ -206,7 +215,7 @@ const DanhSachCSM = (props) => {
                       defaultValue={valDefault.sdt}
                       className={`${errors?.sdt ? 'invalid' : ''}`}
                     />
-                    {errors?.sdt?.type === 'matches' && <p className="error-msg font-bold">{errors?.sdt?.message}</p>}
+                    {errors?.sdt?.type === 'matches' && <ErrorMsg msgError={errors?.sdt?.message} />}
                   </Form.Group>
                 </Col>
 
@@ -215,6 +224,7 @@ const DanhSachCSM = (props) => {
                     <Form.Label>Địa chỉ</Form.Label>
                     <Form.Control
                       type="text"
+                      placeholder="Nhập địa chỉ"
                       name="diachi"
                       autoComplete="off"
                       ref={register}
@@ -231,6 +241,7 @@ const DanhSachCSM = (props) => {
                     <Form.Label>Ghi chú</Form.Label>
                     <Form.Control
                       as="textarea"
+                      placeholder="Nhập ghi chú..."
                       name="ghichu"
                       autoComplete="off"
                       ref={register}
@@ -253,7 +264,7 @@ const DanhSachCSM = (props) => {
         </Modal>
       </div>
       <div className="body-heading">
-        {DSCSM.length ?
+        {DSCSM && !!DSCSM.length ?
           <Table striped bordered hover responsive variant="dark" className="custom-table table-csm">
             <thead>
               <tr>

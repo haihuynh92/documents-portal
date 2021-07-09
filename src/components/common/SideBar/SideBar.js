@@ -31,8 +31,8 @@ const SideBar = () => {
               Cơ sở may
             </Link>
           </li>
-          <li>
-            <Link to="/cutbook">
+          <li className={`${history.location.pathname === "/socat" ? "active" : ""}`}>
+            <Link to="/socat">
               <i className="fa fa-book mr-2"></i>
               Sổ cắt
             </Link>

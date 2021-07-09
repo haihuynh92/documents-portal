@@ -10,16 +10,19 @@
     padding-right: 40px;
     &:focus {
       color: $color-orange;
-      + .fa-search {color: $color-orange;}
+      + .btn-search .fa-search {color: $color-orange;}
     }
   }
-  .fa-search {
+  .btn-search {
+    box-shadow: none;
     position: absolute;
     top: 50%;
-    right: 10px;
+    right: 0;
     z-index: 1;
-    margin-top: -10px;
-    color: $color-white;
-    font-size: 20px;
+    margin-top: -19px;
+    .fa-search {
+      color: $color-white;
+      font-size: 20px;
+    }
   }
 }

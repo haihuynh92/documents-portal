@@ -1,9 +1,15 @@
 import * as actionTypes from 'constant/actionTypes';
 
+export const danhSachTatCaMaHang = () => {
+  return {
+    type: actionTypes.DANH_SACH_TAT_CA_MA_HANG
+  }
+}
+
 export const danhSachMaHang = (pagingState) => {
   return {
     type: actionTypes.DANH_SACH_MA_HANG,
-    payload: pagingState
+    pagingState: pagingState
   }
 }
 
@@ -32,6 +38,16 @@ export const XoaMH = (id, pagingState) => {
     type: actionTypes.XOA_MA_HANG,
     payload: {
       id,
+      pagingState
+    }
+  }
+}
+
+export const timKiemTH = (keySearch, pagingState) => {
+  return {
+    type: actionTypes.TIM_KIEM_TEN_HANG,
+    payload: {
+      keySearch,
       pagingState
     }
   }

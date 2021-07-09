@@ -20,7 +20,6 @@ html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acron
   outline:none;
   padding:0;
   vertical-align:baseline;
-  color: $color-white;
 }
 .clear {clear:both;}
 .clearfix {
@@ -154,10 +153,16 @@ input[type=number]::-webkit-outer-spin-button {
 a {
   text-decoration: none;
   transition: .3s;
+  color: $color-white !important;
   &:active, &:visited, &:focus, &:hover {
-    color: $color-white;
     text-decoration: none;
     outline: none;
+  }
+}
+button {
+  &:hover, &:active, &:focus {
+    border-color: transparent !important;
+    box-shadow: none !important;
   }
 }
 
@@ -165,6 +170,7 @@ a {
   display: flex;
   justify-content: space-between;
 }
+.align-items-flex-end {align-items: flex-end;}
 
 .reset-button {
   background-color: transparent;
@@ -183,7 +189,6 @@ a {
 }
 
 .font-bold {font-weight: bold;}
-
 .error-msg {
   margin-top: 5px;
   font-size: 12px;
@@ -193,7 +198,7 @@ a {
 .modal-backdrop {background-color: $color-white;}
 
 .form-group {
-  input {
+  .form-control {
     color: $color-white;
     border-color: $color-white;
     border-width: 0 0 2px 0;
@@ -210,14 +215,10 @@ a {
   textarea {
     margin-top: 10px;
     height: 200px;
-    background-color: rgba(255, 255, 255, .5);
-    color: $color-black;
+    border-radius: 5px !important;
+    background-color: $color-white !important;
+    color: $color-black !important;
     border: 0;
-    &:focus {
-      background-color: rgba(255, 255, 255, .5);
-      box-shadow: none;
-      color: $color-black;
-    }
   }
   label {
     color: $color-white;
@@ -229,11 +230,12 @@ a {
   }
   .prefix {
     position: absolute;
-    bottom: 24px;
+    top: 35px;
     right: 15px;
     font-size: 12px;
     + input {padding-right: 40px;}
   }
+  .text-readonly {padding-top: 6px;}
 }
 
 // login page
@@ -327,6 +329,7 @@ a {
 .empty-block {
   padding: 20px;
   .title-empty {
+    color: $color-white;
     font-size: 20px;
     text-align: center;
   }
@@ -364,7 +367,7 @@ a {
     min-width: 110px;
     width: 110px;
   }
-  .th-action {
+  .th-action, .th-sl {
     max-width: 100px;
     min-width: 100px;
     width: 100px;
@@ -378,6 +381,7 @@ a {
 }
 
 .modal-custom {
+  .close {color: $color-white;}
   .modal-content {
     overflow: hidden;
     border-radius: 10px;
@@ -395,19 +399,22 @@ a {
 }
 
 .pagination-custom {
-  margin-top: 40px;
+  padding: 40px 0;
   display: flex;
   justify-content: center;
   .ant-pagination-disabled {display: none;}
   .ant-pagination-item {
-    width: 32px;
-    height: 32px;
+    width: 32px !important;
+    height: 32px !important;
+    background-color: transparent;
+    border: 0;
     > a {
       display: block;
       width: 100%;
       padding: 5px;
       text-align: center;
       cursor: pointer;
+      color: $color-white;
       &:hover {
         border: solid 1px $color-green;
         color: $color-green;
@@ -416,7 +423,7 @@ a {
   }
   .ant-pagination-item-active > a {
     border: solid 1px $color-green;
-    color: $color-green;
+    color: $color-green !important;
   }
 
   .ant-pagination-next,
@@ -458,8 +465,8 @@ a {
   }
 
   .ant-pagination-jump-next, .ant-pagination-jump-prev {
-    width: 32px;
-    height: 32px;
+    width: 32px !important;
+    height: 32px !important;
     .ant-pagination-item-link, .ant-pagination-item-container {
       display: block;
       width: 100%;
@@ -479,11 +486,36 @@ a {
       }
       .ant-pagination-item-ellipsis {display: none;}
     }
+    .ant-pagination-item-ellipsis {
+      position: static;
+      color: $color-white;
+    }
     .anticon svg {
       width: 0;
       height: 0;
+      color: $color-white;
       transition-duration: .3s;
       transition-property: width, height;
+    }
+  }
+}
+
+.datepicker-custom {
+  color: $color-black;
+  .ant-picker {width: 100%;}
+}
+.ant-picker-cell-disabled {pointer-events: unset;}
+.ant-picker-cell:not(.ant-picker-cell-disabled):hover .ant-picker-cell-inner {
+  color: $color-white;
+  background-color: #1890ff !important;
+}
+
+.select-custom {
+  .ant-select {width: 100%;}
+  &.invalid {
+    .ant-select-selector {
+      border-color: $color-red !important;
+      box-shadow:  0 0 2px $color-red !important;
     }
   }
 }

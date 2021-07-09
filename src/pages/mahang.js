@@ -1,4 +1,4 @@
-import { danhSachMaHang } from "actions/mahang";
+import { danhSachMaHang, timKiemTH } from "actions/mahang";
 import Footer from "components/common/Footer/Footer";
 import Header from "components/common/Header/Header";
 import SideBar from "components/common/SideBar/SideBar";
@@ -26,8 +26,11 @@ const Mahang = () => {
     dispatch(danhSachMaHang(pagingState));
   }, [dispatch, pagingState]);
 
-  const onSearchMaHang = (formSearchValue) => {
-    console.log(formSearchValue);
+  const onSearchMaHang = (keySearch) => {
+    dispatch(timKiemTH(keySearch, {
+      page: 1,
+      limit: DSMahang.data.pagination?._limit
+    }));
   }
 
   return (

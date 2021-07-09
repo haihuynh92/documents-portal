@@ -3,15 +3,19 @@ import createSagaMiddleware from 'redux-saga';
 import rootSaga from 'sagas';
 
 import loginReducer from 'reducers/loginReducer';
+import homeReducer from 'reducers/homeReducer';
 import loadingReducer from 'reducers/loadingReducer';
 import coSoMayReducer from 'reducers/coSoMayReducer';
 import maHangReducer from 'reducers/maHangReducer';
+import soCatReduder from 'reducers/soCatReducer';
 
 const rootReducer = {
   loginReducer,
   loadingReducer,
+  homeReducer,
   coSoMayReducer,
-  maHangReducer
+  maHangReducer,
+  soCatReduder
 }
 
 const sagaMiddleware = createSagaMiddleware();

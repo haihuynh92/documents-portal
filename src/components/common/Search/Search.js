@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import './Search.scss';
 
 const Search = (props) => {
@@ -8,37 +8,49 @@ const Search = (props) => {
   const typingTimeOut = useRef(null);
   const handleChangeSearch = (e) => {
     setSearchTerm(e.target.value);
-
+    
     if (typingTimeOut.current) {
       clearTimeout(typingTimeOut.current);
     }
-
-    typingTimeOut.current = setTimeout(() => {
-      const formSearchValue = {
-        keySearch: e.target.value
-      };
-
-      onSearch(formSearchValue);
   
+    typingTimeOut.current = setTimeout(() => {
+      if (!e.target.value.length) {
+        onSearch(e.target.value);
+      }
     }, 500);
-    
+  }
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && !!searchTerm) {
+      onSearch(searchTerm);
+      setSearchTerm('');
+    }
+  }
+  const submitKey = () => {
+    if (!!searchTerm) {
+      onSearch(searchTerm);
+      setSearchTerm('');
+    }
+    return;
   }
   
   return (
     <div className="search-form">
-      <Form onSubmit={e => e.preventDefault()}>
-        <Form.Group>
-          <Form.Control
-            type="text" 
-            name="search" 
-            autoComplete="off"
-            value={searchTerm}
-            placeholder= {placeholder}
-            onChange={handleChangeSearch}
-          />
+      <Form.Group>
+        <Form.Control
+          type="text" 
+          name="search" 
+          autoComplete="off"
+          value={searchTerm}
+          placeholder="Tìm kiếm..."
+          onChange={handleChangeSearch}
+          onKeyDown={handleKeyDown}
+        />
+        <Button variant="default" onClick={submitKey} className="btn-search">
           <i className="fa fa-search" aria-hidden="true"></i>
-        </Form.Group>
-      </Form>
+        </Button>
+        
+      </Form.Group>
     </div>
   );
 };

@@ -1,13 +1,21 @@
-###
-GET http://localhost:9000/mahangs
-###
+GET http://localhost:9000/mahangs/c12ec8ea-7d41-8bf9-bba4-6bda3c0f0b3d/socats
+
+###search
+GET http://localhost:9000/mahangs?tenhang_like=q
+
+###search
+GET http://localhost:9000/mahangs?q=08
+
+###pagination
 GET http://localhost:9000/mahangs?_sort=tenhang&_order=desc&_page=2&_limit=2
 
 ###
-DELETE https://manage-documents.herokuapp.com/cosomays/5292b8ad-12f5-73e0-5447-879f44cfdd0d
+GET http://localhost:9000/socats
 
-###
-# @name post product
+###delete
+DELETE http://localhost:9000/socats/b6729e1f-20ef-58d5-d370-e7b1721a5556
+
+###add
 PUT https://manage-documents.herokuapp.com/cosomays/3c1eeded-f275-1251-5987-45f817cb7df1
 Content-Type: application/json
 

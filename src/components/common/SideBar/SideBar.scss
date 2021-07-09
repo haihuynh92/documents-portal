@@ -10,10 +10,11 @@
   height: 100vh;
   background-color: $color-dark-gray;
   .ttl-side-bar {
+    background-color: rgba(0, 0, 21, .2);
     height: 60px;
     padding: 15px 20px;
     font-size: 20px;
-    background-color: rgba(0, 0, 21, .2);
+    color: $color-white;
     .fa-industry:before {font-size: 30px;}
   }
   .link-dashboard {
@@ -23,7 +24,10 @@
     .fa-tachometer:before {font-size: 20px;}
     &:hover {background-color: $color-blue;}
   }
-  .ttl-article {padding: 20px 15px 0;}
+  .ttl-article {
+    padding: 20px 15px 0;
+    color: $color-white;
+  }
   .list-menu {
     margin-top: 10px;
     .fa {min-width: 20px;}

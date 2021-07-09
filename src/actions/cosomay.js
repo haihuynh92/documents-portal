@@ -1,5 +1,11 @@
 import * as actionTypes from 'constant/actionTypes';
 
+export const danhSachTatCaCoSoMay = () => {
+  return {
+    type: actionTypes.DANH_SACH_TAT_CA_CO_SO_MAY
+  }
+}
+
 export const danhSachCoSoMay = (data) => {
   return {
     type: actionTypes.DANH_SACH_CO_SO_MAY,

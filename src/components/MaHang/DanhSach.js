@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { capNhatMH, themMH, XoaMH } from 'actions/mahang';
 import { Pagination } from "antd";
 import Empty from 'components/common/Empty/Empty';
+import ErrorMsg from 'components/common/ErrorMsg/ErrorMsg';
 import Search from 'components/common/Search/Search';
 import moment from 'moment';
 import React, { useState } from 'react';
@@ -24,7 +25,7 @@ const DanhSachMH = (props) => {
     gianhap: '',
     giagiao: '',
     ghichu: '',
-    ngaytao: dateNow
+    ngaytao: ''
   });
 
   const [isShow, setIsShow] = useState(false);
@@ -39,14 +40,20 @@ const DanhSachMH = (props) => {
       gianhap: '',
       giagiao: '',
       ghichu: '',
-      ngaytao: dateNow
+      ngaytao: ''
     });
   };
-  const handleShow = () => setIsShow(true);
+  const handleShow = () => {
+    setValDefault({
+      ...valDefault,
+      ngaytao: dateNow
+    });
+    setIsShow(true);
+  }
 
   let validationSchema = yup.object().shape({
-    mahang: yup.string().required('Mã bắt buộc!'),
-    tenhang: yup.string().required('Tên bắt buộc!')
+    mahang: yup.string().required('Mã bắt buộc'),
+    tenhang: yup.string().required('Tên bắt buộc')
   });
   const { register, handleSubmit, errors } = useForm({
     mode: 'onSubmit',
@@ -97,13 +104,12 @@ const DanhSachMH = (props) => {
       ghichu: detail.ghichu.trim(),
       ngaytao: dateNow
     });
-    handleShow();
+    setIsShow(true);
   }
 
   // show list
   const showDSMH = (list) => {
-    var result = null;
-
+    let result = null;
     result = list.data.map((item, index) => {
       return (
         <MHItem
@@ -118,6 +124,7 @@ const DanhSachMH = (props) => {
     });
 
     return result;
+
   }
 
   // delete
@@ -145,11 +152,8 @@ const DanhSachMH = (props) => {
           <i className="fa fa-list-alt mr-2" aria-hidden="true"></i>
           Danh sách mã hàng
         </p>
-        <div className="d-flex-between">
-          <Search
-            onSearch={onSearchMH}
-            placeholder="Tìm kiếm tên hàng ..."
-          />
+        <div className="d-flex-between align-items-flex-end">
+          <Search onSearch={onSearchMH} />
           <Button variant="success" size="sm" className="btn-add ml-5" onClick={handleShow} >
             <i className="fa fa-plus mr-2" aria-hidden="true"></i>
             Thêm
@@ -177,9 +181,10 @@ const DanhSachMH = (props) => {
               <Row>
                 <Col sm="6">
                   <Form.Group controlId="mahang">
-                    <Form.Label>Mã hàng<span>*</span></Form.Label>
+                    <Form.Label>Mã hàng <span>*</span></Form.Label>
                     <Form.Control
                       type="text"
+                      placeholder="Nhập mã"
                       name="mahang"
                       autoComplete="off"
                       autoFocus
@@ -189,15 +194,16 @@ const DanhSachMH = (props) => {
                       defaultValue={valDefault.mahang}
                       className={`${errors?.mahang ? 'invalid' : ''}`}
                     />
-                    {errors?.mahang?.type === 'required' && <p className="error-msg font-bold">{errors?.mahang?.message}</p>}
+                    {errors?.mahang?.type === 'required' && <ErrorMsg msgError={errors?.mahang?.message} />}
                   </Form.Group>
                 </Col>
 
                 <Col sm="6">
                   <Form.Group controlId="tenhang">
-                    <Form.Label>Tên hàng<span>*</span></Form.Label>
+                    <Form.Label>Tên hàng <span>*</span></Form.Label>
                     <Form.Control
                       type="text"
+                      placeholder="Nhập tên"
                       name="tenhang"
                       autoComplete="off"
                       ref={register}
@@ -205,7 +211,7 @@ const DanhSachMH = (props) => {
                       defaultValue={valDefault.tenhang}
                       className={`${errors.tenhang ? 'invalid' : ''}`}
                     />
-                    {errors?.tenhang?.type === 'required' && <p className="error-msg font-bold">{errors?.tenhang?.message}</p>}
+                    {errors?.tenhang?.type === 'required' && <ErrorMsg msgError={errors?.tenhang?.message} />}
                   </Form.Group>
                 </Col>
               </Row>
@@ -217,6 +223,7 @@ const DanhSachMH = (props) => {
                     <span className="prefix">VNĐ</span>
                     <Form.Control
                       type="text"
+                      placeholder="Nhập giá"
                       name="giamay"
                       autoComplete="off"
                       ref={register}
@@ -233,6 +240,7 @@ const DanhSachMH = (props) => {
                     <span className="prefix">VNĐ</span>
                     <Form.Control
                       type="text"
+                      placeholder="Nhập giá"
                       name="gianhap"
                       autoComplete="off"
                       ref={register}
@@ -251,6 +259,7 @@ const DanhSachMH = (props) => {
                     <span className="prefix">VNĐ</span>
                     <Form.Control
                       type="text"
+                      placeholder="Nhập giá"
                       name="giagiao"
                       autoComplete="off"
                       ref={register}
@@ -268,6 +277,7 @@ const DanhSachMH = (props) => {
                     <Form.Label>Ghi chú</Form.Label>
                     <Form.Control
                       as="textarea"
+                      placeholder="Nhập ghi chú..."
                       name="ghichu"
                       autoComplete="off"
                       ref={register}
@@ -290,7 +300,7 @@ const DanhSachMH = (props) => {
         </Modal>
       </div>
       <div className="body-heading">
-        {!!DSMH.data ?
+        {(DSMH.data && !!DSMH.data.length) ?
           <Table striped bordered hover responsive variant="dark" className="custom-table table-mahang">
             <thead>
               <tr>
@@ -307,11 +317,10 @@ const DanhSachMH = (props) => {
             <tbody>
               {showDSMH(DSMH)}
             </tbody>
-          </Table> 
-          : <Empty />
+          </Table> : <Empty />
         }
       </div>
-      {!!DSMH.data &&
+      {DSMH.data && !!DSMH.data.length &&
         <Pagination
           defaultPageSize={infoPag?._limit}
           className="pagination pagination-custom"
