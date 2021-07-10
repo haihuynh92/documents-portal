@@ -150,6 +150,24 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 /*===== COMMON =====*/
+::-webkit-scrollbar {
+  width: 14px;
+  height: 14px;
+}
+::-webkit-scrollbar-thumb {
+  height: 4px;
+  border: 4px solid transparent;
+  background-clip: padding-box;
+  -webkit-border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.5);
+  -webkit-box-shadow: inset -1px -1px 0 rgba(255, 255, 255, 0.5), inset 1px 1px 0 rgba(255, 255, 255, 0.5);
+}
+::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
+  display: none;
+}
+::-webkit-scrollbar-corner {background-color: transparent;}
 a {
   text-decoration: none;
   transition: .3s;
@@ -336,7 +354,10 @@ button {
   .fa-exclamation-triangle {color: $color-orange;}
 }
 
-.wrapper-container {position: relative;}
+.wrapper-container {
+  position: relative;
+  min-width: 1200px;
+}
 
 .main-content {
   margin-left: 250px;
@@ -359,6 +380,11 @@ button {
   .body-heading {background-color: $color-black-2;}
 }
 
+@keyframes moveTopBottom {
+  0% {top: 0;}
+  100% {top: -5px;}
+}
+
 .custom-table {
   margin-bottom: 0;
   .th-stt {width: 40px;}
@@ -372,12 +398,21 @@ button {
     min-width: 100px;
     width: 100px;
   }
+  .th-min {
+    min-width: 150px;
+  }
   .button-control {
+    padding: 5px;
     font-size: 20px;
     color: $color-white;
   }
-  .btn-edit:hover {color: $color-orange;}
-  .btn-delete:hover {color: $color-black;}
+  .btn-edit:hover {
+    position: relative;
+    animation: moveTopBottom .3s infinite alternate;
+    -webkit-animation: moveTopBottom .3s infinite alternate;
+    color: $color-orange;
+  }
+  .btn-delete:hover {color: $color-red;}
 }
 
 .modal-custom {

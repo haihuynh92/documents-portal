@@ -273,7 +273,7 @@ const DanhSachCSM = (props) => {
                 <th className="th-tencs text-center">Tên cơ sở</th>
                 <th className="th-dc">Địa chỉ</th>
                 <th className="th-sdt text-center">SĐT</th>
-                <th>Ghi chú</th>
+                <th className="th-min">Ghi chú</th>
                 <th className="text-center th-action">Hành động</th>
               </tr>
             </thead>

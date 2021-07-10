@@ -24,11 +24,11 @@ export function* themMaHang(action) {
   try {
     yield put(showLoading());
     const result = yield call(themMaHangApi, payload.data);
-
+    const res = yield call(layDSMaHangApi, payload.pagingState);
     if (result.status === 201) {
       yield delay(1000);
       yield put(hideLoading());
-      yield layDSMH(payload);
+      yield put(DSMaHang(res.data));
       yield put(themMH());
     }
   } catch (error) {
@@ -42,11 +42,11 @@ export function* capNhatMaHang(action) {
   try {
     yield put(showLoading());
     const result = yield call(capNhatMaHangApi, payload.data);
-
+    const res = yield call(layDSMaHangApi, payload.pagingState);
     if (result.status === 200) {
       yield delay(1000);
       yield put(hideLoading());
-      yield layDSMH(payload);
+      yield put(DSMaHang(res.data));
       yield put(capNhatMH());
     }
   } catch (error) {

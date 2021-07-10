@@ -154,7 +154,7 @@ const DanhSachMH = (props) => {
         </p>
         <div className="d-flex-between align-items-flex-end">
           <Search onSearch={onSearchMH} />
-          <Button variant="success" size="sm" className="btn-add ml-5" onClick={handleShow} >
+          <Button variant="success" size="sm" className="btn-add ml-3" onClick={handleShow} >
             <i className="fa fa-plus mr-2" aria-hidden="true"></i>
             Thêm
           </Button>
@@ -306,11 +306,11 @@ const DanhSachMH = (props) => {
               <tr>
                 <th className="th-stt text-center">STT</th>
                 <th className="th-ma text-center">Mã hàng</th>
-                <th className="th-tenhang">Tên hàng</th>
+                <th className="th-min">Tên hàng</th>
                 <th className="th-gia text-center">Giá may</th>
                 <th className="th-gia text-center">Giá nhập</th>
                 <th className="th-gia text-center">Giá giao</th>
-                <th>Ghi chú</th>
+                <th className="th-min">Ghi chú</th>
                 <th className="text-center th-action">Hành động</th>
               </tr>
             </thead>

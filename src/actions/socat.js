@@ -17,15 +17,15 @@ export const themSC = (data, pagingState) => {
   }
 }
 
-// export const capNhatMH = (data, pagingState) => {
-//   return {
-//     type: actionTypes.CAP_NHAT_MA_HANG,
-//     payload: {
-//       data,
-//       pagingState
-//     }
-//   }
-// }
+export const capNhatSC = (data, pagingState) => {
+  return {
+    type: actionTypes.CAP_NHAT_SO_CAT,
+    payload: {
+      data,
+      pagingState
+    }
+  }
+}
 
 export const XoaSC = (id, pagingState) => {
   return {
@@ -37,12 +37,12 @@ export const XoaSC = (id, pagingState) => {
   }
 }
 
-// export const timKiemTH = (keySearch, pagingState) => {
-//   return {
-//     type: actionTypes.TIM_KIEM_TEN_HANG,
-//     payload: {
-//       keySearch,
-//       pagingState
-//     }
-//   }
-// }
+export const timKiemSC = (dataSearch, pagingState) => {
+  return {
+    type: actionTypes.TIM_KIEM_SO_CAT,
+    payload: {
+      dataSearch,
+      pagingState
+    }
+  }
+}

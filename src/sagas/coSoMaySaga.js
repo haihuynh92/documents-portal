@@ -2,7 +2,7 @@ import { capNhatCoSoMayApi, layDSCoSoMayApi, themCoSoMayApi, xoaCoSoMayApi } fro
 import * as actionTypes from 'constant/actionTypes';
 import { capNhatCS, DSCoSoMay, themCS, xoaCS } from 'reducers/coSoMayReducer';
 import { hideLoading, showLoading } from 'reducers/loadingReducer';
-import { call, delay, put, select, takeLatest } from 'redux-saga/effects';
+import { call, delay, put, takeLatest } from 'redux-saga/effects';
 
 export function* layDSCoSoMay() {
   try {
@@ -25,11 +25,11 @@ export function* themCoSoMay(action) {
   try {
     yield put(showLoading());
     const result = yield call(themCoSoMayApi, payload.data);
-
+    const res = yield call(layDSCoSoMayApi);
     if (result.status === 201) {
       yield delay(1000);
       yield put(hideLoading());
-      yield layDSCoSoMay();
+      yield put(DSCoSoMay(res.data));
       yield put(themCS());
     }
   } catch (error) {
@@ -41,11 +41,11 @@ export function* capNhatCoSoMay(action) {
   try {
     yield put(showLoading());
     const result = yield call(capNhatCoSoMayApi, action.payload.data);
-
+    const res = yield call(layDSCoSoMayApi);
     if (result.status === 200) {
       yield delay(1000);
       yield put(hideLoading());
-      yield layDSCoSoMay();
+      yield put(DSCoSoMay(res.data));
       yield put(capNhatCS());
     }
   } catch (error) {

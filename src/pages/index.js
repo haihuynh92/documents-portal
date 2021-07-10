@@ -1,12 +1,10 @@
-import { danhSachTatCaCoSoMay } from "actions/cosomay";
-import { danhSachTatCaMaHang } from "actions/mahang";
 import "antd/dist/antd.css";
 import Footer from 'components/common/Footer/Footer';
 import Header from 'components/common/Header/Header';
 import SideBar from 'components/common/SideBar/SideBar';
 import Dashboard from 'components/Dashboard/Dashboard';
 import { CURRENT_USER } from 'constant/currentUser';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from "react-redux";
 
 const HomePage = () => {
@@ -22,10 +20,10 @@ const HomePage = () => {
     }
   }, [dispatch, currentUser]);
 
-  useMemo(() => {
-    dispatch(danhSachTatCaMaHang());
-    dispatch(danhSachTatCaCoSoMay());
-  }, [dispatch]);
+  // useMemo(() => {
+  //   dispatch(danhSachTatCaMaHang());
+  //   dispatch(danhSachTatCaCoSoMay());
+  // }, [dispatch]);
 
   return !!currentUser && (
     <div className="wrapper-container">

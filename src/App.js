@@ -6,10 +6,10 @@ import HomePage from 'pages/index';
 import LoginPage from 'pages/login';
 import DSMaHang from 'pages/mahang';
 import NotFoundPage from 'pages/notfound';
+import SoCat from 'pages/socat';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Socat from 'pages/socat';
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
           <Route path="/" exact component={HomePage} />
           <Route path="/danhsachmahang" component={DSMaHang} />
           <Route path="/danhsachcosomay" component={DSCoSoMay} />
-          <Route path="/socat" component={Socat} />
+          <Route path="/socat" component={SoCat} />
           <Route component={NotFoundPage} />
         </Switch>
         

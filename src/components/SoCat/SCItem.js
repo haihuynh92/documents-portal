@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 
 const SCItem = (props) => {
-  const { index, item, getDetailMH, confirmDeleteSC, currPage, listCSM, listMH } = props;
+  const { index, item, getDetailSC, confirmDeleteSC, currPage, listCSM, listMH } = props;
   const detailCSM = _.filter(listCSM, (x) => {return x.id === item?.cosomayId});
   const detailMH = _.filter(listMH, (x) => {return x.id === item?.mahangId});
 
@@ -25,7 +25,7 @@ const SCItem = (props) => {
       <td className="text-center">{detailCSM.length && detailCSM[0]?.tencs}</td>
       <td>{ReactHtmlParser(item.ghichu.replace(/\n/g, "<br />"))}</td>
       <td className="text-center">
-        <Button variant="default" className="button-control reset-button mr-3 btn-edit" onClick={() => getDetailMH(item)}>
+        <Button variant="default" className="button-control reset-button mr-3 btn-edit" onClick={() => getDetailSC(item)}>
           <i className="fa fa-pencil" aria-hidden="true"></i>
         </Button>
         <Button variant="default" className="button-control reset-button btn-delete" onClick={() => confirmDeleteSC(item, detailMH)} >

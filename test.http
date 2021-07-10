@@ -15,15 +15,4 @@ GET http://localhost:9000/socats
 ###delete
 DELETE http://localhost:9000/socats/b6729e1f-20ef-58d5-d370-e7b1721a5556
 
-###add
-PUT https://manage-documents.herokuapp.com/cosomays/3c1eeded-f275-1251-5987-45f817cb7df1
-Content-Type: application/json
 
-{
-  "macs": "ffasdf",
-  "tencs": "fsdfasdf",
-  "diachi": "asdfsdafs",
-  "sdt": "32424234",
-  "ghichu": "ok em trai",
-  "id": "3c1eeded-f275-1251-5987-45f817cb7df1"
-}

@@ -5,11 +5,11 @@ import Footer from "components/common/Footer/Footer";
 import Header from "components/common/Header/Header";
 import SideBar from "components/common/SideBar/SideBar";
 import DanhSach from "components/SoCat/DanhSach";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
-const Socat = () => {
+const SoCat = () => {
   const dispatch = useDispatch();
   const DSSoCat = useSelector((state) => state.soCatReduder);
   const DSMaHang = useSelector((state) => state.homeReducer.dsmahang);
@@ -25,15 +25,16 @@ const Socat = () => {
       page: currPage
     });
   };
+  
+  useEffect(() => {
+    dispatch(danhSachTatCaMaHang());
+    dispatch(danhSachTatCaCoSoMay());
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(danhSachSoCat(pagingState));
   }, [dispatch, pagingState]);
 
-  useMemo(() => {
-    dispatch(danhSachTatCaMaHang());
-    dispatch(danhSachTatCaCoSoMay());
-  }, [dispatch]);
 
   // const onSearchMaHang = (keySearch) => {
   //   dispatch(timKiemTH(keySearch, {
@@ -66,4 +67,4 @@ const Socat = () => {
   );
 };
 
-export default Socat;
+export default SoCat;

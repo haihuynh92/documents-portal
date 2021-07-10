@@ -1,21 +1,20 @@
-import { yupResolver } from '@hookform/resolvers/yup';
-import { capNhatMH, danhSachTatCaMaHang, themMH, XoaMH } from 'actions/mahang';
+import { capNhatSC, danhSachSoCat, themSC, timKiemSC, XoaSC } from 'actions/socat';
 import { DatePicker, Pagination, Select } from "antd";
 import Empty from 'components/common/Empty/Empty';
-import Search from 'components/common/Search/Search';
+import ErrorMsg from 'components/common/ErrorMsg/ErrorMsg';
+import _ from 'lodash';
 import moment from 'moment';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Col, Form, Modal, Row, Table } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import './socat.scss';
 import SCItem from './SCItem';
-import { themSC, XoaSC } from 'actions/socat';
-import ErrorMsg from 'components/common/ErrorMsg/ErrorMsg';
+import './socat.scss';
+
 const { Option } = Select;
 
 const DanhSachMH = (props) => {
-  const { DSSC, infoPag, DSMaHang, DSCoSoMay, handlePaging, onSearchMH } = props;
+  const { DSSC, infoPag, DSMaHang, DSCoSoMay, handlePaging } = props;
   const dispatch = useDispatch();
   const dateNow = moment().format('DD/MM/YYYY hh:mm:ss');
   const [valDefault, setValDefault] = useState({
@@ -83,11 +82,11 @@ const DanhSachMH = (props) => {
       ghichu: data.ghichu
     });
     if (!!valDefault?.id) {
-      // data.id = valDefault.id;
-      // dispatch(capNhatMH(data, {
-      //   page: 1,
-      //   limit: infoPag?._limit
-      // }));
+      dispatch(capNhatSC(valDefault, {
+        page: 1,
+        limit: infoPag?._limit
+      }));
+      handleClose();
     } else {
       if (!!valDefault?.mahangId && !!valDefault?.cosomayId) {
         dispatch(themSC(valDefault, {
@@ -101,20 +100,20 @@ const DanhSachMH = (props) => {
     }
   }
 
-  // // get detail
-  // const onGetDetailMH = (detail) => {
-  //   setValDefault({
-  //     id: detail.id,
-  //     mahang: detail.mahang.trim(),
-  //     tenhang: detail.tenhang.trim(),
-  //     giamay: detail.giamay.trim(),
-  //     gianhap: detail.gianhap.trim(),
-  //     giagiao: detail.giagiao.trim(),
-  //     ghichu: detail.ghichu.trim(),
-  //     ngaytao: dateNow
-  //   });
-  //   handleShow();
-  // }
+  // get detail
+  const onGetDetailSC = (detail) => {
+    setValDefault({
+      id: detail.id,
+      ngaycat: detail.ngaycat,
+      mahangId: detail.mahangId,
+      slcat: detail.slcat.trim(),
+      slgiao: detail.slgiao.trim(),
+      cosomayId: detail.cosomayId,
+      ghichu: detail.ghichu.trim(),
+      ngaytao: dateNow
+    });
+    setIsShow(true);
+  }
 
   // show danh sách sổ cắt
   const showDSSC = (list) => {
@@ -130,7 +129,7 @@ const DanhSachMH = (props) => {
           listCSM={DSCoSoMay}
           listMH={DSMaHang}
           confirmDeleteSC={confirmDeleteSC}
-          // getDetailMH={onGetDetailMH}
+          getDetailSC={onGetDetailSC}
         />
       );
     });
@@ -143,7 +142,7 @@ const DanhSachMH = (props) => {
     let result = null;
     result = list.map((item, index) => {
       return (
-        <Option key={item.id} value={item.id}>[ {item.mahang} ] - {item.tenhang}</Option>
+        <Option key={item.id} value={item.id}>{item.mahang}</Option>
       );
     });
     return result;
@@ -154,7 +153,7 @@ const DanhSachMH = (props) => {
     let result = null;
     result = list.map((item, index) => {
       return (
-        <Option key={item.id} value={item.id}>[ {item.macs} ] - {item.tencs}</Option>
+        <Option key={item.id} value={item.id}>{item.tencs}</Option>
       );
     });
     return result;
@@ -195,12 +194,18 @@ const DanhSachMH = (props) => {
   }
 
   // change selete mã hàng
+  const [chiTietMaHang, setChiTietMaHang] = useState([]);
   const onChangeSelectMahang = (value) => {
     setValDefault({
       ...valDefault,
       mahangId: value
     });
   }
+  
+  // show tên hàng sau khi chọn mã hàng
+  useEffect(() => {
+    setChiTietMaHang(_.filter(DSMaHang, (x) => {return x.id === valDefault?.mahangId}));
+  }, [DSMaHang, valDefault?.mahangId]);
 
   // change select cơ sở may
   const onChangeSelectCSM = (value) => {
@@ -210,6 +215,40 @@ const DanhSachMH = (props) => {
     });
   }
 
+  // tìm kiếm mã hàng, cơ sở may, ngày cắt
+  const [dataSearchForm, setDataSearchForm] = useState({
+    mahangId: '',
+    cosomayId: ''
+  });
+  
+  const onChangeSearchMahang = (value) => {
+    setDataSearchForm({
+      ...dataSearchForm,
+      mahangId: value
+    });
+  }
+
+  const onChangeSearchCSM = (value) => {
+    setDataSearchForm({
+      ...dataSearchForm,
+      cosomayId: value
+    });
+  }
+  
+  const searchSC = () => {
+    dispatch(timKiemSC(dataSearchForm, {
+      page: 1,
+      limit: infoPag?._limit
+    }));
+  }
+
+  // const refreshControl = () => {
+  //   dispatch(danhSachSoCat({
+  //     page: 1,
+  //     limit: infoPag?._limit
+  //   }));
+  // }
+
   return (
     <div className="list-default">
       <div className="title-heading d-flex-between">
@@ -217,16 +256,66 @@ const DanhSachMH = (props) => {
           <i className="fa fa-list-alt mr-2" aria-hidden="true"></i>
           Danh sách sổ cắt
         </p>
-        <div className="d-flex-between">
-          {/* <Search
-            onSearch={onSearchMH}
-            placeholder="Tìm kiếm tên hàng ..."
-          /> */}
-          <Button variant="success" size="sm" className="btn-add ml-5" onClick={handleShow}>
+        <div className="d-flex-between align-items-flex-end">
+          <div className="search-socat">
+            <Row>
+              <Col sm="4">
+                <Form.Group>
+                  <div className="select-custom">
+                    <Select
+                      showSearch
+                      placeholder="Tìm mã hàng"
+                      optionFilterProp="children"
+                      filterOption={(input, option) =>
+                        option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                      }
+                      filterSort={(optionA, optionB) =>
+                        optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
+                      }
+                      onChange={onChangeSearchMahang}
+                    >
+                      {showDSMaHang(DSMaHang)}
+                    </Select>
+                  </div>
+                </Form.Group>
+              </Col>
+
+              <Col sm="4">
+                <div className="select-custom">
+                  <Select
+                    showSearch
+                    placeholder="Tìm cơ sở may"
+                    optionFilterProp="children"
+                    filterOption={(input, option) =>
+                      option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                    }
+                    filterSort={(optionA, optionB) =>
+                      optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
+                    }
+                    onChange={onChangeSearchCSM}
+                  >
+                    {showDSCoSoMay(DSCoSoMay)}
+                  </Select>
+                </div>
+              </Col>
+
+            </Row>
+
+            <Button variant="default" onClick={searchSC} className="btn-search" title="Tìm kiếm">
+              <i className="fa fa-search" aria-hidden="true"></i>
+            </Button>
+            {/* <Button variant="default" onClick={refreshControl} className="btn-refresh" title="Làm mới Table">
+              <i className="fa fa-refresh" aria-hidden="true"></i>
+            </Button> */}
+          </div>
+          
+          <Button variant="success" size="sm" className="btn-add ml-3" onClick={handleShow}>
             <i className="fa fa-plus mr-2" aria-hidden="true"></i>
             Thêm
           </Button>
+
         </div>
+
         <Modal
           show={isShow}
           onHide={handleClose}
@@ -249,20 +338,20 @@ const DanhSachMH = (props) => {
                         placeholder="Chọn ngày cắt"
                         inputReadOnly={true}
                         disabledDate={disabledDate}
-                        defaultValue={moment(new Date())} format="DD/MM/YYYY"
+                        defaultValue={moment(`${!!valDefault?.ngaycat ? valDefault?.ngaycat : new Date()}`, 'DD/MM/YYYY')}
+                        format="DD/MM/YYYY"
                         onChange={onChangeDate}
                       />
                     </div>
                   </Form.Group>
                 </Col>
 
-                <Col sm="6">
+                <Col sm="3">
                   <Form.Group>
                     <Form.Label>Mã hàng <span>*</span></Form.Label>
                     <div className={`select-custom mt-2 ${(isError && !valDefault?.mahangId) ? 'invalid' : ''}`}>
                       <Select
                         showSearch
-                        placeholder="Tìm kiếm mã hàng"
                         optionFilterProp="children"
                         filterOption={(input, option) =>
                           option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -271,11 +360,19 @@ const DanhSachMH = (props) => {
                           optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
                         }
                         onChange={onChangeSelectMahang}
+                        defaultValue={`${!!valDefault?.mahangId ? valDefault?.mahangId : 'Tìm kiếm mã hàng'}`}
                       >
                         {showDSMaHang(DSMaHang)}
                       </Select>
                     </div>
                     {isError && !valDefault?.mahangId && <ErrorMsg msgError="Chưa chọn mã hàng" />}
+                  </Form.Group>
+                </Col>
+
+                <Col sm="6">
+                  <Form.Group>
+                    <Form.Label>Tên hàng</Form.Label>
+                    <p className="mt-2 text-readonly">{chiTietMaHang[0]?.tenhang}</p>
                   </Form.Group>
                 </Col>
 
@@ -288,7 +385,7 @@ const DanhSachMH = (props) => {
                     <span className="prefix">Cái</span>
                     <Form.Control
                       type="text"
-                      placeholder="Nhập sl"
+                      placeholder="Nhập SL"
                       name="slcat"
                       autoComplete="off"
                       ref={register}
@@ -305,7 +402,7 @@ const DanhSachMH = (props) => {
                     <span className="prefix">Cái</span>
                     <Form.Control
                       type="text"
-                      placeholder="Nhập sl"
+                      placeholder="Nhập SL"
                       name="slgiao"
                       autoComplete="off"
                       ref={register}
@@ -322,7 +419,6 @@ const DanhSachMH = (props) => {
                     <div className={`select-custom mt-2 ${(isError && !valDefault?.cosomayId) ? 'invalid' : ''}`}>
                       <Select
                         showSearch
-                        placeholder="Tìm kiếm cơ sở may"
                         optionFilterProp="children"
                         filterOption={(input, option) =>
                           option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -331,6 +427,7 @@ const DanhSachMH = (props) => {
                           optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
                         }
                         onChange={onChangeSelectCSM}
+                        defaultValue={`${!!valDefault?.cosomayId ? valDefault?.cosomayId : 'Tìm kiếm cơ sở may'}`}
                       >
                         {showDSCoSoMay(DSCoSoMay)}
                       </Select>
@@ -377,11 +474,11 @@ const DanhSachMH = (props) => {
                 <th className="th-stt text-center">STT</th>
                 <th className="text-center th-date">Ngày cắt</th>
                 <th className="th-ma text-center">Mã hàng</th>
-                <th>Tên hàng</th>
+                <th className="th-min">Tên hàng</th>
                 <th className="th-sl text-center">SL cắt</th>
                 <th className="th-sl text-center">SL giao</th>
                 <th className="th-tencs text-center">Cơ sở may</th>
-                <th>Ghi chú</th>
+                <th className="th-min">Ghi chú</th>
                 <th className="text-center th-action">Hành động</th>
               </tr>
             </thead>
