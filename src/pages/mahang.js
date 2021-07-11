@@ -14,7 +14,7 @@ const Mahang = () => {
     page: 1,
     limit: 2
   });
-
+  const [keySearch, seKeySearch] = useState('');
   const handlePaging = (currPage) => {
     setPagingState({
       ...pagingState,
@@ -23,15 +23,24 @@ const Mahang = () => {
   };
 
   useEffect(() => {
-    dispatch(danhSachMaHang(pagingState));
-  }, [dispatch, pagingState]);
+    if (!keySearch) {
+      dispatch(danhSachMaHang(pagingState));
+    } else {
+      dispatch(timKiemTH(keySearch, pagingState));
+    }
+  }, [dispatch, pagingState, keySearch]);
 
-  const onSearchMaHang = (keySearch) => {
-    dispatch(timKiemTH(keySearch, {
-      page: 1,
-      limit: DSMahang.data.pagination?._limit
-    }));
+  const onSearchMaHang = (value) => {
+    seKeySearch(value);
   }
+  useEffect(() => {
+    if (!!keySearch) {
+      dispatch(timKiemTH(keySearch, {
+        page: 1,
+        limit: pagingState.limit
+      }));
+    }
+  }, [dispatch, keySearch, pagingState.limit]);
 
   return (
     <div className="wrapper-container">

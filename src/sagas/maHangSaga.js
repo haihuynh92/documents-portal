@@ -2,7 +2,7 @@ import { capNhatMaHangApi, layDSMaHangApi, themMaHangApi, timKiemMaHangApi, xoaM
 import * as actionTypes from 'constant/actionTypes';
 import { hideLoading, showLoading } from 'reducers/loadingReducer';
 import { capNhatMH, DSMaHang, themMH, xoaMH } from 'reducers/maHangReducer';
-import { call, delay, put, select, takeLatest } from 'redux-saga/effects';
+import { call, delay, put, takeLatest } from 'redux-saga/effects';
 
 export function* layDSMH(action) {
   try {

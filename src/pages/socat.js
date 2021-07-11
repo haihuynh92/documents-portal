@@ -14,12 +14,12 @@ const SoCat = () => {
   const DSSoCat = useSelector((state) => state.soCatReduder);
   const DSMaHang = useSelector((state) => state.homeReducer.dsmahang);
   const DSCoSoMay = useSelector((state) => state.homeReducer.dscosomay);
-  const pageLimit = {
+  
+  const [dataSearch, seDataSearch] = useState({});
+  const [pagingState, setPagingState] = useState({
     page: 1,
     limit: 2
-  }
-  
-  const [pagingState, setPagingState] = useState(pageLimit);
+  });
   const handlePaging = (currPage) => {
     setPagingState({
       ...pagingState,
@@ -33,32 +33,25 @@ const SoCat = () => {
   }, [dispatch]);
   
   useEffect(() => {
-    dispatch(danhSachSoCat(pagingState));
-  }, [dispatch, pagingState]);
+    if (!dataSearch.ngaycat && !dataSearch.mahangId) {
+      dispatch(danhSachSoCat(pagingState));
+    }
+    if (!!dataSearch.ngaycat || !!dataSearch.mahangId) {
+      dispatch(timKiemSC(dataSearch, pagingState));
+    }
+  }, [dispatch, pagingState, dataSearch]);
   
   // search pagination
-  const [dataSearch, seDataSearch] = useState({});
   const onSearchSoCat = (data) => {
     seDataSearch(data);
   }
-  const [pagingStateSearch, setPagingStateSearch] = useState(pageLimit);
-  const handlePagingSearch = (currPage) => {
-    setPagingStateSearch({
-      ...pagingState,
-      page: currPage
-    });
-  };
 
   useEffect(() => {
-    dispatch(timKiemSC(dataSearch, pagingStateSearch));
-  }, [dispatch, pagingStateSearch, dataSearch]);
-
-  const onRefreshSC = (value) => {
-    setPagingStateSearch(value);
-  }
-
-  
-
+    dispatch(timKiemSC(dataSearch, {
+      page: 1,
+      limit: pagingState.limit
+    }));
+  }, [dispatch, dataSearch, pagingState.limit]);
 
   return (
     <div className="wrapper-container">
@@ -74,9 +67,7 @@ const SoCat = () => {
               DSSC={DSSoCat.data}
               infoPag={DSSoCat.data.pagination}
               handlePaging={handlePaging}
-              handlePagingSearch={handlePagingSearch}
               onSearchSC={onSearchSoCat}
-              onRefreshSC={onRefreshSC}
             />
           </Container>
         </div>

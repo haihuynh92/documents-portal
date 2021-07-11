@@ -3,7 +3,7 @@ import * as actionTypes from 'constant/actionTypes';
 import moment from 'moment';
 import { hideLoading, showLoading } from 'reducers/loadingReducer';
 import { capNhatSC, DSSoCat, themSC, xoaSC } from 'reducers/soCatReducer';
-import { call, delay, put, select, takeLatest } from 'redux-saga/effects';
+import { call, delay, put, takeLatest } from 'redux-saga/effects';
 
 export function* layDSSC(action) {
   try {

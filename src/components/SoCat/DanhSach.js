@@ -1,4 +1,4 @@
-import { capNhatSC, danhSachSoCat, themSC, XoaSC } from 'actions/socat';
+import { capNhatSC, themSC, XoaSC } from 'actions/socat';
 import { DatePicker, Pagination, Select } from "antd";
 import Empty from 'components/common/Empty/Empty';
 import ErrorMsg from 'components/common/ErrorMsg/ErrorMsg';
@@ -15,7 +15,7 @@ import './socat.scss';
 const { Option } = Select;
 
 const DanhSachMH = (props) => {
-  const { DSSC, infoPag, DSMaHang, DSCoSoMay, handlePaging, handlePagingSearch, onSearchSC, onRefreshSC } = props;
+  const { DSSC, infoPag, DSMaHang, DSCoSoMay, handlePaging, onSearchSC } = props;
   const dispatch = useDispatch();
   const dateNow = moment().format('DD/MM/YYYY hh:mm:ss');
   const [valDefault, setValDefault] = useState({
@@ -248,6 +248,7 @@ const DanhSachMH = (props) => {
       ...selected,
       ngaycat: value
     });
+    handlePaging(1);
   }
 
   const refreshControl = () => {
@@ -255,18 +256,11 @@ const DanhSachMH = (props) => {
       ngaycat: '',
       mahangId: ''
     });
-    dispatch(danhSachSoCat({
-      page: 1,
-      limit: infoPag?._limit
-    }));
+    handlePaging(1);
   }
   useEffect(() => {
     onSearchSC(selected);
-    onRefreshSC({
-      page: 1,
-      limit: infoPag?._limit
-    });
-  }, [dispatch, selected]);
+  }, [dispatch, selected, onSearchSC]);
 
 
   return (
@@ -500,7 +494,7 @@ const DanhSachMH = (props) => {
           </Table> : <Empty />
         }
       </div>
-      {!selected.ngaycat && !selected.mahangId && DSSC.data && !!DSSC.data.length &&
+      {DSSC.data && !!DSSC.data.length &&
         <Pagination
           defaultPageSize={infoPag?._limit}
           className="pagination pagination-custom"
@@ -513,7 +507,7 @@ const DanhSachMH = (props) => {
         />
       }
 
-      {(!!selected.ngaycat || !!selected.mahangId) && DSSC.data && !!DSSC.data.length &&
+      {/* {(!!selected.ngaycat || !!selected.mahangId) && DSSC.data && !!DSSC.data.length &&
         <Pagination
           defaultPageSize={infoPag?._limit}
           className="pagination pagination-custom"
@@ -524,7 +518,7 @@ const DanhSachMH = (props) => {
           current={infoPag?._page}
           showTitle={false}
         />
-      }
+      } */}
 
       <Modal
         show={isShowDelete}

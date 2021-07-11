@@ -3,7 +3,7 @@ import { Button, Form } from 'react-bootstrap';
 import './Search.scss';
 
 const Search = (props) => {
-  const { onSearch } = props;
+  const { onSearch, handlePaging } = props;
   const [searchTerm, setSearchTerm] = useState('');
   const searchRef = useRef(null);
 
@@ -14,14 +14,12 @@ const Search = (props) => {
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && !!searchTerm) {
       onSearch(searchTerm);
-      setSearchTerm('');
     }
   }
   
   const submitKey = () => {
     if (!!searchTerm) {
       onSearch(searchTerm);
-      setSearchTerm('');
     } else {
       searchRef.current.focus();
     }
@@ -30,6 +28,7 @@ const Search = (props) => {
   const refreshControl = () => {
     onSearch('');
     setSearchTerm('');
+    handlePaging(1);
   }
   
   return (

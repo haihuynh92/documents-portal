@@ -153,7 +153,7 @@ const DanhSachMH = (props) => {
           Danh sách mã hàng
         </p>
         <div className="d-flex-between align-items-flex-end">
-          <Search onSearch={onSearchMH} />
+          <Search onSearch={onSearchMH} handlePaging={handlePaging} />
           <Button variant="success" size="sm" className="btn-add ml-3" onClick={handleShow} >
             <i className="fa fa-plus mr-2" aria-hidden="true"></i>
             Thêm
