@@ -1,6 +1,6 @@
 import { danhSachTatCaCoSoMay } from "actions/cosomay";
 import { danhSachTatCaMaHang } from "actions/mahang";
-import { danhSachSoCat } from "actions/socat";
+import { danhSachSoCat, timKiemSC } from "actions/socat";
 import Footer from "components/common/Footer/Footer";
 import Header from "components/common/Header/Header";
 import SideBar from "components/common/SideBar/SideBar";
@@ -14,34 +14,51 @@ const SoCat = () => {
   const DSSoCat = useSelector((state) => state.soCatReduder);
   const DSMaHang = useSelector((state) => state.homeReducer.dsmahang);
   const DSCoSoMay = useSelector((state) => state.homeReducer.dscosomay);
-  const [pagingState, setPagingState] = useState({
+  const pageLimit = {
     page: 1,
     limit: 2
-  });
-
+  }
+  
+  const [pagingState, setPagingState] = useState(pageLimit);
   const handlePaging = (currPage) => {
     setPagingState({
       ...pagingState,
       page: currPage
     });
   };
-  
+
   useEffect(() => {
     dispatch(danhSachTatCaMaHang());
     dispatch(danhSachTatCaCoSoMay());
   }, [dispatch]);
-
+  
   useEffect(() => {
     dispatch(danhSachSoCat(pagingState));
   }, [dispatch, pagingState]);
+  
+  // search pagination
+  const [dataSearch, seDataSearch] = useState({});
+  const onSearchSoCat = (data) => {
+    seDataSearch(data);
+  }
+  const [pagingStateSearch, setPagingStateSearch] = useState(pageLimit);
+  const handlePagingSearch = (currPage) => {
+    setPagingStateSearch({
+      ...pagingState,
+      page: currPage
+    });
+  };
 
+  useEffect(() => {
+    dispatch(timKiemSC(dataSearch, pagingStateSearch));
+  }, [dispatch, pagingStateSearch, dataSearch]);
 
-  // const onSearchMaHang = (keySearch) => {
-  //   dispatch(timKiemTH(keySearch, {
-  //     page: 1,
-  //     limit: DSMahang.data.pagination?._limit
-  //   }));
-  // }
+  const onRefreshSC = (value) => {
+    setPagingStateSearch(value);
+  }
+
+  
+
 
   return (
     <div className="wrapper-container">
@@ -57,7 +74,9 @@ const SoCat = () => {
               DSSC={DSSoCat.data}
               infoPag={DSSoCat.data.pagination}
               handlePaging={handlePaging}
-              // onSearchMH={onSearchMaHang}
+              handlePagingSearch={handlePagingSearch}
+              onSearchSC={onSearchSoCat}
+              onRefreshSC={onRefreshSC}
             />
           </Container>
         </div>

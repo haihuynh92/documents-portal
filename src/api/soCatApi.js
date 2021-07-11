@@ -17,11 +17,11 @@ export const xoaSoCatApi = (id) => {
 };
 
 export const timKiemSoCatApi = (dataSearch, pagination) => {
-  if (!!dataSearch.mahangId && !dataSearch.cosomayId) {
-    return axiosClient.get(`/socats?mahangId=${dataSearch.mahangId}&_order=desc&_page=${pagination.page}&_limit=${pagination.limit}`);
-  } else if (!!dataSearch.cosomayId && !dataSearch.mahangId) {
-    return axiosClient.get(`/socats?cosomayId=${dataSearch.cosomayId}&_order=desc&_page=${pagination.page}&_limit=${pagination.limit}`);
+  if (!!dataSearch.mahangId && !dataSearch.ngaycat) {
+    return axiosClient.get(`/socats?q=${dataSearch.mahangId}&_sort=ngaytao&_order=desc&_page=${pagination.page}&_limit=${pagination.limit}`);
+  } else if (!dataSearch.mahangId && !!dataSearch.ngaycat) {
+    return axiosClient.get(`/socats?q=${dataSearch.ngaycat}&_sort=ngaytao&_order=desc&_page=${pagination.page}&_limit=${pagination.limit}`);
   } else {
-    return axiosClient.get(`/socats?mahangId=${dataSearch.mahangId}&cosomayId=${dataSearch.cosomayId}&_order=desc&_page=${pagination.page}&_limit=${pagination.limit}`);
+    return axiosClient.get(`/socats?ngaycat=${dataSearch.ngaycat}&mahangId=${dataSearch.mahangId}&_sort=ngaytao&_order=desc&_page=${pagination.page}&_limit=${pagination.limit}`);
   }
 };

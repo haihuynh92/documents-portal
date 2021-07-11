@@ -1,4 +1,4 @@
-import { capNhatSC, danhSachSoCat, themSC, timKiemSC, XoaSC } from 'actions/socat';
+import { capNhatSC, danhSachSoCat, themSC, XoaSC } from 'actions/socat';
 import { DatePicker, Pagination, Select } from "antd";
 import Empty from 'components/common/Empty/Empty';
 import ErrorMsg from 'components/common/ErrorMsg/ErrorMsg';
@@ -6,6 +6,7 @@ import _ from 'lodash';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { Button, Col, Form, Modal, Row, Table } from 'react-bootstrap';
+import DatePickerEle from 'react-date-picker';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import SCItem from './SCItem';
@@ -14,7 +15,7 @@ import './socat.scss';
 const { Option } = Select;
 
 const DanhSachMH = (props) => {
-  const { DSSC, infoPag, DSMaHang, DSCoSoMay, handlePaging } = props;
+  const { DSSC, infoPag, DSMaHang, DSCoSoMay, handlePaging, handlePagingSearch, onSearchSC, onRefreshSC } = props;
   const dispatch = useDispatch();
   const dateNow = moment().format('DD/MM/YYYY hh:mm:ss');
   const [valDefault, setValDefault] = useState({
@@ -45,6 +46,10 @@ const DanhSachMH = (props) => {
     });
   };
   const handleShow = () => {
+    setSelected({
+      ngaycat: '',
+      mahangId: ''
+    });
     setValDefault({
       ...valDefault,
       ngaycat: moment().format('DD/MM/YYYY'),
@@ -112,6 +117,10 @@ const DanhSachMH = (props) => {
       ghichu: detail.ghichu.trim(),
       ngaytao: dateNow
     });
+    setSelected({
+      ngaycat: '',
+      mahangId: ''
+    });
     setIsShow(true);
   }
 
@@ -165,7 +174,13 @@ const DanhSachMH = (props) => {
   const [detailMH, setDetailMH] = useState({});
   
   const handleCloseDelete = () => setIsShowDelete(false);
-  const handleShowDelete = () => setIsShowDelete(true);
+  const handleShowDelete = () => {
+    setSelected({
+      ngaycat: '',
+      mahangId: ''
+    });
+    setIsShowDelete(true);
+  }
 
   const confirmDeleteSC = (item, detailMH) => {
     if(!!detailMH.length) {
@@ -176,7 +191,7 @@ const DanhSachMH = (props) => {
   }
   const onDeleteMH = () => {
     dispatch(XoaSC(itemDelete.id, {
-      page: infoPag?._page,
+      page: 1,
       limit: infoPag?._limit
     }));
     handleCloseDelete();
@@ -215,39 +230,44 @@ const DanhSachMH = (props) => {
     });
   }
 
-  // tìm kiếm mã hàng, cơ sở may, ngày cắt
-  const [dataSearchForm, setDataSearchForm] = useState({
-    mahangId: '',
-    cosomayId: ''
+  // tìm kiếm mã hàng, ngày cắt
+  const [selected, setSelected] = useState({
+    ngaycat: '',
+    mahangId: ''
   });
-  
-  const onChangeSearchMahang = (value) => {
-    setDataSearchForm({
-      ...dataSearchForm,
+
+  const onChangeSearchMaHang = (value) => {
+    setSelected({
+      ...selected,
       mahangId: value
     });
   }
 
-  const onChangeSearchCSM = (value) => {
-    setDataSearchForm({
-      ...dataSearchForm,
-      cosomayId: value
+  const onChangeDateSearch = (value) => {
+    setSelected({
+      ...selected,
+      ngaycat: value
     });
   }
-  
-  const searchSC = () => {
-    dispatch(timKiemSC(dataSearchForm, {
+
+  const refreshControl = () => {
+    setSelected({
+      ngaycat: '',
+      mahangId: ''
+    });
+    dispatch(danhSachSoCat({
       page: 1,
       limit: infoPag?._limit
     }));
   }
+  useEffect(() => {
+    onSearchSC(selected);
+    onRefreshSC({
+      page: 1,
+      limit: infoPag?._limit
+    });
+  }, [dispatch, selected]);
 
-  // const refreshControl = () => {
-  //   dispatch(danhSachSoCat({
-  //     page: 1,
-  //     limit: infoPag?._limit
-  //   }));
-  // }
 
   return (
     <div className="list-default">
@@ -259,12 +279,26 @@ const DanhSachMH = (props) => {
         <div className="d-flex-between align-items-flex-end">
           <div className="search-socat">
             <Row>
-              <Col sm="4">
+              <Col sm="6">
+                <Form.Group>
+                  <div className="datepicker-custom">
+                    <DatePickerEle
+                      className={`${!!selected.ngaycat ? 'isValue' : ''}`}
+                      onChange={onChangeDateSearch}
+                      value={!!selected.ngaycat ? selected.ngaycat : ''}
+                      format="dd/MM/y"
+                      maxDate={new Date()}
+                    />
+                  </div>
+                </Form.Group>
+              </Col>
+
+              <Col sm="6">
                 <Form.Group>
                   <div className="select-custom">
                     <Select
                       showSearch
-                      placeholder="Tìm mã hàng"
+                      value={!!selected.mahangId ? selected.mahangId : 'Tìm mã hàng'}
                       optionFilterProp="children"
                       filterOption={(input, option) =>
                         option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -272,7 +306,7 @@ const DanhSachMH = (props) => {
                       filterSort={(optionA, optionB) =>
                         optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
                       }
-                      onChange={onChangeSearchMahang}
+                      onChange={onChangeSearchMaHang} 
                     >
                       {showDSMaHang(DSMaHang)}
                     </Select>
@@ -280,33 +314,11 @@ const DanhSachMH = (props) => {
                 </Form.Group>
               </Col>
 
-              <Col sm="4">
-                <div className="select-custom">
-                  <Select
-                    showSearch
-                    placeholder="Tìm cơ sở may"
-                    optionFilterProp="children"
-                    filterOption={(input, option) =>
-                      option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                    }
-                    filterSort={(optionA, optionB) =>
-                      optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
-                    }
-                    onChange={onChangeSearchCSM}
-                  >
-                    {showDSCoSoMay(DSCoSoMay)}
-                  </Select>
-                </div>
-              </Col>
-
             </Row>
 
-            <Button variant="default" onClick={searchSC} className="btn-search" title="Tìm kiếm">
-              <i className="fa fa-search" aria-hidden="true"></i>
-            </Button>
-            {/* <Button variant="default" onClick={refreshControl} className="btn-refresh" title="Làm mới Table">
+            <Button variant="default" onClick={refreshControl} className="btn-refresh" title="Làm mới Table">
               <i className="fa fa-refresh" aria-hidden="true"></i>
-            </Button> */}
+            </Button>
           </div>
           
           <Button variant="success" size="sm" className="btn-add ml-3" onClick={handleShow}>
@@ -488,7 +500,7 @@ const DanhSachMH = (props) => {
           </Table> : <Empty />
         }
       </div>
-      {DSSC.data && !!DSSC.data.length &&
+      {!selected.ngaycat && !selected.mahangId && DSSC.data && !!DSSC.data.length &&
         <Pagination
           defaultPageSize={infoPag?._limit}
           className="pagination pagination-custom"
@@ -496,6 +508,19 @@ const DanhSachMH = (props) => {
           total={infoPag?._totalRows}
           showSizeChanger={false}
           onChange={handlePaging}
+          current={infoPag?._page}
+          showTitle={false}
+        />
+      }
+
+      {(!!selected.ngaycat || !!selected.mahangId) && DSSC.data && !!DSSC.data.length &&
+        <Pagination
+          defaultPageSize={infoPag?._limit}
+          className="pagination pagination-custom"
+          size="small"
+          total={infoPag?._totalRows}
+          showSizeChanger={false}
+          onChange={handlePagingSearch}
           current={infoPag?._page}
           showTitle={false}
         />

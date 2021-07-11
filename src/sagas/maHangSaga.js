@@ -60,20 +60,11 @@ export function* xoaMaHang(action) {
   try {
     yield put(showLoading());
     const result = yield call(xoaMaHangApi, payload.id);
-
+    const res = yield call(layDSMaHangApi, payload.pagingState);
     if (result.status === 200) {
-      yield layDSMH(payload);
-      const listMH = yield select((state) => state.maHangReducer);
-      if (!listMH.data.data.length) {
-        yield layDSMH({
-          pagingState: {
-            page: 1,
-            limit: listMH.data.pagination._limit
-          }
-        });
-      }
       yield delay(1000);
       yield put(hideLoading());
+      yield put(DSMaHang(res.data));
       yield put(xoaMH());
     }
   } catch (error) {
