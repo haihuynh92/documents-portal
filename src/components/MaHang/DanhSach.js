@@ -138,7 +138,7 @@ const DanhSachMH = (props) => {
   }
   const onDeleteMH = () => {
     dispatch(XoaMH(itemDelete.id, {
-      page: infoPag?._page,
+      page: 1,
       limit: infoPag?._limit
     }));
     handleCloseDelete();

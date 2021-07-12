@@ -15,7 +15,7 @@ import './socat.scss';
 const { Option } = Select;
 
 const DanhSachMH = (props) => {
-  const { DSSC, infoPag, DSMaHang, DSCoSoMay, handlePaging, onSearchSC } = props;
+  const { DSSC, infoPag, DSMaHang, DSCoSoMay, handlePaging, onSearchSC, isLoadData } = props;
   const dispatch = useDispatch();
   const dateNow = moment().format('DD/MM/YYYY hh:mm:ss');
   const [valDefault, setValDefault] = useState({
@@ -32,6 +32,7 @@ const DanhSachMH = (props) => {
   const [isShow, setIsShow] = useState(false);
   
   const handleClose = () => {
+    isLoadData(true);
     setIsShow(false);
     setIsError(false);
     setValDefault({
@@ -46,6 +47,7 @@ const DanhSachMH = (props) => {
     });
   };
   const handleShow = () => {
+    isLoadData(false);
     setSelected({
       ngaycat: '',
       mahangId: ''
@@ -121,6 +123,7 @@ const DanhSachMH = (props) => {
       ngaycat: '',
       mahangId: ''
     });
+    isLoadData(false);
     setIsShow(true);
   }
 
@@ -171,12 +174,16 @@ const DanhSachMH = (props) => {
   const [itemDelete, setItemDelete] = useState({});
   const [detailMH, setDetailMH] = useState({});
   
-  const handleCloseDelete = () => setIsShowDelete(false);
+  const handleCloseDelete = () => {
+    isLoadData(true);
+    setIsShowDelete(false);
+  }
   const handleShowDelete = () => {
     setSelected({
       ngaycat: '',
       mahangId: ''
     });
+    isLoadData(false);
     setIsShowDelete(true);
   }
 

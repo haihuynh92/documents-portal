@@ -1,14 +1,16 @@
+import { danhSachTatCaMaHang } from "actions/mahang";
 import Footer from "components/common/Footer/Footer";
 import Header from "components/common/Header/Header";
 import SideBar from "components/common/SideBar/SideBar";
 import DanhSach from "components/KhachSo1/DanhSach";
-import React from "react";
+import React, { useEffect } from "react";
 import { Container } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 
 const QuanLyKhachSo1 = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // const DSSoCat = useSelector((state) => state.soCatReduder);
-  // const DSMaHang = useSelector((state) => state.homeReducer.dsmahang);
+  const DSMaHang = useSelector((state) => state.homeReducer.dsmahang);
   // const DSCoSoMay = useSelector((state) => state.homeReducer.dscosomay);
   
   // const [dataSearch, seDataSearch] = useState({});
@@ -23,10 +25,10 @@ const QuanLyKhachSo1 = () => {
   //   });
   // };
 
-  // useEffect(() => {
-  //   dispatch(danhSachTatCaMaHang());
-  //   dispatch(danhSachTatCaCoSoMay());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(danhSachTatCaMaHang());
+    // dispatch(danhSachTatCaCoSoMay());
+  }, [dispatch]);
   
   // useEffect(() => {
   //   if (!dataSearch.ngaycat && !dataSearch.mahangId) {
@@ -58,7 +60,7 @@ const QuanLyKhachSo1 = () => {
         <div className="outer">
           <Container fluid>
             <DanhSach
-              // DSMaHang={DSMaHang}
+              DSMaHang={DSMaHang}
               // DSCoSoMay={DSCoSoMay}
               // DSSC={DSSoCat.data}
               // infoPag={DSSoCat.data.pagination}

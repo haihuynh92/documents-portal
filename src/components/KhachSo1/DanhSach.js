@@ -1,25 +1,128 @@
-import React, { useState } from 'react';
-import { Button, Form, Modal, Table } from 'react-bootstrap';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { DatePicker, Select } from 'antd';
+import ErrorMsg from 'components/common/ErrorMsg/ErrorMsg';
+import _ from 'lodash';
+import moment from 'moment';
+import React, { useEffect, useState } from 'react';
+import { Button, Col, Form, Modal, Row, Table } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
+
+const { Option } = Select;
 
 const DanhSachMH = (props) => {
-  const { register, handleSubmit } = useForm({
-    mode: 'onSubmit'
+  const { DSSC, infoPag, DSMaHang, DSCoSoMay, handlePaging, onSearchSC } = props;
+
+  let formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'VND',
+  });
+
+  const [isError, setIsError] = useState(false);
+
+  let validationSchema = yup.object().shape({
+    slgiao: yup.string().required('SL giao bắt buộc')
+  });
+  const { register, handleSubmit, errors } = useForm({
+    mode: 'onSubmit',
+    resolver: yupResolver(validationSchema)
   });
   const [valDefault, setValDefault] = useState({
     id: '',
-    ngaytao: ''
+    ngaygiao: '',
+    mahangId: '',
+    slgiao: '',
+    slhu: '',
+    ghichu: '',
+    ngaytao: '',
+    thongtin: 'giaohang'
   });
   const [isShow, setIsShow] = useState(false);
   const handleClose = () => {
     setIsShow(false);
+    setIsError(false);
+    setValDefault({
+      id: '',
+      ngaygiao: '',
+      mahangId: '',
+      slgiao: '',
+      slhu: '',
+      ghichu: '',
+      ngaytao: '',
+      thongtin: 'giaohang'
+    });
   };
   const handleShow = () => {
     setIsShow(true);
   }
 
-  const luuThongTinGiaoHang = (data) => {
+  const disabledDate = (current) => {
+    return current > moment().endOf('day');
+  }
+  const onChangeDate = (date, dateString) => {
+    setValDefault({
+      ...valDefault,
+      ngaygiao: dateString
+    });
+  }
 
+  // input change
+  const handleChange = (e) => {
+    setValDefault({
+      ...valDefault,
+      [e.target.name]: e.target.value
+    });
+  }
+
+  // handleKeyPress
+  const handleKeyPress = (e) => {
+    if (e.which < 48 || e.which > 57) {
+      if (e.which !== 46) e.preventDefault();
+    } 
+  };
+
+  // change selete mã hàng
+  const [chiTietMaHang, setChiTietMaHang] = useState([]);
+  const onChangeSelectMahang = (value) => {
+    setValDefault({
+      ...valDefault,
+      mahangId: value
+    });
+  }
+  
+  // show tên hàng sau khi chọn mã hàng
+  useEffect(() => {
+    setChiTietMaHang(_.filter(DSMaHang, (x) => {return x.id === valDefault?.mahangId}));
+  }, [DSMaHang, valDefault?.mahangId]);
+
+  // show danh sách mã hàng vào dropdown
+  const showDSMaHang = (list) => {
+    let result = null;
+    result = list.map((item, index) => {
+      return (
+        <Option key={item.id} value={item.id}>{item.mahang}</Option>
+      );
+    });
+    return result;
+  }
+
+
+
+
+
+
+
+
+
+  const luuThongTinGiaoHang = (data) => {
+    console.log(data);
+    if (!!valDefault?.id) {
+    } else {
+      if (!!valDefault?.mahangId) {
+      } else {
+        setIsError(true);
+      }
+    }
   }
 
   return (
@@ -55,7 +158,122 @@ const DanhSachMH = (props) => {
           </Modal.Header>
           <Modal.Body>
             <Form onSubmit={handleSubmit(luuThongTinGiaoHang)}>
+              <Row>
+                <Col sm="3">
+                  <Form.Group controlId="ngaygiao">
+                    <Form.Label>Ngày giao</Form.Label>
+                    <div className="datepicker-custom mt-2">
+                      <DatePicker
+                        placeholder="Chọn ngày giao"
+                        inputReadOnly={true}
+                        disabledDate={disabledDate}
+                        defaultValue={moment()}
+                        format="DD/MM/YYYY"
+                        onChange={onChangeDate}
+                      />
+                    </div>
+                  </Form.Group>
+                </Col>
 
+                <Col sm="3">
+                  <Form.Group>
+                    <Form.Label>Mã hàng <span>*</span></Form.Label>
+                    <div className={`select-custom mt-2 ${(isError && !valDefault?.mahangId) ? 'invalid' : ''}`}>
+                      <Select
+                        showSearch
+                        optionFilterProp="children"
+                        filterOption={(input, option) =>
+                          option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        }
+                        filterSort={(optionA, optionB) =>
+                          optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
+                        }
+                        onChange={onChangeSelectMahang}
+                        defaultValue={`${!!valDefault?.mahangId ? valDefault?.mahangId : 'Tìm kiếm mã hàng'}`}
+                      >
+                        {showDSMaHang(DSMaHang)}
+                      </Select>
+                    </div>
+                    {isError && !valDefault?.mahangId && <ErrorMsg msgError="Chưa chọn mã hàng" />}
+                  </Form.Group>
+                </Col>
+
+                <Col sm="6">
+                  <Form.Group>
+                    <Form.Label>Tên hàng</Form.Label>
+                    <p className="mt-2 text-readonly">{chiTietMaHang[0]?.tenhang}</p>
+                  </Form.Group>
+                </Col>
+
+              </Row>
+              
+              <Row>
+                <Col sm="3">
+                  <Form.Group controlId="slgiao">
+                    <Form.Label>Số lượng giao <span>*</span></Form.Label>
+                    <span className="prefix">Cái</span>
+                    <Form.Control
+                      type="text"
+                      placeholder="Nhập SL"
+                      name="slgiao"
+                      autoComplete="off"
+                      ref={register}
+                      onChange={handleChange}
+                      onKeyPress={handleKeyPress}
+                      defaultValue={valDefault.slgiao}
+                      className={`${errors?.slgiao ? 'invalid' : ''}`}
+                    />
+                    {errors?.slgiao?.type === 'required' && <ErrorMsg msgError={errors?.slgiao?.message} />}
+                  </Form.Group>
+                </Col>
+
+                <Col sm="3">
+                  <Form.Group controlId="slhu">
+                    <Form.Label>Số lượng hư</Form.Label>
+                    <span className="prefix">Cái</span>
+                    <Form.Control
+                      type="text"
+                      placeholder="Nhập SL"
+                      name="slhu"
+                      autoComplete="off"
+                      ref={register}
+                      onChange={handleChange}
+                      onKeyPress={handleKeyPress}
+                      defaultValue={valDefault.slhu}
+                    />
+                  </Form.Group>
+                </Col>
+
+                <Col sm="3">
+                  <Form.Group>
+                    <Form.Label>Giá giao</Form.Label>
+                    <p className="mt-2 text-readonly">{chiTietMaHang[0]?.giagiao ? formatter.format(chiTietMaHang[0]?.giagiao) : '0'}</p>
+                  </Form.Group>
+                </Col>
+
+              </Row>
+              <Row>
+                <Col>
+                  <Form.Group controlId="ghichu">
+                    <Form.Label>Ghi chú</Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      placeholder="Nhập ghi chú..."
+                      name="ghichu"
+                      autoComplete="off"
+                      ref={register}
+                      onChange={handleChange}
+                      maxLength={250}
+                      defaultValue={valDefault.ghichu}
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>
+              
+              
+              
+              
+              
               <div className="group-control text-right">
                 <Button variant="secondary" size="sm" onClick={handleClose}>
                   Hủy
