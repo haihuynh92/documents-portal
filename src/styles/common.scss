@@ -392,18 +392,21 @@ button {
     vertical-align: middle;
   }
   .th-stt {width: 40px;}
-  .th-ma {
-    max-width: 110px;
-    min-width: 110px;
-    width: 110px;
-  }
-  .th-action, .th-sl {
+  .th-action, .th-sl, .th-date {
     max-width: 100px;
     min-width: 100px;
     width: 100px;
   }
-  .th-min {
+  .th-min {min-width: 150px;}
+  .th-tencs {
+    max-width: 150px;
     min-width: 150px;
+    width: 150px;
+  }
+  .th-gia, .th-ma {
+    max-width: 120px;
+    min-width: 120px;
+    width: 120px;
   }
   .button-control {
     padding: 5px;

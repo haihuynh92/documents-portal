@@ -132,9 +132,7 @@ const DanhSachMH = (props) => {
       return (
         <SCItem
           key={item.id}
-          index={index}
           item={item}
-          currPage={list.pagination?._page}
           listCSM={DSCoSoMay}
           listMH={DSMaHang}
           confirmDeleteSC={confirmDeleteSC}
@@ -316,7 +314,7 @@ const DanhSachMH = (props) => {
           </div>
           
           <Button variant="success" size="sm" className="btn-add ml-3" onClick={handleShow}>
-            <i className="fa fa-plus mr-2" aria-hidden="true"></i>
+            <i className="fa fa-plus mr-1" aria-hidden="true"></i>
             Thêm
           </Button>
 
@@ -477,7 +475,6 @@ const DanhSachMH = (props) => {
           <Table striped bordered hover responsive variant="dark" className="custom-table table-socat">
             <thead>
               <tr>
-                <th className="th-stt text-center">STT</th>
                 <th className="text-center th-date">Ngày cắt</th>
                 <th className="th-ma text-center">Mã hàng</th>
                 <th className="th-min">Tên hàng</th>
@@ -506,19 +503,6 @@ const DanhSachMH = (props) => {
           showTitle={false}
         />
       }
-
-      {/* {(!!selected.ngaycat || !!selected.mahangId) && DSSC.data && !!DSSC.data.length &&
-        <Pagination
-          defaultPageSize={infoPag?._limit}
-          className="pagination pagination-custom"
-          size="small"
-          total={infoPag?._totalRows}
-          showSizeChanger={false}
-          onChange={handlePagingSearch}
-          current={infoPag?._page}
-          showTitle={false}
-        />
-      } */}
 
       <Modal
         show={isShowDelete}

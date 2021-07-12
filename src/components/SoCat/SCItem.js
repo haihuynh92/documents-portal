@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 
 const SCItem = (props) => {
-  const { index, item, getDetailSC, confirmDeleteSC, currPage, listCSM, listMH } = props;
+  const { item, getDetailSC, confirmDeleteSC, listCSM, listMH } = props;
   const detailCSM = _.filter(listCSM, (x) => {return x.id === item?.cosomayId});
   const detailMH = _.filter(listMH, (x) => {return x.id === item?.mahangId});
 
@@ -16,7 +16,6 @@ const SCItem = (props) => {
 
   return (
     <tr>
-      <td className="text-center">{index + (currPage - 1) + currPage}</td>
       <td className="text-center">{item.ngaycat}</td>
       <td className="text-center">{detailMH.length && detailMH[0]?.mahang}</td>
       <td>{detailMH.length && detailMH[0]?.tenhang}</td>

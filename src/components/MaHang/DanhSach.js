@@ -10,7 +10,6 @@ import { Button, Col, Form, Modal, Row, Table } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
-import './mahang.scss';
 import MHItem from './MHItem';
 
 const DanhSachMH = (props) => {
@@ -155,7 +154,7 @@ const DanhSachMH = (props) => {
         <div className="d-flex-between align-items-flex-end">
           <Search onSearch={onSearchMH} handlePaging={handlePaging} />
           <Button variant="success" size="sm" className="btn-add ml-3" onClick={handleShow} >
-            <i className="fa fa-plus mr-2" aria-hidden="true"></i>
+            <i className="fa fa-plus mr-1" aria-hidden="true"></i>
             Thêm
           </Button>
         </div>

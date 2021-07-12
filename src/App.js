@@ -7,6 +7,7 @@ import LoginPage from 'pages/login';
 import DSMaHang from 'pages/mahang';
 import NotFoundPage from 'pages/notfound';
 import SoCat from 'pages/socat';
+import QuanLyKhachSo1 from 'pages/qlkhachso1';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -22,6 +23,7 @@ function App() {
           <Route path="/danhsachmahang" component={DSMaHang} />
           <Route path="/danhsachcosomay" component={DSCoSoMay} />
           <Route path="/socat" component={SoCat} />
+          <Route path="/quanlykhachso1" component={QuanLyKhachSo1} />
           <Route component={NotFoundPage} />
         </Switch>
         

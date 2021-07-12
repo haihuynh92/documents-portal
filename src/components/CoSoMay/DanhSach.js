@@ -139,7 +139,7 @@ const DanhSachCSM = (props) => {
           Danh sách cơ sở may
         </p>
         <Button variant="success" size="sm" className="btn-add" onClick={handleShow}>
-          <i className="fa fa-plus mr-2" aria-hidden="true"></i>
+          <i className="fa fa-plus mr-1" aria-hidden="true"></i>
           Thêm
         </Button>
         <Modal

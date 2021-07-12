@@ -17,7 +17,7 @@ const SideBar = () => {
         Dashboard
       </Link>
       <div className="inner">
-        <h2 className="ttl-article">Quản lý</h2>
+        <h2 className="ttl-article">Quản lý hàng</h2>
         <ul className="list-menu">
           <li className={`${history.location.pathname === "/danhsachmahang" ? "active" : ""}`}>
             <Link to="/danhsachmahang">
@@ -35,6 +35,15 @@ const SideBar = () => {
             <Link to="/socat">
               <i className="fa fa-book mr-2"></i>
               Sổ cắt
+            </Link>
+          </li>
+        </ul>
+        <h2 className="ttl-article">Quản lý khách</h2>
+        <ul className="list-menu">
+          <li className={`${history.location.pathname === "/quanlykhachso1" ? "active" : ""}`}>
+            <Link to="/quanlykhachso1">
+              <i className="fa fa-newspaper-o mr-2" aria-hidden="true"></i>
+              Sổ hàng Thùy
             </Link>
           </li>
         </ul>
