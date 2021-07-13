@@ -1,23 +1,27 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { themSoKhachSo1 } from 'actions/khachso1';
 import { DatePicker, Select } from 'antd';
+import Empty from 'components/common/Empty/Empty';
 import ErrorMsg from 'components/common/ErrorMsg/ErrorMsg';
 import _ from 'lodash';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { Button, Col, Form, Modal, Row, Table } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
 
 const { Option } = Select;
 
 const DanhSachMH = (props) => {
-  const { DSSC, infoPag, DSMaHang, DSCoSoMay, handlePaging, onSearchSC } = props;
+  const { DSKS1, DSKS1Custom, DSMaHang, DSCoSoMay, handlePaging, onSearchSC } = props;
 
   let formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'VND',
   });
-
+  const dateNow = moment().format('DD/MM/YYYY hh:mm:ss');
+  const dispatch = useDispatch();
   const [isError, setIsError] = useState(false);
 
   let validationSchema = yup.object().shape({
@@ -53,6 +57,11 @@ const DanhSachMH = (props) => {
     });
   };
   const handleShow = () => {
+    setValDefault({
+      ...valDefault,
+      ngaygiao: moment().format('DD/MM/YYYY'),
+      ngaytao: dateNow
+    });
     setIsShow(true);
   }
 
@@ -106,6 +115,32 @@ const DanhSachMH = (props) => {
     return result;
   }
 
+  // show danh sách sổ cắt
+  const showDSKS1 = (obj) => {
+    const arrDate = _.reverse(Object.keys(obj));
+    // console.log(obj['12/07/2021']);
+    
+    arrDate.forEach(date => {
+      console.log(obj[date]);
+
+    });
+    // let result = null;
+
+    // result = list.data.map((item, index) => {
+    //   return (
+    //     <SCItem
+    //       key={item.id}
+    //       item={item}
+    //       listCSM={DSCoSoMay}
+    //       listMH={DSMaHang}
+    //       confirmDeleteSC={confirmDeleteSC}
+    //       getDetailSC={onGetDetailSC}
+    //     />
+    //   );
+    // });
+
+    // return result;
+  }
 
 
 
@@ -115,10 +150,17 @@ const DanhSachMH = (props) => {
 
 
   const luuThongTinGiaoHang = (data) => {
-    console.log(data);
+    setValDefault({
+      ...valDefault,
+      slgiao: data.slgiao,
+      slhu: data.slhu,
+      ghichu: data.ghichu
+    });
     if (!!valDefault?.id) {
     } else {
       if (!!valDefault?.mahangId) {
+        dispatch(themSoKhachSo1(valDefault));
+        handleClose();
       } else {
         setIsError(true);
       }
@@ -268,11 +310,7 @@ const DanhSachMH = (props) => {
                     />
                   </Form.Group>
                 </Col>
-              </Row>
-              
-              
-              
-              
+              </Row>           
               
               <div className="group-control text-right">
                 <Button variant="secondary" size="sm" onClick={handleClose}>
@@ -285,23 +323,25 @@ const DanhSachMH = (props) => {
         </Modal>
       </div>
       <div className="body-heading">
-        <Table striped bordered hover responsive variant="dark" className="custom-table">
-          <thead>
-            <tr>
-              <th className="text-center th-date">Ngày giao</th>
-              <th className="th-ma text-center">Mã hàng</th>
-              <th className="th-min">Tên hàng</th>
-              <th className="th-gia text-center">Giá giao</th>
-              <th className="th-sl text-center">SL giao</th>
-              <th className="th-sl text-center">SL hư</th>
-              <th className="th-gia text-center">Thành tiền</th>
-              <th className="th-min">Ghi chú</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* {showDSSC(DSSC)} */}
-          </tbody>
-        </Table>
+        {DSKS1.data && !!DSKS1.data.length ?
+          <Table striped bordered hover responsive variant="dark" className="custom-table">
+            <thead>
+              <tr>
+                <th className="text-center th-date">Ngày giao</th>
+                <th className="th-ma text-center">Mã hàng</th>
+                <th className="th-min">Tên hàng</th>
+                <th className="th-gia text-center">Giá giao</th>
+                <th className="th-sl text-center">SL giao</th>
+                <th className="th-sl text-center">SL hư</th>
+                <th className="th-gia text-center">Thành tiền</th>
+                <th className="th-min">Ghi chú</th>
+              </tr>
+            </thead>
+            <tbody>
+              {showDSKS1(DSKS1Custom)}
+            </tbody>
+          </Table> : <Empty />
+        }
       </div>
 
     </div> 

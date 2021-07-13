@@ -6,12 +6,23 @@ import DanhSach from "components/KhachSo1/DanhSach";
 import React, { useEffect } from "react";
 import { Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import _ from 'lodash';
+import { danhSachKhachSo1 } from "actions/khachso1";
 
 const QuanLyKhachSo1 = () => {
   const dispatch = useDispatch();
-  // const DSSoCat = useSelector((state) => state.soCatReduder);
+  const DSKS1 = useSelector((state) => state.khachSo1Reduder);
   const DSMaHang = useSelector((state) => state.homeReducer.dsmahang);
-  // const DSCoSoMay = useSelector((state) => state.homeReducer.dscosomay);
+
+  let dataListKS1 = null;
+  if (!!DSKS1.data.length) {
+    dataListKS1 = _.groupBy(DSKS1.data, 'ngaygiao');
+  }
+
+  
+  // console.log('data', Object.keys(dataListKS1));
+  // console.log('sort', );
+
   
   // const [dataSearch, seDataSearch] = useState({});
   // const [pagingState, setPagingState] = useState({
@@ -27,6 +38,7 @@ const QuanLyKhachSo1 = () => {
 
   useEffect(() => {
     dispatch(danhSachTatCaMaHang());
+    dispatch(danhSachKhachSo1());
     // dispatch(danhSachTatCaCoSoMay());
   }, [dispatch]);
   
@@ -62,7 +74,8 @@ const QuanLyKhachSo1 = () => {
             <DanhSach
               DSMaHang={DSMaHang}
               // DSCoSoMay={DSCoSoMay}
-              // DSSC={DSSoCat.data}
+              DSKS1={DSKS1}
+              DSKS1Custom={dataListKS1}
               // infoPag={DSSoCat.data.pagination}
               // handlePaging={handlePaging}
               // onSearchSC={onSearchSoCat}

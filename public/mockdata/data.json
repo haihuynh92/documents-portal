@@ -1,0 +1,138 @@
+{
+  "mahangs": [
+    {
+      "ngaytao": "12/07/2021 05:40:51",
+      "mahang": "MH001",
+      "tenhang": "Áo bà ba rách túi",
+      "giamay": "30000",
+      "gianhap": "",
+      "giagiao": "41000",
+      "ghichu": "ok",
+      "id": "b7dce985-0e0b-f9c4-fe0b-570dcd8f19d2"
+    },
+    {
+      "ngaytao": "12/07/2021 05:41:12",
+      "mahang": "MH002",
+      "tenhang": "Quần què MTP",
+      "giamay": "20000",
+      "gianhap": "",
+      "giagiao": "35000",
+      "ghichu": "hihi",
+      "id": "c12ec8ea-7d41-8bf9-bba4-6bda3c0f0b3d"
+    },
+    {
+      "ngaytao": "12/07/2021 05:41:33",
+      "mahang": "MH003",
+      "tenhang": "Đầm đen ko mặc đc",
+      "giamay": "21000",
+      "gianhap": "",
+      "giagiao": "25000",
+      "ghichu": "",
+      "id": "46ee0245-8eb1-3399-2ef9-5b882c437801"
+    },
+    {
+      "ngaytao": "12/07/2021 05:44:00",
+      "mahang": "MH004",
+      "tenhang": "Áo hở vú",
+      "giamay": "20000",
+      "gianhap": "",
+      "giagiao": "39500",
+      "ghichu": "",
+      "id": "c68e90b5-7278-756f-8ca0-7d31c15dc1fb"
+    }
+  ],
+  "cosomays": [
+    {
+      "ngaytao": "09/07/2021 01:26:07",
+      "macs": "CS001",
+      "tencs": "Út Mãi",
+      "sdt": "0343371517",
+      "diachi": "",
+      "ghichu": "",
+      "id": "0f5dddec-e349-14f3-a47c-7c7d24bf57d3"
+    },
+    {
+      "ngaytao": "10/07/2021 05:00:55",
+      "macs": "CS002",
+      "tencs": "Suboy mập địt",
+      "sdt": "0377771337",
+      "diachi": "",
+      "ghichu": "",
+      "id": "a3e1443d-074f-63a9-c7e0-70bd69a0307a"
+    }
+  ],
+  "socats": [
+    {
+      "id": "081ef87c-04d0-6be5-a5a5-640649a98103",
+      "ngaycat": "11/07/2021",
+      "mahangId": "c12ec8ea-7d41-8bf9-bba4-6bda3c0f0b3d",
+      "slcat": "21",
+      "slgiao": "21",
+      "cosomayId": "a3e1443d-074f-63a9-c7e0-70bd69a0307a",
+      "ghichu": "",
+      "ngaytao": "11/07/2021 07:41:24"
+    },
+    {
+      "id": "3526438a-de1f-de39-ab4a-e68c52dcb243",
+      "ngaycat": "11/07/2021",
+      "mahangId": "c12ec8ea-7d41-8bf9-bba4-6bda3c0f0b3d",
+      "slcat": "9",
+      "slgiao": "9",
+      "cosomayId": "0f5dddec-e349-14f3-a47c-7c7d24bf57d3",
+      "ghichu": "",
+      "ngaytao": "12/07/2021 07:28:50"
+    },
+    {
+      "id": "82020556-ba48-e37a-b9d9-c56baabfb7fa",
+      "ngaycat": "11/07/2021",
+      "mahangId": "b7dce985-0e0b-f9c4-fe0b-570dcd8f19d2",
+      "slcat": "11",
+      "slgiao": "11",
+      "cosomayId": "a3e1443d-074f-63a9-c7e0-70bd69a0307a",
+      "ghichu": "",
+      "ngaytao": "12/07/2021 08:01:32"
+    },
+    {
+      "id": "b97d3b7b-c3d9-4fec-c92c-a58e8f17d40e",
+      "ngaycat": "12/07/2021",
+      "mahangId": "c68e90b5-7278-756f-8ca0-7d31c15dc1fb",
+      "slcat": "1",
+      "slgiao": "1",
+      "cosomayId": "0f5dddec-e349-14f3-a47c-7c7d24bf57d3",
+      "ghichu": "",
+      "ngaytao": "12/07/2021 08:02:53"
+    }
+  ],
+  "khachso1s": [
+    {
+      "id": "c051c94a-caad-37f6-c622-8f8666f275be",
+      "ngaygiao": "12/07/2021",
+      "mahangId": "c12ec8ea-7d41-8bf9-bba4-6bda3c0f0b3d",
+      "slgiao": "21",
+      "slhu": "",
+      "ghichu": "",
+      "ngaytao": "12/07/2021 08:36:35",
+      "thongtin": "giaohang"
+    },
+    {
+      "id": "acf3f46f-abe4-db9a-858d-cf43d2a93708",
+      "ngaygiao": "12/07/2021",
+      "mahangId": "b7dce985-0e0b-f9c4-fe0b-570dcd8f19d2",
+      "slgiao": "22",
+      "slhu": "",
+      "ghichu": "",
+      "ngaytao": "12/07/2021 08:44:35",
+      "thongtin": "giaohang"
+    },
+    {
+      "id": "48eac768-83c2-ec04-4d67-d19aa211c94d",
+      "ngaygiao": "11/07/2021",
+      "mahangId": "c68e90b5-7278-756f-8ca0-7d31c15dc1fb",
+      "slgiao": "23",
+      "slhu": "",
+      "ghichu": "",
+      "ngaytao": "12/07/2021 08:45:06",
+      "thongtin": "giaohang"
+    }
+  ]
+}

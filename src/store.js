@@ -1,13 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
-import createSagaMiddleware from 'redux-saga';
-import rootSaga from 'sagas';
-
-import loginReducer from 'reducers/loginReducer';
-import homeReducer from 'reducers/homeReducer';
-import loadingReducer from 'reducers/loadingReducer';
 import coSoMayReducer from 'reducers/coSoMayReducer';
+import homeReducer from 'reducers/homeReducer';
+import khachSo1Reduder from 'reducers/khachSo1Reducer';
+import loadingReducer from 'reducers/loadingReducer';
+import loginReducer from 'reducers/loginReducer';
 import maHangReducer from 'reducers/maHangReducer';
 import soCatReduder from 'reducers/soCatReducer';
+import createSagaMiddleware from 'redux-saga';
+import rootSaga from 'sagas';
 
 const rootReducer = {
   loginReducer,
@@ -15,7 +15,8 @@ const rootReducer = {
   homeReducer,
   coSoMayReducer,
   maHangReducer,
-  soCatReduder
+  soCatReduder,
+  khachSo1Reduder
 }
 
 const sagaMiddleware = createSagaMiddleware();
