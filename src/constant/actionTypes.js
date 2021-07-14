@@ -23,4 +23,5 @@ export const TIM_KIEM_SO_CAT = 'TIM_KIEM_SO_CAT';
 // quản lý sổ hàng khách số 1
 export const DANH_SACH_SO_KHACH1 = 'DANH_SACH_SO_KHACH1';
 export const THEM_SO_KHACH1 = 'THEM_SO_KHACH1';
+export const THEM_TIEN_TRA_TRUOC = 'THEM_TIEN_TRA_TRUOC';
 export const CAP_NHAT_SO_KHACH1 = 'CAP_NHAT_SO_KHACH1';

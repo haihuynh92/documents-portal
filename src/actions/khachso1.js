@@ -15,6 +15,16 @@ export const themSoKhachSo1 = (data) => {
   }
 }
 
+export const themTienTraTruoc = (data) => {
+  return {
+    type: actionTypes.THEM_TIEN_TRA_TRUOC,
+    payload: {
+      data
+    }
+  }
+}
+
+
 // export const capNhatSC = (data, pagingState) => {
 //   return {
 //     type: actionTypes.CAP_NHAT_SO_CAT,

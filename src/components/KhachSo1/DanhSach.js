@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { themSoKhachSo1 } from 'actions/khachso1';
+import { themSoKhachSo1, themTienTraTruoc } from 'actions/khachso1';
 import { DatePicker, Select } from 'antd';
 import Empty from 'components/common/Empty/Empty';
 import ErrorMsg from 'components/common/ErrorMsg/ErrorMsg';
@@ -8,6 +8,7 @@ import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { Button, Col, Form, Modal, Row, Table } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
+import ReactHtmlParser from 'react-html-parser';
 import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
 
@@ -115,40 +116,7 @@ const DanhSachMH = (props) => {
     return result;
   }
 
-  // show danh sách sổ cắt
-  const showDSKS1 = (obj) => {
-    const arrDate = _.reverse(Object.keys(obj));
-    // console.log(obj['12/07/2021']);
-    
-    arrDate.forEach(date => {
-      console.log(obj[date]);
-
-    });
-    // let result = null;
-
-    // result = list.data.map((item, index) => {
-    //   return (
-    //     <SCItem
-    //       key={item.id}
-    //       item={item}
-    //       listCSM={DSCoSoMay}
-    //       listMH={DSMaHang}
-    //       confirmDeleteSC={confirmDeleteSC}
-    //       getDetailSC={onGetDetailSC}
-    //     />
-    //   );
-    // });
-
-    // return result;
-  }
-
-
-
-
-
-
-
-
+  // lưu thông tin ngày giao hàng
   const luuThongTinGiaoHang = (data) => {
     setValDefault({
       ...valDefault,
@@ -167,6 +135,117 @@ const DanhSachMH = (props) => {
     }
   }
 
+  // show danh sách sổ cắt
+  const showDSKS1 = (obj) => {
+    const arrDate = Object.keys(obj);
+    let result = '';
+    
+    for(let i = 0; i < arrDate.length; i++) {
+      console.log(_.sortBy(obj[arrDate[i]], ['ngaytao']));
+      for(let j = 0; j < obj[arrDate[i]].length; j++) {
+        let count = obj[arrDate[i]].length;
+        let isGH = obj[arrDate[i]][j]['thongtin'] === 'giaohang' ? true : false;
+        let detailMH = _.filter(DSMaHang, (x) => {return x.id === obj[arrDate[i]][j]['mahangId']});
+        
+        result += `
+          <tr>
+            ${j < 1 ? `<td class="text-center" rowspan=${count}>${obj[arrDate[i]][j]['ngaygiao']}</td>` : ''}
+            
+            ${!isGH && j <= 1 ? `<td class="text-right" colspan="5">Tiền khách trả trước</td>` : `<td>${detailMH.length && detailMH[0]?.mahang}</td>`}
+            
+            ${isGH ? `<td>${detailMH.length && detailMH[0]?.tenhang}</td>` : ''}
+            
+            ${isGH ? `<td class="text-center">${detailMH.length && formatter.format(detailMH[0]?.giagiao)}</td>` : ''}
+            
+            ${isGH ? `<td class="text-center">${obj[arrDate[i]][j]['slgiao']}</td>` : ''}
+            
+            ${isGH ? `<td class="text-center">${obj[arrDate[i]][j]['slhu'] ? obj[arrDate[i]][j]['slhu'] : 0}</td>` : ''}
+            
+            ${isGH ? `<td class="text-center">a</td>` : `<td class="text-center">${formatter.format(obj[arrDate[i]][j]['tientratruoc'])}</td>`}
+            
+            <td>${obj[arrDate[i]][j]['ghichu'].replace(/\n/g, "<br />")}</td>
+            
+            ${j < 1 ? `<td class="text-center" rowspan=${count}>tongtien</td>` : ''}
+          </tr>`
+      }
+
+    };
+    return ReactHtmlParser(result);
+  }
+
+  // ==============================================================================================
+  // config tiền khách trả trước
+  const [valDefaultTU, setValDefaultTU] = useState({
+    id: '',
+    ngaygiao: '',
+    tientratruoc: '',
+    ghichu: '',
+    ngaytao: '',
+    thongtin: 'tientratruoc'
+  });
+  const [isShowTU, setIsShowTU] = useState(false);
+  const [isErrorTU, setIsErrorTU] = useState(false);
+  const handleCloseTU = () => {
+    setIsShowTU(false);
+    setIsErrorTU(false);
+    setValDefaultTU({
+      id: '',
+      ngaygiao: '',
+      tientratruoc: '',
+      ghichu: '',
+      ngaytao: '',
+      thongtin: 'tientratruoc'
+    });
+  };
+  const handleShowTU = () => {
+    setValDefaultTU({
+      ...valDefaultTU,
+      ngaygiao: moment().format('DD/MM/YYYY'),
+      ngaytao: dateNow
+    });
+    setIsShowTU(true);
+  }
+
+  // lưu thông tin tiền khách trả
+  const luuThongTinTienKhach = () => {
+    // setValDefault({
+    //   ...valDefault,
+    //   slgiao: data.slgiao,
+    //   slhu: data.slhu,
+    //   ghichu: data.ghichu
+    // });
+    if (!!valDefaultTU?.id) {
+    } else {
+      if (!!valDefaultTU?.tientratruoc) {
+        dispatch(themTienTraTruoc(valDefaultTU));
+        handleCloseTU();
+      } else {
+        setIsErrorTU(true);
+      }
+    }
+  }
+  const handleChangeTU = (e) => {
+    setValDefaultTU({
+      ...valDefaultTU,
+      [e.target.name]: e.target.value
+    });
+  }
+  const onChangeDateTU = (date, dateString) => {
+    setValDefaultTU({
+      ...valDefaultTU,
+      ngaygiao: dateString
+    });
+  }
+
+
+
+
+
+
+
+
+  
+
   return (
     <div className="list-default">
       <div className="title-heading d-flex-between">
@@ -175,7 +254,7 @@ const DanhSachMH = (props) => {
           Thông tin ngày giao hàng
         </p>
         <div className="d-flex-between align-items-flex-end">
-          <Button variant="warning" size="sm" className="btn-add ml-3" onClick={handleShow}>
+          <Button variant="warning" size="sm" className="btn-add ml-3" onClick={handleShowTU}>
             <i className="fa fa-usd mr-1" aria-hidden="true"></i>
             Tiền khách đưa
           </Button>
@@ -321,10 +400,87 @@ const DanhSachMH = (props) => {
             </Form>        
           </Modal.Body>
         </Modal>
+      
+        <Modal
+          show={isShowTU}
+          onHide={handleCloseTU}
+          backdrop="static"
+          keyboard={false}
+          dialogClassName="modal-custom"
+          size="lg"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>{`${!!valDefault?.id ? 'Cập nhật' : 'Thêm'} tiền khách trả`}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form onSubmit={e => e.preventDefault()}>
+              <Row>
+                <Col sm="3">
+                  <Form.Group controlId="ngaygiao">
+                    <Form.Label>Ngày giao</Form.Label>
+                    <div className="datepicker-custom mt-2">
+                      <DatePicker
+                        placeholder="Chọn ngày giao"
+                        inputReadOnly={true}
+                        disabledDate={disabledDate}
+                        defaultValue={moment()}
+                        format="DD/MM/YYYY"
+                        onChange={onChangeDateTU}
+                      />
+                    </div>
+                  </Form.Group>
+                </Col>
+                <Col sm="4">
+                  <Form.Group controlId="tientratruoc">
+                    <Form.Label>Tiền trả trước <span>*</span></Form.Label>
+                    <span className="prefix">VNĐ</span>
+                    <Form.Control
+                      type="text"
+                      placeholder="Nhập tiền"
+                      name="tientratruoc"
+                      autoComplete="off"
+                      ref={register}
+                      onChange={handleChangeTU}
+                      onKeyPress={handleKeyPress}
+                      defaultValue={valDefaultTU.tientratruoc}
+                      className={`${isErrorTU && !valDefaultTU.tientratruoc ? 'invalid' : ''}`}
+                    />
+                    {(isErrorTU && !valDefaultTU.tientratruoc) && <ErrorMsg msgError="Tiền khách đưa là bắt buộc" />}
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Form.Group controlId="ghichu">
+                    <Form.Label>Ghi chú</Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      placeholder="Nhập ghi chú..."
+                      name="ghichu"
+                      autoComplete="off"
+                      ref={register}
+                      onChange={handleChangeTU}
+                      maxLength={250}
+                      defaultValue={valDefaultTU.ghichu}
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>
+              <div className="group-control text-right">
+                <Button variant="secondary" size="sm" onClick={handleCloseTU}>
+                  Hủy
+                </Button>
+                <Button variant="primary" type="submit" size="sm" className="ml-2" onClick={luuThongTinTienKhach}>{`${!!valDefaultTU?.id ? 'Cập nhật' : 'Lưu'}`}</Button>
+              </div>
+            </Form>
+          </Modal.Body>
+        </Modal>
+      
+      
       </div>
       <div className="body-heading">
         {DSKS1.data && !!DSKS1.data.length ?
-          <Table striped bordered hover responsive variant="dark" className="custom-table">
+          <Table bordered responsive variant="dark" className="custom-table">
             <thead>
               <tr>
                 <th className="text-center th-date">Ngày giao</th>
@@ -335,6 +491,7 @@ const DanhSachMH = (props) => {
                 <th className="th-sl text-center">SL hư</th>
                 <th className="th-gia text-center">Thành tiền</th>
                 <th className="th-min">Ghi chú</th>
+                <th className="th-gia text-center">Tổng tiền</th>
               </tr>
             </thead>
             <tbody>
