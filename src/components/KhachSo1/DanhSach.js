@@ -8,9 +8,9 @@ import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { Button, Col, Form, Modal, Row, Table } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import ReactHtmlParser from 'react-html-parser';
 import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
+import KS1Item from './KS1Item';
 
 const { Option } = Select;
 
@@ -21,7 +21,23 @@ const DanhSachMH = (props) => {
     style: 'currency',
     currency: 'VND',
   });
-  const dateNow = moment().format('DD/MM/YYYY hh:mm:ss');
+  const dateNow = moment().format('DD/MM/YYYY HH:mm:ss');
+  const getMonth = new Date().getMonth();
+  const arrMonth = {
+    0: 'T1',
+    1: 'T2',
+    2: 'T3',
+    3: 'T4',
+    4: 'T5',
+    5: 'T6',
+    6: 'T7',
+    7: 'T8',
+    8: 'T9',
+    9: 'T10',
+    10: 'T11',
+    11: 'T12'
+  };
+
   const dispatch = useDispatch();
   const [isError, setIsError] = useState(false);
 
@@ -40,7 +56,8 @@ const DanhSachMH = (props) => {
     slhu: '',
     ghichu: '',
     ngaytao: '',
-    thongtin: 'giaohang'
+    thongtin: 'giaohang',
+    titleMonth: ''
   });
   const [isShow, setIsShow] = useState(false);
   const handleClose = () => {
@@ -54,14 +71,16 @@ const DanhSachMH = (props) => {
       slhu: '',
       ghichu: '',
       ngaytao: '',
-      thongtin: 'giaohang'
+      thongtin: 'giaohang',
+      titleMonth: ''
     });
   };
   const handleShow = () => {
     setValDefault({
       ...valDefault,
       ngaygiao: moment().format('DD/MM/YYYY'),
-      ngaytao: dateNow
+      ngaytao: dateNow,
+      titleMonth: arrMonth[getMonth]
     });
     setIsShow(true);
   }
@@ -135,43 +154,6 @@ const DanhSachMH = (props) => {
     }
   }
 
-  // show danh sách sổ cắt
-  const showDSKS1 = (obj) => {
-    const arrDate = Object.keys(obj);
-    let result = '';
-    
-    for(let i = 0; i < arrDate.length; i++) {
-      console.log(_.sortBy(obj[arrDate[i]], ['ngaytao']));
-      for(let j = 0; j < obj[arrDate[i]].length; j++) {
-        let count = obj[arrDate[i]].length;
-        let isGH = obj[arrDate[i]][j]['thongtin'] === 'giaohang' ? true : false;
-        let detailMH = _.filter(DSMaHang, (x) => {return x.id === obj[arrDate[i]][j]['mahangId']});
-        
-        result += `
-          <tr>
-            ${j < 1 ? `<td class="text-center" rowspan=${count}>${obj[arrDate[i]][j]['ngaygiao']}</td>` : ''}
-            
-            ${!isGH && j <= 1 ? `<td class="text-right" colspan="5">Tiền khách trả trước</td>` : `<td>${detailMH.length && detailMH[0]?.mahang}</td>`}
-            
-            ${isGH ? `<td>${detailMH.length && detailMH[0]?.tenhang}</td>` : ''}
-            
-            ${isGH ? `<td class="text-center">${detailMH.length && formatter.format(detailMH[0]?.giagiao)}</td>` : ''}
-            
-            ${isGH ? `<td class="text-center">${obj[arrDate[i]][j]['slgiao']}</td>` : ''}
-            
-            ${isGH ? `<td class="text-center">${obj[arrDate[i]][j]['slhu'] ? obj[arrDate[i]][j]['slhu'] : 0}</td>` : ''}
-            
-            ${isGH ? `<td class="text-center">a</td>` : `<td class="text-center">${formatter.format(obj[arrDate[i]][j]['tientratruoc'])}</td>`}
-            
-            <td>${obj[arrDate[i]][j]['ghichu'].replace(/\n/g, "<br />")}</td>
-            
-            ${j < 1 ? `<td class="text-center" rowspan=${count}>tongtien</td>` : ''}
-          </tr>`
-      }
-
-    };
-    return ReactHtmlParser(result);
-  }
 
   // ==============================================================================================
   // config tiền khách trả trước
@@ -181,7 +163,8 @@ const DanhSachMH = (props) => {
     tientratruoc: '',
     ghichu: '',
     ngaytao: '',
-    thongtin: 'tientratruoc'
+    thongtin: 'tientratruoc',
+    titleMonth: ''
   });
   const [isShowTU, setIsShowTU] = useState(false);
   const [isErrorTU, setIsErrorTU] = useState(false);
@@ -194,14 +177,16 @@ const DanhSachMH = (props) => {
       tientratruoc: '',
       ghichu: '',
       ngaytao: '',
-      thongtin: 'tientratruoc'
+      thongtin: 'tientratruoc',
+      titleMonth: ''
     });
   };
   const handleShowTU = () => {
     setValDefaultTU({
       ...valDefaultTU,
       ngaygiao: moment().format('DD/MM/YYYY'),
-      ngaytao: dateNow
+      ngaytao: dateNow,
+      titleMonth: arrMonth[getMonth]
     });
     setIsShowTU(true);
   }
@@ -228,12 +213,6 @@ const DanhSachMH = (props) => {
     setValDefaultTU({
       ...valDefaultTU,
       [e.target.name]: e.target.value
-    });
-  }
-  const onChangeDateTU = (date, dateString) => {
-    setValDefaultTU({
-      ...valDefaultTU,
-      ngaygiao: dateString
     });
   }
 
@@ -281,11 +260,11 @@ const DanhSachMH = (props) => {
             <Form onSubmit={handleSubmit(luuThongTinGiaoHang)}>
               <Row>
                 <Col sm="3">
-                  <Form.Group controlId="ngaygiao">
-                    <Form.Label>Ngày giao</Form.Label>
+                  <Form.Group>
+                    <Form.Label>Ngày nhập</Form.Label>
                     <div className="datepicker-custom mt-2">
                       <DatePicker
-                        placeholder="Chọn ngày giao"
+                        placeholder="Chọn ngày nhập"
                         inputReadOnly={true}
                         disabledDate={disabledDate}
                         defaultValue={moment()}
@@ -371,7 +350,6 @@ const DanhSachMH = (props) => {
                     <p className="mt-2 text-readonly">{chiTietMaHang[0]?.giagiao ? formatter.format(chiTietMaHang[0]?.giagiao) : '0'}</p>
                   </Form.Group>
                 </Col>
-
               </Row>
               <Row>
                 <Col>
@@ -415,21 +393,6 @@ const DanhSachMH = (props) => {
           <Modal.Body>
             <Form onSubmit={e => e.preventDefault()}>
               <Row>
-                <Col sm="3">
-                  <Form.Group controlId="ngaygiao">
-                    <Form.Label>Ngày giao</Form.Label>
-                    <div className="datepicker-custom mt-2">
-                      <DatePicker
-                        placeholder="Chọn ngày giao"
-                        inputReadOnly={true}
-                        disabledDate={disabledDate}
-                        defaultValue={moment()}
-                        format="DD/MM/YYYY"
-                        onChange={onChangeDateTU}
-                      />
-                    </div>
-                  </Form.Group>
-                </Col>
                 <Col sm="4">
                   <Form.Group controlId="tientratruoc">
                     <Form.Label>Tiền trả trước <span>*</span></Form.Label>
@@ -489,13 +452,14 @@ const DanhSachMH = (props) => {
                 <th className="th-gia text-center">Giá giao</th>
                 <th className="th-sl text-center">SL giao</th>
                 <th className="th-sl text-center">SL hư</th>
-                <th className="th-gia text-center">Thành tiền</th>
+                <th className="th-money text-center">Thành tiền</th>
                 <th className="th-min">Ghi chú</th>
-                <th className="th-gia text-center">Tổng tiền</th>
+                <th className="th-money text-center">Tổng tiền <br /> trong ngày</th>
+                <th className="th-money text-center">Tổng tiền <br /> còn lại</th>
               </tr>
             </thead>
             <tbody>
-              {showDSKS1(DSKS1Custom)}
+              <KS1Item  data={DSKS1Custom} listMH={DSMaHang} />
             </tbody>
           </Table> : <Empty />
         }

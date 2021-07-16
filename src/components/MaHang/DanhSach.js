@@ -15,7 +15,7 @@ import MHItem from './MHItem';
 const DanhSachMH = (props) => {
   const { DSMH, infoPag, handlePaging, onSearchMH } = props;
   const dispatch = useDispatch();
-  const dateNow = moment().format('DD/MM/YYYY hh:mm:ss');
+  const dateNow = moment().format('DD/MM/YYYY HH:mm:ss');
   const [valDefault, setValDefault] = useState({
     id: '',
     mahang: '',

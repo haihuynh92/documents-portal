@@ -17,7 +17,7 @@ const { Option } = Select;
 const DanhSachMH = (props) => {
   const { DSSC, infoPag, DSMaHang, DSCoSoMay, handlePaging, onSearchSC, isLoadData } = props;
   const dispatch = useDispatch();
-  const dateNow = moment().format('DD/MM/YYYY hh:mm:ss');
+  const dateNow = moment().format('DD/MM/YYYY HH:mm:ss');
   const [valDefault, setValDefault] = useState({
     id: '',
     ngaycat: '',

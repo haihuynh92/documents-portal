@@ -14,7 +14,7 @@ import './csm.scss';
 const DanhSachCSM = (props) => {
   const { DSCSM } = props;
   const dispatch = useDispatch();
-  const dateNow = moment().format('DD/MM/YYYY hh:mm:ss');
+  const dateNow = moment().format('DD/MM/YYYY HH:mm:ss');
   const [valDefault, setValDefault] = useState({
     id: '',
     macs: '',
