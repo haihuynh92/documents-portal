@@ -19,8 +19,8 @@ const SCItem = (props) => {
       <td className="text-center">{item.ngaycat}</td>
       <td className="text-center">{detailMH.length && detailMH[0]?.mahang}</td>
       <td>{detailMH.length && detailMH[0]?.tenhang}</td>
-      <td className="text-center">{formatter.format(item.slcat).slice(1)} cái</td>
-      <td className="text-center">{formatter.format(item.slgiao).slice(1)} cái</td>
+      <td className="text-center">{formatter.format(item.slcat).slice(1)}</td>
+      <td className="text-center">{formatter.format(item.slgiao).slice(1)}</td>
       <td className="text-center">{detailCSM.length && detailCSM[0]?.tencs}</td>
       <td>{ReactHtmlParser(item.ghichu.replace(/\n/g, "<br />"))}</td>
       <td className="text-center">

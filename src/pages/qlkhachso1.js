@@ -16,11 +16,9 @@ const QuanLyKhachSo1 = () => {
 
   let dataListKS1 = null;
   if (!!DSKS1.data.length) {
-    dataListKS1 = _.groupBy(DSKS1.data, 'ngaygiao');
+    dataListKS1 = _.groupBy(DSKS1.data, 'ngaynhap');
   }
 
-
-  
   // console.log('data', Object.keys(dataListKS1));
   // console.log('sort', );
 

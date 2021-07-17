@@ -485,8 +485,8 @@ const DanhSachMH = (props) => {
                 <th className="text-center th-date">Ngày cắt</th>
                 <th className="th-ma text-center">Mã hàng</th>
                 <th className="th-min">Tên hàng</th>
-                <th className="th-sl text-center">SL cắt</th>
-                <th className="th-sl text-center">SL giao</th>
+                <th className="th-sl text-center">SL cắt (cái)</th>
+                <th className="th-sl text-center">SL giao (cái)</th>
                 <th className="th-tencs text-center">Cơ sở may</th>
                 <th className="th-min">Ghi chú</th>
                 <th className="text-center th-action">Hành động</th>

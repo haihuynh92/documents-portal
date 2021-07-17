@@ -37,24 +37,6 @@ export function* themKhachSo1(action) {
   }
 }
 
-export function* themTienTraTruoc(action) {
-  const { payload } = action;
-
-  try {
-    yield put(showLoading());
-    const result = yield call(themKhachSo1Api, payload.data);
-    const res = yield call(layDSKhachSo1Api);
-    if (result.status === 201) {
-      yield delay(1000);
-      yield put(hideLoading());
-      yield put(DSKS1(res.data));
-      yield put(themKS1());
-    }
-  } catch (error) {
-    throw new Error(error);
-  }
-}
-
 // export function* capNhatSoCat(action) {
 //   const { payload } = action;
 
@@ -116,7 +98,8 @@ export function* themTienTraTruoc(action) {
 export const watchKhachSo1 = [
   takeLatest(actionTypes.DANH_SACH_SO_KHACH1, layDSKS1),
   takeLatest(actionTypes.THEM_SO_KHACH1, themKhachSo1),
-  takeLatest(actionTypes.THEM_TIEN_TRA_TRUOC, themTienTraTruoc),
+  takeLatest(actionTypes.THEM_TIEN_TRA_TRUOC, themKhachSo1),
+  takeLatest(actionTypes.THEM_HANG_LOI, themKhachSo1),
   // takeLatest(actionTypes.CAP_NHAT_SO_CAT, capNhatSoCat),
   // takeLatest(actionTypes.XOA_SO_CAT, xoaSoCat),
   // takeLatest(actionTypes.TIM_KIEM_SO_CAT, timKiemSoCat)

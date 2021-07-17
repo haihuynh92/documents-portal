@@ -306,9 +306,9 @@ const DanhSachMH = (props) => {
                 <th className="th-stt text-center">STT</th>
                 <th className="th-ma text-center">Mã hàng</th>
                 <th className="th-min">Tên hàng</th>
-                <th className="th-gia text-center">Giá may</th>
-                <th className="th-gia text-center">Giá nhập</th>
-                <th className="th-gia text-center">Giá giao</th>
+                <th className="th-gia text-center">Giá may (VNĐ)</th>
+                <th className="th-gia text-center">Giá nhập (VNĐ)</th>
+                <th className="th-gia text-center">Giá giao (VNĐ)</th>
                 <th className="th-min">Ghi chú</th>
                 <th className="text-center th-action">Hành động</th>
               </tr>

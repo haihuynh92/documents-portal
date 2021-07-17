@@ -24,6 +24,15 @@ export const themTienTraTruoc = (data) => {
   }
 }
 
+export const themHangLoi = (data) => {
+  return {
+    type: actionTypes.THEM_HANG_LOI,
+    payload: {
+      data
+    }
+  }
+}
+
 
 // export const capNhatSC = (data, pagingState) => {
 //   return {

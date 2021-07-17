@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { themSoKhachSo1, themTienTraTruoc } from 'actions/khachso1';
+import { themHangLoi, themSoKhachSo1, themTienTraTruoc } from 'actions/khachso1';
 import { DatePicker, Select } from 'antd';
 import Empty from 'components/common/Empty/Empty';
 import ErrorMsg from 'components/common/ErrorMsg/ErrorMsg';
@@ -22,22 +22,6 @@ const DanhSachMH = (props) => {
     currency: 'VND',
   });
   const dateNow = moment().format('DD/MM/YYYY HH:mm:ss');
-  const getMonth = new Date().getMonth();
-  const arrMonth = {
-    0: 'T1',
-    1: 'T2',
-    2: 'T3',
-    3: 'T4',
-    4: 'T5',
-    5: 'T6',
-    6: 'T7',
-    7: 'T8',
-    8: 'T9',
-    9: 'T10',
-    10: 'T11',
-    11: 'T12'
-  };
-
   const dispatch = useDispatch();
   const [isError, setIsError] = useState(false);
 
@@ -50,14 +34,12 @@ const DanhSachMH = (props) => {
   });
   const [valDefault, setValDefault] = useState({
     id: '',
-    ngaygiao: '',
+    ngaynhap: '',
     mahangId: '',
     slgiao: '',
-    slhu: '',
     ghichu: '',
     ngaytao: '',
-    thongtin: 'giaohang',
-    titleMonth: ''
+    thongtin: 'giaohang'
   });
   const [isShow, setIsShow] = useState(false);
   const handleClose = () => {
@@ -65,22 +47,19 @@ const DanhSachMH = (props) => {
     setIsError(false);
     setValDefault({
       id: '',
-      ngaygiao: '',
+      ngaynhap: '',
       mahangId: '',
       slgiao: '',
-      slhu: '',
       ghichu: '',
       ngaytao: '',
-      thongtin: 'giaohang',
-      titleMonth: ''
+      thongtin: 'giaohang'
     });
   };
   const handleShow = () => {
     setValDefault({
       ...valDefault,
-      ngaygiao: moment().format('DD/MM/YYYY'),
-      ngaytao: dateNow,
-      titleMonth: arrMonth[getMonth]
+      ngaynhap: moment().format('DD/MM/YYYY'),
+      ngaytao: dateNow
     });
     setIsShow(true);
   }
@@ -91,7 +70,7 @@ const DanhSachMH = (props) => {
   const onChangeDate = (date, dateString) => {
     setValDefault({
       ...valDefault,
-      ngaygiao: dateString
+      ngaynhap: dateString
     });
   }
 
@@ -140,7 +119,6 @@ const DanhSachMH = (props) => {
     setValDefault({
       ...valDefault,
       slgiao: data.slgiao,
-      slhu: data.slhu,
       ghichu: data.ghichu
     });
     if (!!valDefault?.id) {
@@ -155,16 +133,14 @@ const DanhSachMH = (props) => {
   }
 
 
-  // ==============================================================================================
-  // config tiền khách trả trước
+  // ===================================================================config tiền khách đưa trước
   const [valDefaultTU, setValDefaultTU] = useState({
     id: '',
-    ngaygiao: '',
+    ngaynhap: '',
     tientratruoc: '',
     ghichu: '',
     ngaytao: '',
-    thongtin: 'tientratruoc',
-    titleMonth: ''
+    thongtin: 'tientratruoc'
   });
   const [isShowTU, setIsShowTU] = useState(false);
   const [isErrorTU, setIsErrorTU] = useState(false);
@@ -173,32 +149,24 @@ const DanhSachMH = (props) => {
     setIsErrorTU(false);
     setValDefaultTU({
       id: '',
-      ngaygiao: '',
+      ngaynhap: '',
       tientratruoc: '',
       ghichu: '',
       ngaytao: '',
-      thongtin: 'tientratruoc',
-      titleMonth: ''
+      thongtin: 'tientratruoc'
     });
   };
   const handleShowTU = () => {
     setValDefaultTU({
       ...valDefaultTU,
-      ngaygiao: moment().format('DD/MM/YYYY'),
-      ngaytao: dateNow,
-      titleMonth: arrMonth[getMonth]
+      ngaynhap: moment().format('DD/MM/YYYY'),
+      ngaytao: dateNow
     });
     setIsShowTU(true);
   }
 
   // lưu thông tin tiền khách trả
   const luuThongTinTienKhach = () => {
-    // setValDefault({
-    //   ...valDefault,
-    //   slgiao: data.slgiao,
-    //   slhu: data.slhu,
-    //   ghichu: data.ghichu
-    // });
     if (!!valDefaultTU?.id) {
     } else {
       if (!!valDefaultTU?.tientratruoc) {
@@ -216,14 +184,72 @@ const DanhSachMH = (props) => {
     });
   }
 
+  // =======================================hàng lỗi
+  const [valDefaultFail, setValDefaultFail] = useState({
+    id: '',
+    ngaynhap: '',
+    mahangId: '',
+    slhu: '',
+    ghichu: '',
+    ngaytao: '',
+    thongtin: 'hangloi'
+  });
+  const [isShowFail, setIsShowFail] = useState(false);
+  const [isErrorFail, setIsErrorFail] = useState(false);
+  const handleCloseFail = () => {
+    setIsShowFail(false);
+    setIsErrorFail(false);
+    setValDefaultFail({
+      id: '',
+      ngaynhap: '',
+      mahangId: '',
+      slhu: '',
+      ghichu: '',
+      ngaytao: '',
+      thongtin: 'hangloi'
+    });
+  };
+  const handleShowFail = () => {
+    setValDefaultFail({
+      ...valDefaultFail,
+      ngaynhap: moment().format('DD/MM/YYYY'),
+      ngaytao: dateNow
+    });
+    setIsShowFail(true);
+  }
 
-
-
-
-
-
-
+  // lưu thông tin tiền khách trả
+  const luuHangLoi = () => {
+    console.log(valDefaultFail);
+    if (!!valDefaultFail?.id) {
+    } else {
+      if (!!valDefaultFail?.mahangId) {
+        dispatch(themHangLoi(valDefaultFail));
+        handleCloseFail();
+      } else {
+        setIsErrorFail(true);
+      }
+    }
+  }
+  const handleChangeFail = (e) => {
+    setValDefaultFail({
+      ...valDefaultFail,
+      [e.target.name]: e.target.value
+    });
+  }
+  // change selete mã hàng
+  const [chiTietMaHangFail, setChiTietMaHangFail] = useState([]);
+  const onChangeSelectMahangFail = (value) => {
+    setValDefaultFail({
+      ...valDefaultFail,
+      mahangId: value
+    });
+  }
   
+  // show tên hàng sau khi chọn mã hàng
+  useEffect(() => {
+    setChiTietMaHangFail(_.filter(DSMaHang, (x) => {return x.id === valDefaultFail?.mahangId}));
+  }, [DSMaHang, valDefaultFail?.mahangId]);
 
   return (
     <div className="list-default">
@@ -237,14 +263,116 @@ const DanhSachMH = (props) => {
             <i className="fa fa-usd mr-1" aria-hidden="true"></i>
             Tiền khách đưa
           </Button>
-          
+          <Button variant="danger" size="sm" className="btn-add ml-3" onClick={handleShowFail}>
+            <i className="fa fa-exclamation mr-1" aria-hidden="true"></i>
+            Hàng lỗi
+          </Button>
           <Button variant="success" size="sm" className="btn-add ml-3" onClick={handleShow}>
             <i className="fa fa-plus mr-1" aria-hidden="true"></i>
-            Thêm
+            Giao hàng
           </Button>
 
         </div>
 
+        {/* Hàng lỗi */}
+        <Modal
+          show={isShowFail}
+          onHide={handleCloseFail}
+          backdrop="static"
+          keyboard={false}
+          dialogClassName="modal-custom"
+          size="lg"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>{`${!!valDefaultFail?.id ? 'Cập nhật' : 'Thêm'} hàng lỗi`}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form onSubmit={e => e.preventDefault()}>
+              <Row>
+
+                <Col sm="3">
+                  <Form.Group>
+                    <Form.Label>Mã hàng <span>*</span></Form.Label>
+                    <div className={`select-custom mt-2 ${(isErrorFail && !valDefaultFail?.mahangId) ? 'invalid' : ''}`}>
+                      <Select
+                        showSearch
+                        optionFilterProp="children"
+                        filterOption={(input, option) =>
+                          option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        }
+                        filterSort={(optionA, optionB) =>
+                          optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
+                        }
+                        onChange={onChangeSelectMahangFail}
+                        defaultValue={`${!!valDefaultFail?.mahangId ? valDefaultFail?.mahangId : 'Tìm kiếm mã hàng'}`}
+                      >
+                        {showDSMaHang(DSMaHang)}
+                      </Select>
+                    </div>
+                    {isErrorFail && !valDefaultFail?.mahangId && <ErrorMsg msgError="Chưa chọn mã hàng" />}
+                  </Form.Group>
+                </Col>
+
+                <Col sm="4">
+                  <Form.Group>
+                    <Form.Label>Tên hàng</Form.Label>
+                    <p className="mt-2 text-readonly">{chiTietMaHangFail[0]?.tenhang}</p>
+                  </Form.Group>
+                </Col>
+
+                <Col sm="3">
+                  <Form.Group controlId="slhu">
+                    <Form.Label>Số lượng hư</Form.Label>
+                    <span className="prefix">Cái</span>
+                    <Form.Control
+                      type="text"
+                      placeholder="Nhập SL"
+                      name="slhu"
+                      autoComplete="off"
+                      ref={register}
+                      onChange={handleChangeFail}
+                      onKeyPress={handleKeyPress}
+                      defaultValue={valDefaultFail.slhu}
+                    />
+                  </Form.Group>
+                </Col>
+
+                <Col sm="2">
+                  <Form.Group>
+                    <Form.Label>Giá giao</Form.Label>
+                    <p className="mt-2 text-readonly">{chiTietMaHangFail[0]?.giagiao ? formatter.format(chiTietMaHangFail[0]?.giagiao).slice(1) : '0'} VNĐ</p>
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Form.Group controlId="ghichu">
+                    <Form.Label>Ghi chú</Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      placeholder="Nhập ghi chú..."
+                      name="ghichu"
+                      autoComplete="off"
+                      ref={register}
+                      onChange={handleChangeFail}
+                      maxLength={250}
+                      defaultValue={valDefaultFail.ghichu}
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>           
+              
+              <div className="group-control text-right">
+                <Button variant="secondary" size="sm" onClick={handleCloseFail}>
+                  Hủy
+                </Button>
+                <Button variant="primary" type="submit" size="sm" className="ml-2" onClick={luuHangLoi}>{`${!!valDefaultFail?.id ? 'Cập nhật' : 'Lưu'}`}</Button>
+              </div>
+            </Form>        
+          </Modal.Body>
+        </Modal>
+
+        {/* giao hàng */}
         <Modal
           show={isShow}
           onHide={handleClose}
@@ -327,27 +455,10 @@ const DanhSachMH = (props) => {
                   </Form.Group>
                 </Col>
 
-                <Col sm="3">
-                  <Form.Group controlId="slhu">
-                    <Form.Label>Số lượng hư</Form.Label>
-                    <span className="prefix">Cái</span>
-                    <Form.Control
-                      type="text"
-                      placeholder="Nhập SL"
-                      name="slhu"
-                      autoComplete="off"
-                      ref={register}
-                      onChange={handleChange}
-                      onKeyPress={handleKeyPress}
-                      defaultValue={valDefault.slhu}
-                    />
-                  </Form.Group>
-                </Col>
-
-                <Col sm="3">
+                <Col sm="2">
                   <Form.Group>
                     <Form.Label>Giá giao</Form.Label>
-                    <p className="mt-2 text-readonly">{chiTietMaHang[0]?.giagiao ? formatter.format(chiTietMaHang[0]?.giagiao) : '0'}</p>
+                    <p className="mt-2 text-readonly">{chiTietMaHang[0]?.giagiao ? formatter.format(chiTietMaHang[0]?.giagiao).slice(1) : '0'} VNĐ</p>
                   </Form.Group>
                 </Col>
               </Row>
@@ -378,7 +489,8 @@ const DanhSachMH = (props) => {
             </Form>        
           </Modal.Body>
         </Modal>
-      
+        
+        {/* Tiền khách đưa */}
         <Modal
           show={isShowTU}
           onHide={handleCloseTU}
@@ -395,7 +507,7 @@ const DanhSachMH = (props) => {
               <Row>
                 <Col sm="4">
                   <Form.Group controlId="tientratruoc">
-                    <Form.Label>Tiền trả trước <span>*</span></Form.Label>
+                    <Form.Label>Tiền khách đưa <span>*</span></Form.Label>
                     <span className="prefix">VNĐ</span>
                     <Form.Control
                       type="text"
@@ -446,16 +558,18 @@ const DanhSachMH = (props) => {
           <Table bordered responsive variant="dark" className="custom-table">
             <thead>
               <tr>
-                <th className="text-center th-date">Ngày giao</th>
+                <th className="text-center th-date">Ngày nhập</th>
                 <th className="th-ma text-center">Mã hàng</th>
                 <th className="th-min">Tên hàng</th>
-                <th className="th-gia text-center">Giá giao</th>
-                <th className="th-sl text-center">SL giao</th>
-                <th className="th-sl text-center">SL hư</th>
-                <th className="th-money text-center">Thành tiền</th>
+                <th className="th-gia text-center">Giá giao (VNĐ)</th>
+                <th className="th-sl text-center">SL giao (cái)</th>
+                <th className="th-sl text-center">SL hư (cái)</th>
+                <th className="th-money text-center">Thành tiền <br />(VNĐ)</th>
                 <th className="th-min">Ghi chú</th>
-                <th className="th-money text-center">Tổng tiền <br /> trong ngày</th>
-                <th className="th-money text-center">Tổng tiền <br /> còn lại</th>
+                <th className="th-money text-center">Tổng tiền <br /> trong ngày <br />(VNĐ)</th>
+                <th className="th-money text-center">Tổng tiền <br /> hàng lỗi <br />(VNĐ)</th>
+                <th className="th-money text-center">Tổng tiền <br /> khách đưa <br />(VNĐ)</th>
+                <th className="th-money text-center">Tổng tiền <br /> còn lại <br />(VNĐ)</th>
               </tr>
             </thead>
             <tbody>

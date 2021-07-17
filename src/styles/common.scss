@@ -360,6 +360,7 @@ button {
 }
 
 .main-content {
+  margin-top: 60px;
   margin-left: 250px;
   padding-bottom: 80px;
   > .outer {padding: 20px 0;}
@@ -387,10 +388,12 @@ button {
 
 .custom-table {
   margin-bottom: 0;
+  thead th {vertical-align: middle;}
   tbody td {
     padding: 5px 10px;
     vertical-align: middle;
-    &.td-bgd {background-color: $color-black-1;}
+    &.td-bgd {background-color: $color-black-3;}
+    &.td-fail {background-color: $color-red-1;}
   }
   .th-stt {width: 40px;}
   .th-action, .th-date, .th-gia, .th-ma {
@@ -399,14 +402,14 @@ button {
     width: 100px;
   }
   .th-sl {
-    max-width: 60px;
-    min-width: 60px;
-    width: 60px;
+    max-width: 80px;
+    min-width: 80px;
+    width: 80px;
   }
   .th-money {
-    max-width: 140px;
-    min-width: 140px;
-    width: 140px;
+    max-width: 120px;
+    min-width: 120px;
+    width: 120px;
   }
   .th-min {min-width: 150px;}
   .th-tencs {
