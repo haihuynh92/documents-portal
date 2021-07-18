@@ -14,6 +14,7 @@ const SoCat = () => {
   const DSSoCat = useSelector((state) => state.soCatReduder);
   const DSMaHang = useSelector((state) => state.homeReducer.dsmahang);
   const DSCoSoMay = useSelector((state) => state.homeReducer.dscosomay);
+  const showMenu = useSelector((state) => state.menuReduder);
   
   const [pagingState, setPagingState] = useState({
     page: 1,
@@ -61,9 +62,9 @@ const SoCat = () => {
 
   return (
     <div className="wrapper-container">
-      <SideBar />
+      <SideBar classEle={`${showMenu ? 'full-sidebar' : ''}`} />
 
-      <div className="main-content">
+      <div className={`main-content ${showMenu ? 'full-content' : ''}`}>
         <Header />
         <div className="outer">
           <Container fluid>

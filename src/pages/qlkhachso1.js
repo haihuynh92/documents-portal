@@ -13,6 +13,7 @@ const QuanLyKhachSo1 = () => {
   const dispatch = useDispatch();
   const DSKS1 = useSelector((state) => state.khachSo1Reduder);
   const DSMaHang = useSelector((state) => state.homeReducer.dsmahang);
+  const showMenu = useSelector((state) => state.menuReduder);
 
   let dataListKS1 = null;
   if (!!DSKS1.data.length) {
@@ -64,9 +65,9 @@ const QuanLyKhachSo1 = () => {
 
   return (
     <div className="wrapper-container">
-      <SideBar />
+      <SideBar classEle={`${showMenu ? 'full-sidebar' : ''}`} />
 
-      <div className="main-content">
+      <div className={`main-content ${showMenu ? 'full-content' : ''}`}>
         <Header />
         <div className="outer">
           <Container fluid>

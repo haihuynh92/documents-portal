@@ -40,21 +40,27 @@
 header {
   position: fixed;
   top: 0;
-  left: 250px;
+  left: 50px;
   right: 0;
   z-index: 20;
   height: 60px;
   background-color: $color-dark-gray;
-  border-bottom: solid 1px $color-white !important;
+  transition-duration: .3s;
+  transition-property: left;
   .inner {
     align-items: center;
     height: 100%;
   }
   .btn-menu {
     @extend .reset-button;
-    .fa-bars:before {
-      font-size: 25px;
-      color: $color-white;
+    .fa {
+      transition-duration: .3s;
+      &:hover {transform: scale(1.2);}
+      &:before {
+        font-size: 25px;
+        color: $color-white;
+        content: "\f0c9";
+      }
     }
   }
   .avatar {

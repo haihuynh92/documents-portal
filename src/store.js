@@ -6,6 +6,7 @@ import loadingReducer from 'reducers/loadingReducer';
 import loginReducer from 'reducers/loginReducer';
 import maHangReducer from 'reducers/maHangReducer';
 import soCatReduder from 'reducers/soCatReducer';
+import menuReduder from 'reducers/menuReducer';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from 'sagas';
 
@@ -16,7 +17,8 @@ const rootReducer = {
   coSoMayReducer,
   maHangReducer,
   soCatReduder,
-  khachSo1Reduder
+  khachSo1Reduder,
+  menuReduder
 }
 
 const sagaMiddleware = createSagaMiddleware();

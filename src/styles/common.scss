@@ -361,9 +361,17 @@ button {
 
 .main-content {
   margin-top: 60px;
-  margin-left: 250px;
+  margin-left: 50px;
   padding-bottom: 80px;
+  transition-duration: .3s;
+  transition-property: margin-left;
   > .outer {padding: 20px 0;}
+
+  &.full-content {
+    margin-left: 250px;
+    header, footer {left: 250px !important;}
+    header .btn-menu .fa:before {content: "\f00d";}
+  }
 }
 
 .list-default {

@@ -21,6 +21,7 @@ const Mahang = () => {
       page: currPage
     });
   };
+  const showMenu = useSelector((state) => state.menuReduder);
 
   useEffect(() => {
     if (!keySearch) {
@@ -44,9 +45,9 @@ const Mahang = () => {
 
   return (
     <div className="wrapper-container">
-      <SideBar />
+      <SideBar classEle={`${showMenu ? 'full-sidebar' : ''}`} />
 
-      <div className="main-content">
+      <div className={`main-content ${showMenu ? 'full-content' : ''}`}>
         <Header />
         <div className="outer">
           <Container fluid>

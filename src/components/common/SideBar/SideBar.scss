@@ -6,24 +6,36 @@
   left: 0;
   bottom: 0;
   z-index: 10;
-  width: 250px;
+  width: 50px;
   background-color: $color-dark-gray;
   border-right: solid 1px $color-white;
+  transition-duration: .3s;
+  transition-property: width;
+  overflow: hidden;
   > .outer {
     height: 100%;
     overflow-x: scroll;
     padding-bottom: 80px;
   }
+  .sub-ttl {
+    opacity: 0;
+    transition-duration: .8s;
+    transition-property: opacity;
+  }
   .ttl-side-bar {
+    white-space: nowrap;
     background-color: $color-dark-gray;
     height: 60px;
-    padding: 15px 20px;
+    padding: 14px 9px;
     border-bottom: solid 1px $color-white;
     font-size: 20px;
     color: $color-white;
-    .fa-industry:before {font-size: 30px;}
+    transition-duration: .3s;
+    transition-property: padding;
+    .fa-industry {font-size: 30px;}
   }
   .link-dashboard {
+    white-space: nowrap;
     display: block;
     padding: 12px 15px 15px;
     background-color: hsla(0, 0%, 100%, .5);
@@ -31,16 +43,22 @@
     &:hover {background-color: $color-blue;}
   }
   .ttl-article {
-    padding: 20px 15px 0;
+    opacity: 0;
+    padding: 0;
+    height: 0;
     color: $color-white;
+    white-space: nowrap;
+    transition-duration: .3s;
+    transition-property: padding height opacity;
   }
   .list-menu {
-    margin-top: 10px;
     .fa {min-width: 20px;}
     a {
       position: relative;
       display: block;
-      padding: 15px 30px;
+      padding: 15px 16px;
+      white-space: nowrap;
+      transition-property: padding;
       &:before {
         content: '';
         position: absolute;
@@ -62,5 +80,17 @@
       background-color: $color-blue;
       &:before {right: 0;}
     }
+  }
+  &.full-sidebar {
+    width: 250px;
+    .ttl-side-bar {padding: 15px 20px;}
+    .sub-ttl {opacity: 1;}
+    .ttl-article {
+      padding: 10px 15px;
+      margin-top: 10px;
+      height: auto;
+      opacity: 1;
+    }
+    .list-menu a {padding: 15px 30px;}
   }
 }

@@ -1,20 +1,28 @@
-import React from 'react';
-import './Header.scss';
-import { Button, OverlayTrigger, Popover, Container } from "react-bootstrap";
-import { Link } from 'react-router-dom';
+import { handleMenu } from 'actions/notification';
 import { CURRENT_USER } from 'constant/currentUser';
+import React from 'react';
+import { Button, Container, OverlayTrigger, Popover } from "react-bootstrap";
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import './Header.scss';
 
 const Header = (props) => {
+  const dispatch = useDispatch();
   let currentUser = JSON.parse(localStorage.getItem(CURRENT_USER));
   const { firstName, lastName, email } = currentUser;
   const fslice = firstName.slice(0, 1).toUpperCase();
   const lslice = lastName.slice(0, 1).toLowerCase();
+
+  const showMenu = useSelector((state) => state.menuReduder);
+  const handleBtnMenu = () => {
+    dispatch(handleMenu(!showMenu));
+  }
   
   return (
     <header>
       <Container fluid className="inner d-flex-between">
-        <Button variant="default" className="btn-menu">
-          <i className="fa fa-bars"></i>
+        <Button variant="default" className="btn-menu" onClick={handleBtnMenu}>
+          <i className="fa" aria-hidden="true"></i>
         </Button>
         <p className="ttl-help">Tôi giúp gì cho bạn đây! {currentUser.firstName}</p>
         <div className="avatar">

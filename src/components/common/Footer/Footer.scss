@@ -3,10 +3,12 @@
 footer {
   position: fixed;
   bottom: 0;
-  left: 250px;
+  left: 50px;
   right: 0;
   z-index: 10;
   background-color: $color-dark-gray;
+  transition-duration: .3s;
+  transition-property: left;
   .inner {
     padding-top: 20px;
     padding-bottom: 20px;;

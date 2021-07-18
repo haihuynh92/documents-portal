@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const CoSoMay = () => {
   const dispatch = useDispatch();
   const DSCoSoMay = useSelector(state => state.coSoMayReducer);
+  const showMenu = useSelector((state) => state.menuReduder);
 
   useEffect(() => {
     dispatch(danhSachCoSoMay());
@@ -17,9 +18,9 @@ const CoSoMay = () => {
 
   return (
     <div className="wrapper-container">
-      <SideBar />
+      <SideBar classEle={`${showMenu ? 'full-sidebar' : ''}`} />
 
-      <div className="main-content">
+      <div className={`main-content ${showMenu ? 'full-content' : ''}`}>
         <Header />
         <div className="outer">
           <Container fluid>

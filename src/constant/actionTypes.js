@@ -1,3 +1,7 @@
+// handle menu
+export const HANDLE_MENU = 'HANDLE_MENU';
+
+
 // quản lý cơ sở may
 export const DANH_SACH_TAT_CA_CO_SO_MAY = 'DANH_SACH_TAT_CA_CO_SO_MAY';
 export const DANH_SACH_CO_SO_MAY = 'DANH_SACH_CO_SO_MAY';

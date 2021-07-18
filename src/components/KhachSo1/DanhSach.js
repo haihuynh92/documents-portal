@@ -271,7 +271,6 @@ const DanhSachMH = (props) => {
             <i className="fa fa-plus mr-1" aria-hidden="true"></i>
             Giao hàng
           </Button>
-
         </div>
 
         {/* Hàng lỗi */}
@@ -507,7 +506,7 @@ const DanhSachMH = (props) => {
               <Row>
                 <Col sm="4">
                   <Form.Group controlId="tientratruoc">
-                    <Form.Label>Tiền khách đưa <span>*</span></Form.Label>
+                    <Form.Label>Tiền khách trả <span>*</span></Form.Label>
                     <span className="prefix">VNĐ</span>
                     <Form.Control
                       type="text"
@@ -550,7 +549,6 @@ const DanhSachMH = (props) => {
             </Form>
           </Modal.Body>
         </Modal>
-      
       
       </div>
       <div className="body-heading">

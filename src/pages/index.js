@@ -5,11 +5,12 @@ import SideBar from 'components/common/SideBar/SideBar';
 import Dashboard from 'components/Dashboard/Dashboard';
 import { CURRENT_USER } from 'constant/currentUser';
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const HomePage = () => {
   const dispatch = useDispatch();
   let [currentUser, setCurrentUser] = useState(null);
+  const showMenu = useSelector((state) => state.menuReduder);
 
   useEffect(() => {
     let getUser = localStorage.getItem(CURRENT_USER);
@@ -19,7 +20,7 @@ const HomePage = () => {
       return;
     }
   }, [dispatch, currentUser]);
-
+  
   // useMemo(() => {
   //   dispatch(danhSachTatCaMaHang());
   //   dispatch(danhSachTatCaCoSoMay());
@@ -27,10 +28,10 @@ const HomePage = () => {
 
   return !!currentUser && (
     <div className="wrapper-container">
-      <SideBar />
+      <SideBar classEle={`${showMenu ? 'full-sidebar' : ''}`} />
 
-      <div className="main-content">
-        <Header/>
+      <div className={`main-content ${showMenu ? 'full-content' : ''}`}>
+        <Header />
         <div className="outer">
           <Dashboard />
         </div>
