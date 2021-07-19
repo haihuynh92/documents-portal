@@ -41,10 +41,16 @@ const SideBar = (props) => {
           </ul>
           <h2 className="ttl-article">Quản lý khách</h2>
           <ul className="list-menu">
-            <li className={`${history.location.pathname === "/quanlykhachso1" ? "active" : ""}`}>
-              <Link to="/quanlykhachso1" title="Sổ hàng Thùy">
+            <li className={`${history.location.pathname === "/quanlykhach/sohangthuy" ? "active" : ""}`}>
+              <Link to="/quanlykhach/sohangthuy" title="Sổ Hằng Thùy">
                 <i className="fa fa-newspaper-o mr-2" aria-hidden="true"></i>
-                <span className="sub-ttl">Sổ hàng Thùy</span>
+                <span className="sub-ttl">Sổ Hằng Thùy</span>
+              </Link>
+            </li>
+            <li className={`${history.location.pathname === "/quanlykhach/sohang" ? "active" : ""}`}>
+              <Link to="/quanlykhach/sohang" title="Sổ Hằng">
+                <i className="fa fa-window-restore mr-2" aria-hidden="true"></i>
+                <span className="sub-ttl">Sổ Hằng</span>
               </Link>
             </li>
           </ul>

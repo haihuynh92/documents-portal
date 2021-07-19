@@ -24,9 +24,8 @@ export const CAP_NHAT_SO_CAT = 'CAP_NHAT_SO_CAT';
 export const XOA_SO_CAT = 'XOA_SO_CAT';
 export const TIM_KIEM_SO_CAT = 'TIM_KIEM_SO_CAT';
 
-// quản lý sổ hàng khách số 1
-export const DANH_SACH_SO_KHACH1 = 'DANH_SACH_SO_KHACH1';
-export const THEM_SO_KHACH1 = 'THEM_SO_KHACH1';
+// quản lý sổ tất cả khách hàng
+export const DANH_SACH_THONG_TIN = 'DANH_SACH_THONG_TIN';
+export const THEM_THONG_TIN = 'THEM_THONG_TIN';
 export const THEM_TIEN_TRA_TRUOC = 'THEM_TIEN_TRA_TRUOC';
 export const THEM_HANG_LOI = 'THEM_HANG_LOI';
-export const CAP_NHAT_SO_KHACH1 = 'CAP_NHAT_SO_KHACH1';

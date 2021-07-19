@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { themHangLoi, themSoKhachSo1, themTienTraTruoc } from 'actions/khachso1';
+import { themHangLoi, themThongTin, themTienTraTruoc } from 'actions/khachhang';
 import { DatePicker, Select } from 'antd';
 import Empty from 'components/common/Empty/Empty';
 import ErrorMsg from 'components/common/ErrorMsg/ErrorMsg';
@@ -10,12 +10,12 @@ import { Button, Col, Form, Modal, Row, Table } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
-import KS1Item from './KS1Item';
+import KHItem from './KHItem';
 
 const { Option } = Select;
 
 const DanhSachMH = (props) => {
-  const { DSKS1, DSKS1Custom, DSMaHang, DSCoSoMay, handlePaging, onSearchSC } = props;
+  const { DSKH, DSKHGroupBy, DSMaHang, nameArr } = props;
 
   let formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -124,7 +124,7 @@ const DanhSachMH = (props) => {
     if (!!valDefault?.id) {
     } else {
       if (!!valDefault?.mahangId) {
-        dispatch(themSoKhachSo1(valDefault));
+        dispatch(themThongTin(valDefault, nameArr));
         handleClose();
       } else {
         setIsError(true);
@@ -170,7 +170,7 @@ const DanhSachMH = (props) => {
     if (!!valDefaultTU?.id) {
     } else {
       if (!!valDefaultTU?.tientratruoc) {
-        dispatch(themTienTraTruoc(valDefaultTU));
+        dispatch(themTienTraTruoc(valDefaultTU, nameArr));
         handleCloseTU();
       } else {
         setIsErrorTU(true);
@@ -220,11 +220,10 @@ const DanhSachMH = (props) => {
 
   // lưu thông tin tiền khách trả
   const luuHangLoi = () => {
-    console.log(valDefaultFail);
     if (!!valDefaultFail?.id) {
     } else {
       if (!!valDefaultFail?.mahangId) {
-        dispatch(themHangLoi(valDefaultFail));
+        dispatch(themHangLoi(valDefaultFail, nameArr));
         handleCloseFail();
       } else {
         setIsErrorFail(true);
@@ -256,7 +255,7 @@ const DanhSachMH = (props) => {
       <div className="title-heading d-flex-between">
         <p className="ttl-list">
           <i className="fa fa-list-alt mr-2" aria-hidden="true"></i>
-          Thông tin ngày giao hàng
+          Thông tin giao hàng
         </p>
         <div className="d-flex-between align-items-flex-end">
           <Button variant="warning" size="sm" className="btn-add ml-3" onClick={handleShowTU}>
@@ -552,7 +551,7 @@ const DanhSachMH = (props) => {
       
       </div>
       <div className="body-heading">
-        {DSKS1.data && !!DSKS1.data.length ?
+        {DSKH.data && !!DSKH.data.length ?
           <Table bordered responsive variant="dark" className="custom-table">
             <thead>
               <tr>
@@ -571,7 +570,7 @@ const DanhSachMH = (props) => {
               </tr>
             </thead>
             <tbody>
-              <KS1Item  data={DSKS1Custom} listMH={DSMaHang} />
+              <KHItem  data={DSKHGroupBy} listMH={DSMaHang} />
             </tbody>
           </Table> : <Empty />
         }

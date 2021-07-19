@@ -1,7 +1,7 @@
 import ReactHtmlParser from 'react-html-parser';
 import _ from 'lodash';
 
-const KS1Item = (props) => {
+const KHItem = (props) => {
   const { data, listMH } = props;
 
   let formatter = new Intl.NumberFormat('en-US', {
@@ -109,4 +109,4 @@ const KS1Item = (props) => {
     return ReactHtmlParser(result);
 };
 
-export default KS1Item;
+export default KHItem;

@@ -54,8 +54,6 @@ header {
   .btn-menu {
     @extend .reset-button;
     .fa {
-      transition-duration: .3s;
-      &:hover {transform: scale(1.2);}
       &:before {
         font-size: 25px;
         color: $color-white;

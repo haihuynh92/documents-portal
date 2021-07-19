@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import coSoMayReducer from 'reducers/coSoMayReducer';
 import homeReducer from 'reducers/homeReducer';
-import khachSo1Reduder from 'reducers/khachSo1Reducer';
+import khachHangReduder from 'reducers/khachHangReducer';
 import loadingReducer from 'reducers/loadingReducer';
 import loginReducer from 'reducers/loginReducer';
 import maHangReducer from 'reducers/maHangReducer';
@@ -17,7 +17,7 @@ const rootReducer = {
   coSoMayReducer,
   maHangReducer,
   soCatReduder,
-  khachSo1Reduder,
+  khachHangReduder,
   menuReduder
 }
 
