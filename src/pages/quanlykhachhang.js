@@ -19,7 +19,7 @@ const QuanLyKhachHang = () => {
   const showMenu = useSelector((state) => state.menuReduder);
 
   let dataListGroupBy = null;
-  if (!!DSKH.data.length) {
+  if (DSKH.data && !!DSKH.data.length) {
     dataListGroupBy = _.groupBy(DSKH.data, 'ngaynhap');
   }
 
@@ -32,6 +32,14 @@ const QuanLyKhachHang = () => {
     nameArr = 'sohangthuys';
   } else if (history.location.pathname === pathNameTypes.SO_HANG) {
     nameArr = 'sohangs';
+  } else if (history.location.pathname === pathNameTypes.SO_LINH) {
+    nameArr = 'solinhs';
+  } else if (history.location.pathname === pathNameTypes.SO_THAO) {
+    nameArr = 'sothaos';
+  } else if (history.location.pathname === pathNameTypes.SO_LINHBAVAN) {
+    nameArr = 'solinhbavans';
+  } else if (history.location.pathname === pathNameTypes.SO_KIM) {
+    nameArr = 'sokims';
   }
 
   useEffect(() => {

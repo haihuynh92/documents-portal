@@ -25,6 +25,10 @@ function App() {
           <Route path="/socat" component={SoCat} />
           <Route path="/quanlykhach/sohangthuy" component={QuanLyKhachHang} />
           <Route path="/quanlykhach/sohang" component={QuanLyKhachHang} />
+          <Route path="/quanlykhach/solinh" component={QuanLyKhachHang} />
+          <Route path="/quanlykhach/sothao" component={QuanLyKhachHang} />
+          <Route path="/quanlykhach/solinhbavan" component={QuanLyKhachHang} />
+          <Route path="/quanlykhach/sokim" component={QuanLyKhachHang} />
           <Route component={NotFoundPage} />
         </Switch>
         

@@ -101,7 +101,7 @@ const KHItem = (props) => {
             
             ${j < 1 ? `<td class="text-center" rowspan=${count}>${formatter.format(reverseArrMoneyCustomer[i]).slice(1)}</td>` : ''}
 
-            ${j < 1 ? `<td class="text-center ${i === 0 && j === 0 ? "td-bgd" : ''}" rowspan=${count}>${formatter.format(reverseArrMoneyFinal[i]).slice(1)}</td>` : ''}
+            ${j < 1 ? `<td class="text-center ${i === 0 && j === 0 ? "td-bgd" : ''}" rowspan=${count}>${reverseArrMoneyFinal[i] > 0 ? formatter.format(reverseArrMoneyFinal[i]).slice(1) : formatter.format(reverseArrMoneyFinal[i]).replace(formatter.format(reverseArrMoneyFinal[i]).slice(1, 2), '')}</td>` : ''}
           </tr>`;
       }
 

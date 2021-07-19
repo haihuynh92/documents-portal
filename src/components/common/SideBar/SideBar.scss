@@ -52,7 +52,10 @@
     transition-property: padding height opacity;
   }
   .list-menu {
-    .fa {min-width: 20px;}
+    .fa {
+      min-width: 20px;
+      text-align: center;
+    }
     a {
       position: relative;
       display: block;
