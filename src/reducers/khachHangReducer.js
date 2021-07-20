@@ -14,12 +14,16 @@ const khachhang = createSlice({
     themThongTin: (state, action) => {
       toastInfo('Thêm dữ liệu thành công!');
       return;
+    },
+    xoaThongTin: (state, action) => {
+      toastInfo('Xóa thành công!');
+      return;
     }
   }
 });
 
 const { reducer, actions } = khachhang;
 
-export const { DSThongTin, themThongTin } = actions;
+export const { DSThongTin, themThongTin, xoaThongTin } = actions;
 
 export default reducer;

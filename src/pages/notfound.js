@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 
 const Notfound = () => {
   const showMenu = useSelector((state) => state.menuReduder);
+  
   return (
     <div>
       <SideBar classEle={`${showMenu ? 'full-sidebar' : ''}`} />

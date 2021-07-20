@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const Mahang = () => {
   const dispatch = useDispatch();
+  const showMenu = useSelector((state) => state.menuReduder);
   const DSMahang = useSelector((state) => state.maHangReducer);
   const [pagingState, setPagingState] = useState({
     page: 1,
@@ -21,7 +22,6 @@ const Mahang = () => {
       page: currPage
     });
   };
-  const showMenu = useSelector((state) => state.menuReduder);
 
   useEffect(() => {
     if (!keySearch) {

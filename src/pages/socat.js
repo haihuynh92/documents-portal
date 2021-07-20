@@ -28,7 +28,6 @@ const SoCat = () => {
   };
 
   const [dataSearch, seDataSearch] = useState({});
-  const [isLoad, setIsLoad] = useState(true);
 
   useEffect(() => {
     dispatch(danhSachTatCaMaHang());
@@ -36,9 +35,10 @@ const SoCat = () => {
   }, [dispatch]);
   
   useEffect(() => {
-    if (!dataSearch.ngaycat && !dataSearch.mahangId && isLoad) {
-      dispatch(danhSachSoCat(pagingState));
-    }
+    dispatch(danhSachSoCat(pagingState));
+  }, [dispatch, pagingState]);
+
+  useEffect(() => {
     if (!!dataSearch.ngaycat || !!dataSearch.mahangId) {
       dispatch(timKiemSC(dataSearch, pagingState));
     }
@@ -56,10 +56,6 @@ const SoCat = () => {
     }));
   }, [dispatch, dataSearch, pagingState.limit]);
 
-  const onLoadData = (value) => {
-    setIsLoad(value);
-  }
-
   return (
     <div className="wrapper-container">
       <SideBar classEle={`${showMenu ? 'full-sidebar' : ''}`} />
@@ -75,7 +71,6 @@ const SoCat = () => {
               infoPag={DSSoCat.data.pagination}
               handlePaging={handlePaging}
               onSearchSC={onSearchSoCat}
-              isLoadData={onLoadData}
             />
           </Container>
         </div>

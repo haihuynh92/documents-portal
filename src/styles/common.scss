@@ -403,16 +403,29 @@ button {
     &.td-bgd {background-color: $color-black-3;}
     &.td-fail {background-color: $color-red-1;}
   }
+  .td-relative {
+    position: relative;
+    cursor: pointer;
+    transition-duration: .3s;
+    transition-property: padding;
+    &:hover {
+      padding-right: 30px;
+      .btn-delete-ab {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
   .th-stt {width: 40px;}
   .th-action, .th-date, .th-gia, .th-ma {
     max-width: 100px;
     min-width: 100px;
     width: 100px;
   }
-  .th-sl {
-    max-width: 80px;
-    min-width: 80px;
-    width: 80px;
+  .th-sl, .th-action-small {
+    max-width: 60px;
+    min-width: 60px;
+    width: 60px;
   }
   .th-money {
     max-width: 120px;
@@ -429,6 +442,17 @@ button {
     padding: 5px;
     font-size: 20px;
     color: $color-white;
+  }
+  .btn-delete-ab {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    z-index: 2;
+    margin-top: -8px;
+    padding: 0;
+    opacity: 0;
+    visibility: hidden;
+    font-size: 14px;
   }
   .btn-edit:hover {
     position: relative;

@@ -36,3 +36,13 @@ export const themHangLoi = (data, nameArr) => {
     }
   }
 }
+
+export const xoaThongTin = (id, nameArr) => {
+  return {
+    type: actionTypes.XOA_THONG_TIN,
+    payload: {
+      id,
+      nameArr
+    }
+  }
+}

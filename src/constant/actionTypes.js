@@ -29,3 +29,4 @@ export const DANH_SACH_THONG_TIN = 'DANH_SACH_THONG_TIN';
 export const THEM_THONG_TIN = 'THEM_THONG_TIN';
 export const THEM_TIEN_TRA_TRUOC = 'THEM_TIEN_TRA_TRUOC';
 export const THEM_HANG_LOI = 'THEM_HANG_LOI';
+export const XOA_THONG_TIN = 'XOA_THONG_TIN';

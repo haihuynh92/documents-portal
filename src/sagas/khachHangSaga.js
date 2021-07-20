@@ -1,6 +1,6 @@
-import { layDSThongTinApi, themThongTinApi } from 'api/khachHangApi';
+import { layDSThongTinApi, themThongTinApi, xoaThongTinApi } from 'api/khachHangApi';
 import * as actionTypes from 'constant/actionTypes';
-import { DSThongTin, themThongTin } from 'reducers/khachHangReducer';
+import { DSThongTin, themThongTin, xoaThongTin } from 'reducers/khachHangReducer';
 import { hideLoading, showLoading } from 'reducers/loadingReducer';
 import { call, delay, put, takeLatest } from 'redux-saga/effects';
 
@@ -36,9 +36,28 @@ export function* themThongTinGiaoHang(action) {
   }
 }
 
+export function* xoaThongTinGiaoHang(action) {
+  const { payload } = action;
+
+  try {
+    yield put(showLoading());
+    const result = yield call(xoaThongTinApi, payload.id, payload.nameArr);
+    const res = yield call(layDSThongTinApi, payload.nameArr);
+    if (result.status === 200) {
+      yield delay(1000);
+      yield put(hideLoading());
+      yield put(DSThongTin(res.data));
+      yield put(xoaThongTin());
+    }
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
 export const watchKhachHang = [
   takeLatest(actionTypes.DANH_SACH_THONG_TIN, layDSThongTin),
   takeLatest(actionTypes.THEM_THONG_TIN, themThongTinGiaoHang),
   takeLatest(actionTypes.THEM_TIEN_TRA_TRUOC, themThongTinGiaoHang),
-  takeLatest(actionTypes.THEM_HANG_LOI, themThongTinGiaoHang)
+  takeLatest(actionTypes.THEM_HANG_LOI, themThongTinGiaoHang),
+  takeLatest(actionTypes.XOA_THONG_TIN, xoaThongTinGiaoHang)
 ]

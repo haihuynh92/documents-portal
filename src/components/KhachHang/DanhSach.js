@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { themHangLoi, themThongTin, themTienTraTruoc } from 'actions/khachhang';
+import { themHangLoi, themThongTin, themTienTraTruoc, xoaThongTin } from 'actions/khachhang';
 import { DatePicker, Select } from 'antd';
 import Empty from 'components/common/Empty/Empty';
 import ErrorMsg from 'components/common/ErrorMsg/ErrorMsg';
@@ -249,6 +249,26 @@ const DanhSachMH = (props) => {
   useEffect(() => {
     setChiTietMaHangFail(_.filter(DSMaHang, (x) => {return x.id === valDefaultFail?.mahangId}));
   }, [DSMaHang, valDefaultFail?.mahangId]);
+
+  // delete
+  const [isShowDelete, setIsShowDelete] = useState(false);
+  const [itemDelete, setItemDelete] = useState({});
+  const handleCloseDelete = () => setIsShowDelete(false);
+  const handleShowDelete = () => setIsShowDelete(true);
+  let detailKH = _.filter(DSMaHang, (x) => {return x.id === itemDelete.mahangId});
+
+  const confirmDeleteKH = (detail) => {
+    setItemDelete(detail);
+    handleShowDelete();
+  }
+  const onDeleteKH = () => {
+    dispatch(xoaThongTin(itemDelete.id, nameArr));
+    handleCloseDelete();
+  }
+
+  const confirmDeleteTT = (id) => {
+    dispatch(xoaThongTin(id, nameArr));
+  }
 
   return (
     <div className="list-default">
@@ -556,6 +576,7 @@ const DanhSachMH = (props) => {
             <thead>
               <tr>
                 <th className="text-center th-date">Ngày nhập</th>
+                <th className="text-center th-action-small">Hành <br />động</th>
                 <th className="th-ma text-center">Mã hàng</th>
                 <th className="th-min">Tên hàng</th>
                 <th className="th-gia text-center">Giá giao (VNĐ)</th>
@@ -570,11 +591,35 @@ const DanhSachMH = (props) => {
               </tr>
             </thead>
             <tbody>
-              <KHItem  data={DSKHGroupBy} listMH={DSMaHang} />
+              <KHItem  data={DSKHGroupBy} listMH={DSMaHang} confirmDeleteKH={confirmDeleteKH} confirmDeleteTT={confirmDeleteTT} />
             </tbody>
           </Table> : <Empty />
         }
       </div>
+
+      <Modal
+        show={isShowDelete}
+        onHide={handleCloseDelete}
+        backdrop="static"
+        keyboard={false}
+        dialogClassName="modal-custom"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Xác nhận</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          { itemDelete.thongtin === 'giaohang' ?
+            <p>Bạn có chắc là xóa mã hàng "<span className="font-bold">{detailKH[0].mahang} - <span className="font-bold">{detailKH[0].tenhang}</span></span>" ra khỏi ngày giao "<span className="font-bold">{itemDelete.ngaynhap}</span>" không?</p>
+            : itemDelete.thongtin === 'hangloi' ? 
+            <p>Bạn có chắc là xóa mã hàng lỗi "<span className="font-bold">{detailKH[0].mahang} - <span className="font-bold">{detailKH[0].tenhang}</span></span>" ra khỏi ngày nhập "<span className="font-bold">{itemDelete.ngaynhap}</span>" không?</p>
+            : ''
+          }
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" size="sm" onClick={handleCloseDelete}>Hủy</Button>
+          <Button variant="danger" size="sm" onClick={onDeleteKH}>Xóa</Button>
+        </Modal.Footer>
+      </Modal>
 
     </div> 
   );

@@ -15,7 +15,7 @@ import './socat.scss';
 const { Option } = Select;
 
 const DanhSachMH = (props) => {
-  const { DSSC, infoPag, DSMaHang, DSCoSoMay, handlePaging, onSearchSC, isLoadData } = props;
+  const { DSSC, infoPag, DSMaHang, DSCoSoMay, handlePaging, onSearchSC } = props;
   const dispatch = useDispatch();
   const dateNow = moment().format('DD/MM/YYYY HH:mm:ss');
   const [valDefault, setValDefault] = useState({
@@ -32,7 +32,6 @@ const DanhSachMH = (props) => {
   const [isShow, setIsShow] = useState(false);
   
   const handleClose = () => {
-    isLoadData(true);
     setIsShow(false);
     setIsError(false);
     setValDefault({
@@ -47,11 +46,6 @@ const DanhSachMH = (props) => {
     });
   };
   const handleShow = () => {
-    isLoadData(false);
-    setSelected({
-      ngaycat: '',
-      mahangId: ''
-    });
     setValDefault({
       ...valDefault,
       ngaycat: moment().format('DD/MM/YYYY'),
@@ -93,6 +87,10 @@ const DanhSachMH = (props) => {
         page: 1,
         limit: infoPag?._limit
       }));
+      setSelected({
+        ngaycat: '',
+        mahangId: ''
+      });
       handleClose();
     } else {
       if (!!valDefault?.mahangId && !!valDefault?.cosomayId) {
@@ -100,6 +98,10 @@ const DanhSachMH = (props) => {
           page: 1,
           limit: infoPag?._limit
         }));
+        setSelected({
+          ngaycat: '',
+          mahangId: ''
+        });
         handleClose();
       } else {
         setIsError(true);
@@ -119,11 +121,6 @@ const DanhSachMH = (props) => {
       ghichu: detail.ghichu.trim(),
       ngaytao: dateNow
     });
-    setSelected({
-      ngaycat: '',
-      mahangId: ''
-    });
-    isLoadData(false);
     setIsShow(true);
   }
 
@@ -175,15 +172,9 @@ const DanhSachMH = (props) => {
   const [detailMH, setDetailMH] = useState({});
   
   const handleCloseDelete = () => {
-    isLoadData(true);
     setIsShowDelete(false);
   }
   const handleShowDelete = () => {
-    setSelected({
-      ngaycat: '',
-      mahangId: ''
-    });
-    isLoadData(false);
     setIsShowDelete(true);
   }
 
@@ -199,6 +190,10 @@ const DanhSachMH = (props) => {
       page: 1,
       limit: infoPag?._limit
     }));
+    setSelected({
+      ngaycat: '',
+      mahangId: ''
+    });
     handleCloseDelete();
   }
 

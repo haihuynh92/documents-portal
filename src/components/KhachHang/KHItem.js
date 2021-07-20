@@ -1,8 +1,9 @@
-import ReactHtmlParser from 'react-html-parser';
 import _ from 'lodash';
+import { Button } from 'react-bootstrap';
+import ReactHtmlParser from 'react-html-parser';
 
 const KHItem = (props) => {
-  const { data, listMH } = props;
+  const { data, listMH, confirmDeleteKH, confirmDeleteTT } = props;
 
   let formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -12,7 +13,7 @@ const KHItem = (props) => {
   const arrDate = Object.keys(data);
     const cloneArr = [...arrDate];
     const reverseArr = _.reverse(cloneArr);
-    let result = '';
+    
     let arrMoneyFail = [];
     let arrMoneyCustomer = [];
     let arrMoneyTotalDay = [];
@@ -69,44 +70,65 @@ const KHItem = (props) => {
     const reverseArrMoneyFail = _.reverse(arrMoneyFail);
     
     // 
-    for(let i = 0; i < arrDate.length; i++) {
+    // for(let i = 0; i < arrDate.length; i++) {
+    let resultFinal = null;
+    resultFinal = arrDate.map((item, i) => {
+      let result = null;
       const sortDate = data[arrDate[i]][0]['thongtin'] === 'giaohang' ? data[arrDate[i]].slice().sort((a, b) => a.ngaytao > b.ngaytao ? -1 : 1) : data[arrDate[i]].slice().sort((a, b) => b.ngaytao > a.ngaytao ? -1 : 1);
 
-      for(let j = 0; j < sortDate.length; j++) {
+      result = sortDate.map((item, j) => {
         let count = sortDate.length;
-        let isGH = sortDate[j]['thongtin'] === 'giaohang' ? 'GH' : sortDate[j]['thongtin'] === 'tientratruoc' ? 'TT' : 'HL';
+        let isTT = sortDate[j]['thongtin'] === 'giaohang' ? 'GH' : sortDate[j]['thongtin'] === 'tientratruoc' ? 'TT' : 'HL';
         let detailMH = _.filter(listMH, (x) => {return x.id === sortDate[j]['mahangId']});
-        
-        result += `
-          <tr>
-            ${j < 1 ? `<td class="text-center" rowspan=${count}>${sortDate[j]['ngaynhap']}</td>` : ''}
-            
-            ${isGH === 'TT' ? `<td class="text-right td-bgd" colspan="5">Tiền khách trả trước</td>` : `<td class="text-center ${isGH === 'HL' && 'td-fail'}">${detailMH.length && detailMH[0]?.mahang}</td>`}
-            
-            ${isGH !== 'TT' ? `<td class=${isGH === 'HL' && 'td-fail'}>${detailMH.length && detailMH[0]?.tenhang}</td>` : ''}
-            
-            ${isGH !== 'TT' ? `<td class="text-center ${isGH === 'HL' && 'td-fail'}">${detailMH.length && formatter.format(detailMH[0]?.giagiao).slice(1)}</td>` : ''}
-            
-            ${isGH === 'GH' ? `<td class="text-center">${formatter.format(sortDate[j]['slgiao']).slice(1)}</td>` : isGH === 'HL' ? `<td class="text-center td-fail">0</td>` :  ''}
-            
-            ${isGH === 'GH' ? `<td class="text-center">0</td>` : isGH === 'HL' ? `<td class="text-center td-fail">${formatter.format(sortDate[j]['slhu']).slice(1)}</td>` : ''}
-            
-            ${isGH === 'GH' ? `<td class="text-center">${formatter.format(sortDate[j]['slgiao'] * detailMH[0]?.giagiao).slice(1)}</td>` : isGH === 'HL' ? `<td class="text-center td-fail">${formatter.format(sortDate[j]['slhu'] * detailMH[0]?.giagiao).slice(1)}</td>` : `<td class="text-center td-bgd">${formatter.format(sortDate[j]['tientratruoc']).slice(1)}</td>`}
-            
-            <td class=${isGH === 'TT' ? 'td-bgd' : isGH === 'HL' ? 'td-fail' : ''}>${sortDate[j]['ghichu'].replace(/\n/g, "<br />")}</td>
-            
-            ${j < 1 ? `<td class="text-center" rowspan=${count}>${formatter.format(reverseArrMoneyTotalDay[i]).slice(1)}</td>` : ''}
 
-            ${j < 1 ? `<td class="text-center" rowspan=${count}>${formatter.format(reverseArrMoneyFail[i]).slice(1)}</td>` : ''}
+        return (
+          <tr key={item.id}>
+            {j < 1 && <td className="text-center" rowSpan={count}>{sortDate[j]['ngaynhap']}</td>}
             
-            ${j < 1 ? `<td class="text-center" rowspan=${count}>${formatter.format(reverseArrMoneyCustomer[i]).slice(1)}</td>` : ''}
+            {isTT !== 'TT' && <td className="text-center">
+              <Button variant="default" className="button-control reset-button btn-delete" onClick={() => confirmDeleteKH(item)}>
+                <i className="fa fa-trash" aria-hidden="true"></i>
+              </Button>
+            </td>}
 
-            ${j < 1 ? `<td class="text-center ${i === 0 && j === 0 ? "td-bgd" : ''}" rowspan=${count}>${reverseArrMoneyFinal[i] > 0 ? formatter.format(reverseArrMoneyFinal[i]).slice(1) : formatter.format(reverseArrMoneyFinal[i]).replace(formatter.format(reverseArrMoneyFinal[i]).slice(1, 2), '')}</td>` : ''}
-          </tr>`;
-      }
+            {isTT === 'TT' ? 
+              <td className="text-right td-bgd td-relative" colSpan="6">
+                <Button variant="default" className="button-control reset-button btn-delete btn-delete-ab" onClick={() => confirmDeleteTT(item.id)}>
+                  <i className="fa fa-times" aria-hidden="true"></i>
+                </Button>
+                Tiền khách trả trước
+              </td> 
+              : 
+              <td className={`text-center ${isTT === 'HL' && 'td-fail'}`}>{detailMH.length && detailMH[0]?.mahang}</td>
+            }
 
-    };
-    return ReactHtmlParser(result);
+            {isTT !== 'TT' && <td className={`${isTT === 'HL' && 'td-fail'}`}>{detailMH.length && detailMH[0]?.tenhang}</td>}
+
+            {isTT !== 'TT' && <td className={`text-center ${isTT === 'HL' && 'td-fail'}`}>{detailMH.length && formatter.format(detailMH[0]?.giagiao).slice(1)}</td>}
+
+            {isTT === 'GH' ? <td className="text-center">{formatter.format(sortDate[j]['slgiao']).slice(1)}</td> : isTT === 'HL' && <td className="text-center td-fail">0</td>}
+
+            {isTT === 'GH' ? <td className="text-center">0</td> : isTT === 'HL' && <td className="text-center td-fail">{formatter.format(sortDate[j]['slhu']).slice(1)}</td>}
+
+            {isTT === 'GH' ? <td className="text-center">{formatter.format(sortDate[j]['slgiao'] * detailMH[0]?.giagiao).slice(1)}</td> : isTT === 'HL' ? <td className="text-center td-fail">{formatter.format(sortDate[j]['slhu'] * detailMH[0]?.giagiao).slice(1)}</td> : <td className="text-center td-bgd">{formatter.format(sortDate[j]['tientratruoc']).slice(1)}</td>}
+
+            <td className={`${isTT === 'TT' ? 'td-bgd' : isTT === 'HL' ? 'td-fail' : ''}`}>{ReactHtmlParser(sortDate[j]['ghichu'].replace(/\n/g, "<br />"))}</td>
+
+            {j < 1 && <td className="text-center" rowSpan={count}>{formatter.format(reverseArrMoneyTotalDay[i]).slice(1)}</td>}
+
+            {j < 1 && <td className="text-center" rowSpan={count}>{formatter.format(reverseArrMoneyFail[i]).slice(1)}</td>}
+
+            {j < 1 && <td className="text-center" rowSpan={count}>{formatter.format(reverseArrMoneyCustomer[i]).slice(1)}</td>}
+
+            {j < 1 && <td className={`text-center ${i === 0 && j === 0 ? 'td-bgd' : ''}`} rowSpan={count}>{reverseArrMoneyFinal[i] > 0 ? formatter.format(reverseArrMoneyFinal[i]).slice(1) : formatter.format(reverseArrMoneyFinal[i]).replace(formatter.format(reverseArrMoneyFinal[i]).slice(1, 2), '')}</td>}
+          </tr>
+        );
+      });
+      
+      return result;
+      
+    });
+    return resultFinal;
 };
 
 export default KHItem;
