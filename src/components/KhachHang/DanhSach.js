@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { themHangLoi, themThongTin, themTienTraTruoc, xoaThongTin } from 'actions/khachhang';
+import { themHangLoi, themThongTin, themTienTraTruoc, themTienVaiPhuLieu, xoaThongTin } from 'actions/khachhang';
 import { DatePicker, Select } from 'antd';
 import Empty from 'components/common/Empty/Empty';
 import ErrorMsg from 'components/common/ErrorMsg/ErrorMsg';
@@ -121,14 +121,11 @@ const DanhSachMH = (props) => {
       slgiao: data.slgiao,
       ghichu: data.ghichu
     });
-    if (!!valDefault?.id) {
+    if (!!valDefault?.mahangId) {
+      dispatch(themThongTin(valDefault, nameArr));
+      handleClose();
     } else {
-      if (!!valDefault?.mahangId) {
-        dispatch(themThongTin(valDefault, nameArr));
-        handleClose();
-      } else {
-        setIsError(true);
-      }
+      setIsError(true);
     }
   }
 
@@ -167,14 +164,11 @@ const DanhSachMH = (props) => {
 
   // lưu thông tin tiền khách trả
   const luuThongTinTienKhach = () => {
-    if (!!valDefaultTU?.id) {
+    if (!!valDefaultTU?.tientratruoc) {
+      dispatch(themTienTraTruoc(valDefaultTU, nameArr));
+      handleCloseTU();
     } else {
-      if (!!valDefaultTU?.tientratruoc) {
-        dispatch(themTienTraTruoc(valDefaultTU, nameArr));
-        handleCloseTU();
-      } else {
-        setIsErrorTU(true);
-      }
+      setIsErrorTU(true);
     }
   }
   const handleChangeTU = (e) => {
@@ -220,14 +214,11 @@ const DanhSachMH = (props) => {
 
   // lưu thông tin tiền khách trả
   const luuHangLoi = () => {
-    if (!!valDefaultFail?.id) {
+    if (!!valDefaultFail?.mahangId) {
+      dispatch(themHangLoi(valDefaultFail, nameArr));
+      handleCloseFail();
     } else {
-      if (!!valDefaultFail?.mahangId) {
-        dispatch(themHangLoi(valDefaultFail, nameArr));
-        handleCloseFail();
-      } else {
-        setIsErrorFail(true);
-      }
+      setIsErrorFail(true);
     }
   }
   const handleChangeFail = (e) => {
@@ -266,8 +257,56 @@ const DanhSachMH = (props) => {
     handleCloseDelete();
   }
 
-  const confirmDeleteTT = (id) => {
+  const confirmDeleteTTVPL = (id) => {
     dispatch(xoaThongTin(id, nameArr));
+  }
+
+  // ===================================================================config tiền vải, phụ liệu
+  const [valDefaultVPL, setValDefaultVPL] = useState({
+    id: '',
+    ngaynhap: '',
+    tienvaiphulieu: '',
+    ghichu: '',
+    ngaytao: '',
+    thongtin: 'tienvaiphulieu'
+  });
+  const [isShowVPL, setIsShowVPL] = useState(false);
+  const [isErrorVPL, setIsErrorVPL] = useState(false);
+  const handleCloseVPL = () => {
+    setIsShowVPL(false);
+    setIsErrorVPL(false);
+    setValDefaultVPL({
+      id: '',
+      ngaynhap: '',
+      tienvaiphulieu: '',
+      ghichu: '',
+      ngaytao: '',
+      thongtin: 'tienvaiphulieu'
+    });
+  };
+  const handleShowVPL = () => {
+    setValDefaultVPL({
+      ...valDefaultVPL,
+      ngaynhap: moment().format('DD/MM/YYYY'),
+      ngaytao: dateNow
+    });
+    setIsShowVPL(true);
+  }
+
+  // lưu thông tin tiền khách trả
+  const luuThongTinVPL = () => {
+    if (!!valDefaultVPL?.tienvaiphulieu) {
+      dispatch(themTienVaiPhuLieu(valDefaultVPL, nameArr));
+      handleCloseVPL();
+    } else {
+      setIsErrorVPL(true);
+    }
+  }
+  const handleChangeVPL = (e) => {
+    setValDefaultVPL({
+      ...valDefaultVPL,
+      [e.target.name]: e.target.value
+    });
   }
 
   return (
@@ -281,6 +320,10 @@ const DanhSachMH = (props) => {
           <Button variant="warning" size="sm" className="btn-add ml-3" onClick={handleShowTU}>
             <i className="fa fa-usd mr-1" aria-hidden="true"></i>
             Tiền khách đưa
+          </Button>
+          <Button variant="info" size="sm" className="btn-add ml-3" onClick={handleShowVPL}>
+            <i className="fa fa-usd mr-1" aria-hidden="true"></i>
+            Tiền vải, phụ liệu
           </Button>
           <Button variant="danger" size="sm" className="btn-add ml-3" onClick={handleShowFail}>
             <i className="fa fa-exclamation mr-1" aria-hidden="true"></i>
@@ -302,7 +345,7 @@ const DanhSachMH = (props) => {
           size="lg"
         >
           <Modal.Header closeButton>
-            <Modal.Title>{`${!!valDefaultFail?.id ? 'Cập nhật' : 'Thêm'} hàng lỗi`}</Modal.Title>
+            <Modal.Title>Thêm hàng lỗi</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form onSubmit={e => e.preventDefault()}>
@@ -384,7 +427,7 @@ const DanhSachMH = (props) => {
                 <Button variant="secondary" size="sm" onClick={handleCloseFail}>
                   Hủy
                 </Button>
-                <Button variant="primary" type="submit" size="sm" className="ml-2" onClick={luuHangLoi}>{`${!!valDefaultFail?.id ? 'Cập nhật' : 'Lưu'}`}</Button>
+                <Button variant="primary" type="submit" size="sm" className="ml-2" onClick={luuHangLoi}>Lưu</Button>
               </div>
             </Form>        
           </Modal.Body>
@@ -400,7 +443,7 @@ const DanhSachMH = (props) => {
           size="lg"
         >
           <Modal.Header closeButton>
-            <Modal.Title>{`${!!valDefault?.id ? 'Cập nhật' : 'Thêm'} thông tin giao hàng`}</Modal.Title>
+            <Modal.Title>Thêm thông tin giao hàng</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form onSubmit={handleSubmit(luuThongTinGiaoHang)}>
@@ -502,7 +545,7 @@ const DanhSachMH = (props) => {
                 <Button variant="secondary" size="sm" onClick={handleClose}>
                   Hủy
                 </Button>
-                <Button variant="primary" type="submit" size="sm" className="ml-2">{`${!!valDefault?.id ? 'Cập nhật' : 'Lưu'}`}</Button>
+                <Button variant="primary" type="submit" size="sm" className="ml-2">Lưu</Button>
               </div>
             </Form>        
           </Modal.Body>
@@ -518,7 +561,7 @@ const DanhSachMH = (props) => {
           size="lg"
         >
           <Modal.Header closeButton>
-            <Modal.Title>{`${!!valDefault?.id ? 'Cập nhật' : 'Thêm'} tiền khách trả`}</Modal.Title>
+            <Modal.Title>Thêm tiền khách trả</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form onSubmit={e => e.preventDefault()}>
@@ -563,12 +606,73 @@ const DanhSachMH = (props) => {
                 <Button variant="secondary" size="sm" onClick={handleCloseTU}>
                   Hủy
                 </Button>
-                <Button variant="primary" type="submit" size="sm" className="ml-2" onClick={luuThongTinTienKhach}>{`${!!valDefaultTU?.id ? 'Cập nhật' : 'Lưu'}`}</Button>
+                <Button variant="primary" type="submit" size="sm" className="ml-2" onClick={luuThongTinTienKhach}>Lưu</Button>
               </div>
             </Form>
           </Modal.Body>
         </Modal>
-      
+
+        {/* Tiền vải, phụ liệu */}
+        <Modal
+          show={isShowVPL}
+          onHide={handleCloseVPL}
+          backdrop="static"
+          keyboard={false}
+          dialogClassName="modal-custom"
+          size="lg"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Thêm tiền vải, phụ liệu</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form onSubmit={e => e.preventDefault()}>
+              <Row>
+                <Col sm="4">
+                  <Form.Group controlId="tienvaiphulieu">
+                    <Form.Label>Tiền vải, phụ liệu <span>*</span></Form.Label>
+                    <span className="prefix">VNĐ</span>
+                    <Form.Control
+                      type="text"
+                      placeholder="Nhập tiền"
+                      name="tienvaiphulieu"
+                      autoComplete="off"
+                      ref={register}
+                      onChange={handleChangeVPL}
+                      onKeyPress={handleKeyPress}
+                      defaultValue={valDefaultVPL.tienvaiphulieu}
+                      className={`${isErrorVPL && !valDefaultVPL.tienvaiphulieu ? 'invalid' : ''}`}
+                    />
+                    {(isErrorVPL && !valDefaultVPL.tienvaiphulieu) && <ErrorMsg msgError="Tiền vải, phụ liệu là bắt buộc" />}
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Form.Group controlId="ghichu">
+                    <Form.Label>Ghi chú</Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      placeholder="Nhập ghi chú..."
+                      name="ghichu"
+                      autoComplete="off"
+                      ref={register}
+                      onChange={handleChangeVPL}
+                      maxLength={250}
+                      defaultValue={valDefaultVPL.ghichu}
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>
+              <div className="group-control text-right">
+                <Button variant="secondary" size="sm" onClick={handleCloseVPL}>
+                  Hủy
+                </Button>
+                <Button variant="primary" type="submit" size="sm" className="ml-2" onClick={luuThongTinVPL}>Lưu</Button>
+              </div>
+            </Form>
+          </Modal.Body>
+        </Modal>
+
       </div>
       <div className="body-heading">
         {DSKH.data && !!DSKH.data.length ?
@@ -585,13 +689,14 @@ const DanhSachMH = (props) => {
                 <th className="th-money text-center">Thành tiền <br />(VNĐ)</th>
                 <th className="th-min">Ghi chú</th>
                 <th className="th-money text-center">Tổng tiền <br /> trong ngày <br />(VNĐ)</th>
+                <th className="th-money text-center">Tổng tiền <br /> vải, phụ liệu <br />(VNĐ)</th>
                 <th className="th-money text-center">Tổng tiền <br /> hàng lỗi <br />(VNĐ)</th>
                 <th className="th-money text-center">Tổng tiền <br /> khách đưa <br />(VNĐ)</th>
                 <th className="th-money text-center">Tổng tiền <br /> còn lại <br />(VNĐ)</th>
               </tr>
             </thead>
             <tbody>
-              <KHItem  data={DSKHGroupBy} listMH={DSMaHang} confirmDeleteKH={confirmDeleteKH} confirmDeleteTT={confirmDeleteTT} />
+              <KHItem  data={DSKHGroupBy} listMH={DSMaHang} confirmDeleteKH={confirmDeleteKH} confirmDeleteTTVPL={confirmDeleteTTVPL} />
             </tbody>
           </Table> : <Empty />
         }

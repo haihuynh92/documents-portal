@@ -59,5 +59,6 @@ export const watchKhachHang = [
   takeLatest(actionTypes.THEM_THONG_TIN, themThongTinGiaoHang),
   takeLatest(actionTypes.THEM_TIEN_TRA_TRUOC, themThongTinGiaoHang),
   takeLatest(actionTypes.THEM_HANG_LOI, themThongTinGiaoHang),
+  takeLatest(actionTypes.THEM_TIEN_VAI_PHULIEU, themThongTinGiaoHang),
   takeLatest(actionTypes.XOA_THONG_TIN, xoaThongTinGiaoHang)
 ]

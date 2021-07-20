@@ -401,7 +401,11 @@ button {
     padding: 5px 10px;
     vertical-align: middle;
     &.td-bgd {background-color: $color-black-3;}
-    &.td-fail {background-color: $color-red-1;}
+    &.td-bgd1 {background-color: $main-color;}
+    &.td-fail {
+      background-color: $color-red-1;
+      .btn-delete:hover {color: $color-black;}
+    }
   }
   .td-relative {
     position: relative;

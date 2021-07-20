@@ -27,6 +27,17 @@ export const themTienTraTruoc = (data, nameArr) => {
   }
 }
 
+export const themTienVaiPhuLieu = (data, nameArr) => {
+  return {
+    type: actionTypes.THEM_TIEN_VAI_PHULIEU,
+    payload: {
+      data,
+      nameArr
+    }
+  }
+}
+
+
 export const themHangLoi = (data, nameArr) => {
   return {
     type: actionTypes.THEM_HANG_LOI,
