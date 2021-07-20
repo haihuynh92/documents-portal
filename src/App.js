@@ -11,6 +11,7 @@ import QuanLyKhachHang from 'pages/quanlykhachhang';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { BackTop } from 'antd';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         
       </BrowserRouter>
 
+      <BackTop visibilityHeight={100} />
       <Loading />
       <ToastContainer />
 

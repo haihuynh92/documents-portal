@@ -679,3 +679,12 @@ button {
     &:focus {background-color: transparent;}
   }
 }
+
+.ant-back-top {
+  right: 16px;
+  bottom: 80px;
+  .ant-back-top-content {
+    background-color: $color-purple;
+    .anticon {vertical-align: 0;}
+  }
+}
