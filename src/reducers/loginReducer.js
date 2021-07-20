@@ -9,13 +9,6 @@ const user = createSlice({
       password: 'Hai@jr99',
       firstName: 'Hải',
       lastName: 'Huỳnh',
-    },
-    {
-      id: 'Rq0qhIXFCemZ3QiqvK7wgm4Z7SLairje',
-      email: 'phuonganhtran3292@dxc.com',
-      password: '123456',
-      firstName: 'Anh',
-      lastName: 'Trần',
     }
   ],
   reducers: {
