@@ -1,4 +1,3 @@
-import { yupResolver } from '@hookform/resolvers/yup';
 import { themHangLoi, themThongTin, themTienTraTruoc, themTienVaiPhuLieu, xoaThongTin } from 'actions/khachhang';
 import { DatePicker, Select } from 'antd';
 import Empty from 'components/common/Empty/Empty';
@@ -7,9 +6,8 @@ import _ from 'lodash';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { Button, Col, Form, Modal, Row, Table } from 'react-bootstrap';
-import { useForm } from 'react-hook-form';
+import CurrencyFormat from 'react-currency-format';
 import { useDispatch } from 'react-redux';
-import * as yup from 'yup';
 import KHItem from './KHItem';
 
 const { Option } = Select;
@@ -25,13 +23,6 @@ const DanhSachMH = (props) => {
   const dispatch = useDispatch();
   const [isError, setIsError] = useState(false);
 
-  let validationSchema = yup.object().shape({
-    slgiao: yup.string().required('SL giao bắt buộc')
-  });
-  const { register, handleSubmit, errors } = useForm({
-    mode: 'onSubmit',
-    resolver: yupResolver(validationSchema)
-  });
   const [valDefault, setValDefault] = useState({
     id: '',
     ngaynhap: '',
@@ -82,12 +73,12 @@ const DanhSachMH = (props) => {
     });
   }
 
-  // handleKeyPress
-  const handleKeyPress = (e) => {
-    if (e.which < 48 || e.which > 57) {
-      if (e.which !== 46) e.preventDefault();
-    } 
-  };
+  const onValueChangeFormatGH = (nameInput, objVal) => {
+    setValDefault({
+      ...valDefault,
+      [nameInput]: objVal.value
+    });
+  }
 
   // change selete mã hàng
   const [chiTietMaHang, setChiTietMaHang] = useState([]);
@@ -177,6 +168,12 @@ const DanhSachMH = (props) => {
       [e.target.name]: e.target.value
     });
   }
+  const onValueChangeFormatTU = (nameInput, objVal) => {
+    setValDefaultTU({
+      ...valDefaultTU,
+      [nameInput]: objVal.value
+    });
+  }
 
   // =======================================hàng lỗi
   const [valDefaultFail, setValDefaultFail] = useState({
@@ -212,7 +209,7 @@ const DanhSachMH = (props) => {
     setIsShowFail(true);
   }
 
-  // lưu thông tin tiền khách trả
+  // lưu thông tin hàng lỗi
   const luuHangLoi = () => {
     if (!!valDefaultFail?.mahangId) {
       dispatch(themHangLoi(valDefaultFail, nameArr));
@@ -227,6 +224,13 @@ const DanhSachMH = (props) => {
       [e.target.name]: e.target.value
     });
   }
+  const onValueChangeFormatFail = (nameInput, objVal) => {
+    setValDefaultFail({
+      ...valDefaultFail,
+      [nameInput]: objVal.value
+    });
+  }
+
   // change selete mã hàng
   const [chiTietMaHangFail, setChiTietMaHangFail] = useState([]);
   const onChangeSelectMahangFail = (value) => {
@@ -308,6 +312,12 @@ const DanhSachMH = (props) => {
       [e.target.name]: e.target.value
     });
   }
+  const onValueChangeFormatVPL = (nameInput, objVal) => {
+    setValDefaultVPL({
+      ...valDefaultVPL,
+      [nameInput]: objVal.value
+    });
+  }
 
   return (
     <div className="list-default">
@@ -385,15 +395,16 @@ const DanhSachMH = (props) => {
                   <Form.Group controlId="slhu">
                     <Form.Label>Số lượng hư</Form.Label>
                     <span className="prefix">Cái</span>
-                    <Form.Control
-                      type="text"
+                    <CurrencyFormat 
+                      thousandSeparator={true}
+                      onValueChange={(value) => onValueChangeFormatFail('slhu', value)}
+                      className="form-control"
                       placeholder="Nhập SL"
-                      name="slhu"
                       autoComplete="off"
-                      ref={register}
-                      onChange={handleChangeFail}
-                      onKeyPress={handleKeyPress}
-                      defaultValue={valDefaultFail.slhu}
+                      maxLength={10}
+                      name="slhu"
+                      id="slhu"
+                      value={valDefaultFail.slhu}
                     />
                   </Form.Group>
                 </Col>
@@ -414,7 +425,6 @@ const DanhSachMH = (props) => {
                       placeholder="Nhập ghi chú..."
                       name="ghichu"
                       autoComplete="off"
-                      ref={register}
                       onChange={handleChangeFail}
                       maxLength={250}
                       defaultValue={valDefaultFail.ghichu}
@@ -446,7 +456,7 @@ const DanhSachMH = (props) => {
             <Modal.Title>Thêm thông tin giao hàng</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Form onSubmit={handleSubmit(luuThongTinGiaoHang)}>
+            <Form onSubmit={e => e.preventDefault()}>
               <Row>
                 <Col sm="3">
                   <Form.Group>
@@ -501,18 +511,18 @@ const DanhSachMH = (props) => {
                   <Form.Group controlId="slgiao">
                     <Form.Label>Số lượng giao <span>*</span></Form.Label>
                     <span className="prefix">Cái</span>
-                    <Form.Control
-                      type="text"
+                    <CurrencyFormat 
+                      thousandSeparator={true}
+                      onValueChange={(value) => onValueChangeFormatGH('slgiao', value)}
+                      className={`form-control ${isError && !valDefault?.slgiao ? 'invalid' : ''}`}
                       placeholder="Nhập SL"
-                      name="slgiao"
                       autoComplete="off"
-                      ref={register}
-                      onChange={handleChange}
-                      onKeyPress={handleKeyPress}
-                      defaultValue={valDefault.slgiao}
-                      className={`${errors?.slgiao ? 'invalid' : ''}`}
+                      maxLength={10}
+                      name="slgiao"
+                      id="slgiao"
+                      value={valDefault.slgiao}
                     />
-                    {errors?.slgiao?.type === 'required' && <ErrorMsg msgError={errors?.slgiao?.message} />}
+                    {isError && !valDefault?.slgiao && <ErrorMsg msgError="SL giao bắt buộc" />}
                   </Form.Group>
                 </Col>
 
@@ -532,7 +542,6 @@ const DanhSachMH = (props) => {
                       placeholder="Nhập ghi chú..."
                       name="ghichu"
                       autoComplete="off"
-                      ref={register}
                       onChange={handleChange}
                       maxLength={250}
                       defaultValue={valDefault.ghichu}
@@ -545,7 +554,7 @@ const DanhSachMH = (props) => {
                 <Button variant="secondary" size="sm" onClick={handleClose}>
                   Hủy
                 </Button>
-                <Button variant="primary" type="submit" size="sm" className="ml-2">Lưu</Button>
+                <Button variant="primary" type="submit" size="sm" className="ml-2" onClick={luuThongTinGiaoHang}>Lưu</Button>
               </div>
             </Form>        
           </Modal.Body>
@@ -570,16 +579,15 @@ const DanhSachMH = (props) => {
                   <Form.Group controlId="tientratruoc">
                     <Form.Label>Tiền khách trả <span>*</span></Form.Label>
                     <span className="prefix">VNĐ</span>
-                    <Form.Control
-                      type="text"
+                    <CurrencyFormat 
+                      thousandSeparator={true}
+                      onValueChange={(value) => onValueChangeFormatTU('tientratruoc', value)}
+                      className={`form-control ${isErrorTU && !valDefaultTU.tientratruoc ? 'invalid' : ''}`}
                       placeholder="Nhập tiền"
-                      name="tientratruoc"
                       autoComplete="off"
-                      ref={register}
-                      onChange={handleChangeTU}
-                      onKeyPress={handleKeyPress}
-                      defaultValue={valDefaultTU.tientratruoc}
-                      className={`${isErrorTU && !valDefaultTU.tientratruoc ? 'invalid' : ''}`}
+                      name="tientratruoc"
+                      id="tientratruoc"
+                      value={valDefaultTU.tientratruoc}
                     />
                     {(isErrorTU && !valDefaultTU.tientratruoc) && <ErrorMsg msgError="Tiền khách đưa là bắt buộc" />}
                   </Form.Group>
@@ -594,7 +602,6 @@ const DanhSachMH = (props) => {
                       placeholder="Nhập ghi chú..."
                       name="ghichu"
                       autoComplete="off"
-                      ref={register}
                       onChange={handleChangeTU}
                       maxLength={250}
                       defaultValue={valDefaultTU.ghichu}
@@ -631,16 +638,15 @@ const DanhSachMH = (props) => {
                   <Form.Group controlId="tienvaiphulieu">
                     <Form.Label>Tiền vải, phụ liệu <span>*</span></Form.Label>
                     <span className="prefix">VNĐ</span>
-                    <Form.Control
-                      type="text"
+                    <CurrencyFormat 
+                      thousandSeparator={true}
+                      onValueChange={(value) => onValueChangeFormatVPL('tienvaiphulieu', value)}
+                      className={`form-control ${isErrorVPL && !valDefaultVPL.tienvaiphulieu ? 'invalid' : ''}`}
                       placeholder="Nhập tiền"
-                      name="tienvaiphulieu"
                       autoComplete="off"
-                      ref={register}
-                      onChange={handleChangeVPL}
-                      onKeyPress={handleKeyPress}
-                      defaultValue={valDefaultVPL.tienvaiphulieu}
-                      className={`${isErrorVPL && !valDefaultVPL.tienvaiphulieu ? 'invalid' : ''}`}
+                      name="tienvaiphulieu"
+                      id="tienvaiphulieu"
+                      value={valDefaultVPL.tienvaiphulieu}
                     />
                     {(isErrorVPL && !valDefaultVPL.tienvaiphulieu) && <ErrorMsg msgError="Tiền vải, phụ liệu là bắt buộc" />}
                   </Form.Group>
@@ -655,7 +661,6 @@ const DanhSachMH = (props) => {
                       placeholder="Nhập ghi chú..."
                       name="ghichu"
                       autoComplete="off"
-                      ref={register}
                       onChange={handleChangeVPL}
                       maxLength={250}
                       defaultValue={valDefaultVPL.ghichu}

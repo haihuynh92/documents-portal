@@ -7,6 +7,7 @@ import Search from 'components/common/Search/Search';
 import moment from 'moment';
 import React, { useState } from 'react';
 import { Button, Col, Form, Modal, Row, Table } from 'react-bootstrap';
+import CurrencyFormat from 'react-currency-format';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
@@ -67,23 +68,22 @@ const DanhSachMH = (props) => {
     });
   }
 
-  // handleKeyPress
-  const handleKeyPress = (e) => {
-    if (e.which < 48 || e.which > 57) {
-      if (e.which !== 46) e.preventDefault();
-    } 
-  };
-
+  const onValueChangeFormat = (nameInput, objVal) => {
+    setValDefault({
+      ...valDefault,
+      [nameInput]: objVal.value
+    });
+  }
+  
   // save and update
-  const luuMaHang = (data) => {
+  const luuMaHang = () => {
     if (!!valDefault?.id) {
-      data.id = valDefault.id;
-      dispatch(capNhatMH(data, {
+      dispatch(capNhatMH(valDefault, {
         page: 1,
         limit: infoPag?._limit
       }));
     } else {
-      dispatch(themMH(data, {
+      dispatch(themMH(valDefault, {
         page: 1,
         limit: infoPag?._limit
       }));
@@ -220,15 +220,16 @@ const DanhSachMH = (props) => {
                   <Form.Group controlId="giamay">
                     <Form.Label>Giá may</Form.Label>
                     <span className="prefix">VNĐ</span>
-                    <Form.Control
-                      type="text"
+                    <CurrencyFormat 
+                      thousandSeparator={true}
+                      onValueChange={(value) => onValueChangeFormat('giamay', value)}
+                      className="form-control"
                       placeholder="Nhập giá"
-                      name="giamay"
                       autoComplete="off"
-                      ref={register}
-                      onChange={handleChange}
-                      onKeyPress={handleKeyPress}
-                      defaultValue={valDefault.giamay}
+                      maxLength={10}
+                      name="giamay"
+                      id="giamay"
+                      value={valDefault.giamay}
                     />
                   </Form.Group>
                 </Col>
@@ -237,15 +238,16 @@ const DanhSachMH = (props) => {
                   <Form.Group controlId="gianhap">
                     <Form.Label>Giá nhập</Form.Label>
                     <span className="prefix">VNĐ</span>
-                    <Form.Control
-                      type="text"
+                    <CurrencyFormat 
+                      thousandSeparator={true}
+                      onValueChange={(value) => onValueChangeFormat('gianhap', value)}
+                      className="form-control"
                       placeholder="Nhập giá"
-                      name="gianhap"
                       autoComplete="off"
-                      ref={register}
-                      onChange={handleChange}
-                      onKeyPress={handleKeyPress}
-                      defaultValue={valDefault.gianhap}
+                      maxLength={10}
+                      name="gianhap"
+                      id="gianhap"
+                      value={valDefault.gianhap}
                     />
                   </Form.Group>
                 </Col>
@@ -256,15 +258,16 @@ const DanhSachMH = (props) => {
                   <Form.Group controlId="giagiao">
                     <Form.Label>Giá giao</Form.Label>
                     <span className="prefix">VNĐ</span>
-                    <Form.Control
-                      type="text"
+                    <CurrencyFormat 
+                      thousandSeparator={true}
+                      onValueChange={(value) => onValueChangeFormat('giagiao', value)}
+                      className="form-control"
                       placeholder="Nhập giá"
-                      name="giagiao"
                       autoComplete="off"
-                      ref={register}
-                      onChange={handleChange}
-                      onKeyPress={handleKeyPress}
-                      defaultValue={valDefault.giagiao}
+                      maxLength={10}
+                      name="giagiao"
+                      id="giagiao"
+                      value={valDefault.giagiao}
                     />
                   </Form.Group>
                 </Col>

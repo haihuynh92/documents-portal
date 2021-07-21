@@ -6,6 +6,7 @@ import _ from 'lodash';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { Button, Col, Form, Modal, Row, Table } from 'react-bootstrap';
+import CurrencyFormat from 'react-currency-format';
 import DatePickerEle from 'react-date-picker';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
@@ -65,12 +66,12 @@ const DanhSachMH = (props) => {
     });
   }
 
-  // handleKeyPress
-  const handleKeyPress = (e) => {
-    if (e.which < 48 || e.which > 57) {
-      if (e.which !== 46) e.preventDefault();
-    } 
-  };
+  const onValueChangeFormat = (nameInput, objVal) => {
+    setValDefault({
+      ...valDefault,
+      [nameInput]: objVal.value
+    });
+  }
 
   // save and update
   const [isError, setIsError] = useState(false);
@@ -389,15 +390,16 @@ const DanhSachMH = (props) => {
                   <Form.Group controlId="slcat">
                     <Form.Label>Số lượng cắt</Form.Label>
                     <span className="prefix">Cái</span>
-                    <Form.Control
-                      type="text"
+                    <CurrencyFormat 
+                      thousandSeparator={true}
+                      onValueChange={(value) => onValueChangeFormat('slcat', value)}
+                      className="form-control"
                       placeholder="Nhập SL"
-                      name="slcat"
                       autoComplete="off"
-                      ref={register}
-                      onChange={handleChange}
-                      onKeyPress={handleKeyPress}
-                      defaultValue={valDefault.slcat}
+                      maxLength={6}
+                      name="slcat"
+                      id="slcat"
+                      value={valDefault.slcat}
                     />
                   </Form.Group>
                 </Col>
@@ -406,15 +408,16 @@ const DanhSachMH = (props) => {
                   <Form.Group controlId="slgiao">
                     <Form.Label>Số lượng giao</Form.Label>
                     <span className="prefix">Cái</span>
-                    <Form.Control
-                      type="text"
+                    <CurrencyFormat 
+                      thousandSeparator={true}
+                      onValueChange={(value) => onValueChangeFormat('slgiao', value)}
+                      className="form-control"
                       placeholder="Nhập SL"
-                      name="slgiao"
                       autoComplete="off"
-                      ref={register}
-                      onChange={handleChange}
-                      onKeyPress={handleKeyPress}
-                      defaultValue={valDefault.slgiao}
+                      maxLength={6}
+                      name="slgiao"
+                      id="slgiao"
+                      value={valDefault.slgiao}
                     />
                   </Form.Group>
                 </Col>
