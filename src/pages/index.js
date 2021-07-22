@@ -5,6 +5,7 @@ import Header from 'components/common/Header/Header';
 import SideBar from 'components/common/SideBar/SideBar';
 import Dashboard from 'components/Dashboard/Dashboard';
 import { CURRENT_USER } from 'constant/currentUser';
+import * as pathNameTypes from 'constant/pathName';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 
@@ -18,7 +19,7 @@ const HomePage = () => {
     let getUser = localStorage.getItem(CURRENT_USER);
     setCurrentUser(getUser);
     if (getUser === null) {
-      window.location.href = '/login';
+      window.location.href = pathNameTypes.LOGIN;
       return;
     }
   }, [dispatch, currentUser]);

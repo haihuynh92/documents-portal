@@ -1,13 +1,14 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { CURRENT_USER } from 'constant/currentUser';
+import * as pathNameTypes from 'constant/pathName';
+import { find } from "lodash";
 import React, { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import "styles/common.scss";
 import * as yup from 'yup';
-import { toast } from 'react-toastify';
-import { useSelector } from 'react-redux';
-import { find } from "lodash";
 
 const LoginPage = () => {
   let validationSchema = yup.object().shape({
@@ -35,7 +36,7 @@ const LoginPage = () => {
     
     if (validUser?.email && validUser?.password) {
       localStorage.setItem(CURRENT_USER, JSON.stringify(validUser));
-      window.location.href = '/';
+      window.location.href = pathNameTypes.HOMEPAGE;
       return;
     } else {
       toast.error('Bạn không được phép vào!', {

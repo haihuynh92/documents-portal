@@ -4,7 +4,7 @@ import Footer from "components/common/Footer/Footer";
 import Header from "components/common/Header/Header";
 import SideBar from "components/common/SideBar/SideBar";
 import DanhSach from "components/KhachHang/DanhSach";
-import { CURRENT_USER } from "constant/currentUser";
+import { CURRENT_USER, ROLE } from "constant/currentUser";
 import * as pathNameTypes from 'constant/pathName';
 import _ from 'lodash';
 import React, { useEffect } from "react";
@@ -19,6 +19,8 @@ const QuanLyKhachHang = () => {
   const DSKH = useSelector((state) => state.khachHangReduder);
   const DSMaHang = useSelector((state) => state.homeReducer.dsmahang);
   const showMenu = useSelector((state) => state.menuReduder);
+  let isTypeBook = '';
+  
 
   let dataListGroupBy = null;
   if (DSKH.data && !!DSKH.data.length) {
@@ -32,16 +34,31 @@ const QuanLyKhachHang = () => {
   let nameArr = '';
   if (history.location.pathname === pathNameTypes.SO_HANG_THUY) {
     nameArr = 'sohangthuys';
+    isTypeBook = ROLE.SO_KHACH;
   } else if (history.location.pathname === pathNameTypes.SO_HANG) {
     nameArr = 'sohangs';
+    isTypeBook = ROLE.SO_KHACH;
   } else if (history.location.pathname === pathNameTypes.SO_LINH) {
     nameArr = 'solinhs';
+    isTypeBook = ROLE.SO_KHACH;
   } else if (history.location.pathname === pathNameTypes.SO_THAO) {
     nameArr = 'sothaos';
+    isTypeBook = ROLE.SO_KHACH;
   } else if (history.location.pathname === pathNameTypes.SO_LINHBAVAN) {
     nameArr = 'solinhbavans';
+    isTypeBook = ROLE.SO_KHACH;
   } else if (history.location.pathname === pathNameTypes.SO_KIM) {
     nameArr = 'sokims';
+    isTypeBook = ROLE.SO_KHACH;
+  } else if (history.location.pathname === pathNameTypes.SO_NGHI) {
+    nameArr = 'songhis';
+    isTypeBook = ROLE.NOI_BO;
+  } else if (history.location.pathname === pathNameTypes.SO_UT) {
+    nameArr = 'souts';
+    isTypeBook = ROLE.NOI_BO;
+  } else if (history.location.pathname === pathNameTypes.SO_NGOC) {
+    nameArr = 'songocs';
+    isTypeBook = ROLE.NOI_BO;
   }
 
   useEffect(() => {
@@ -62,6 +79,7 @@ const QuanLyKhachHang = () => {
               DSMaHang={DSMaHang}
               DSKH={DSKH}
               DSKHGroupBy={dataListGroupBy}
+              isTypeBook={isTypeBook}
             />
           </Container>
         </div>

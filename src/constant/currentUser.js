@@ -1,6 +1,8 @@
 export const CURRENT_USER = 'CURRENT_USER';
 export const ROLE = {
-  ADMIN: 'admin'
+  ADMIN: 'admin',
+  NOI_BO: 'sonoibo',
+  SO_KHACH: 'sokhach'
 };
 export const CONFIG_MONEY = 1000;
 export const DATA_BOOK = [

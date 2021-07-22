@@ -5,7 +5,7 @@ import ReactHtmlParser from 'react-html-parser';
 import { formatter } from 'services/common';
 
 const KHItem = (props) => {
-  const { data, listMH, confirmDeleteKH, confirmDeleteTTVPL, viewLN, currentUser } = props;
+  const { data, listMH, confirmDeleteKH, confirmDeleteTTVPL, viewLN, currentUser, isTypeBook } = props;
 
   const arrDate = Object.keys(data);
     const cloneArr = [...arrDate];
@@ -41,8 +41,13 @@ const KHItem = (props) => {
       // thông tin hàng lỗi
       data[reverseArr[k]].map(x => {
         if (x.thongtin === 'hangloi') {
-          let giagiao = _.filter(listMH, k => {return k.id === x.mahangId})[0]['giagiao'];
-          totalCountMoneyFail += +x.slhu * giagiao;
+          if(isTypeBook === ROLE.NOI_BO) {
+            let gianhap = _.filter(listMH, k => {return k.id === x.mahangId})[0]['gianhap'];
+            totalCountMoneyFail += +x.slhu * gianhap;
+          } else {
+            let giagiao = _.filter(listMH, k => {return k.id === x.mahangId})[0]['giagiao'];
+            totalCountMoneyFail += +x.slhu * giagiao;
+          }
           totalFail += +x.slhu;
         }
         return totalCountMoneyFail && totalFail;
@@ -62,8 +67,13 @@ const KHItem = (props) => {
       // thông tin giao hàng
       data[reverseArr[k]].map(x => {
         if (x.thongtin === 'giaohang') {
-          let giagiao = _.filter(listMH, k => {return k.id === x.mahangId})[0]['giagiao'];
-          totalCountMoneyDay += +x.slgiao * giagiao;
+          if(isTypeBook === ROLE.NOI_BO) {
+            let gianhap = _.filter(listMH, k => {return k.id === x.mahangId})[0]['gianhap'];
+            totalCountMoneyDay += +x.slgiao * gianhap;
+          } else {
+            let giagiao = _.filter(listMH, k => {return k.id === x.mahangId})[0]['giagiao'];
+            totalCountMoneyDay += +x.slgiao * giagiao;
+          }
           totalSend += +x.slgiao;
         }
         return totalCountMoneyDay && totalSend;
@@ -136,13 +146,21 @@ const KHItem = (props) => {
 
             {['GH', 'HL'].includes(isTT) && <td className={`${isTT === 'HL' && 'td-bgd-red'}`}>{detailMH.length && detailMH[0]?.tenhang}</td>}
 
-            {['GH', 'HL'].includes(isTT) && <td className={`text-center ${isTT === 'HL' && 'td-bgd-red'}`}>{detailMH.length && formatter.format(detailMH[0]?.giagiao).slice(1)}</td>}
+            {['GH', 'HL'].includes(isTT) && <td className={`text-center ${isTT === 'HL' && 'td-bgd-red'}`}>{isTypeBook === ROLE.NOI_BO && detailMH.length ? formatter.format(detailMH[0]?.gianhap).slice(1) : formatter.format(detailMH[0]?.giagiao).slice(1)}</td>}
 
             {isTT === 'GH' ? <td className="text-center">{formatter.format(sortDate[j]['slgiao']).slice(1)}</td> : isTT === 'HL' && <td className="text-center td-bgd-red">0</td>}
 
             {isTT === 'GH' ? <td className="text-center">0</td> : isTT === 'HL' && <td className="text-center td-bgd-red">{formatter.format(sortDate[j]['slhu']).slice(1)}</td>}
 
-            {isTT === 'GH' ? <td className="text-center">{formatter.format(sortDate[j]['slgiao'] * detailMH[0]?.giagiao).slice(1)}</td> : isTT === 'HL' ? <td className="text-center td-bgd-red">{formatter.format(sortDate[j]['slhu'] * detailMH[0]?.giagiao).slice(1)}</td> : isTT === 'TT' ? <td className="text-center td-bgd-black">{formatter.format(sortDate[j]['tientratruoc']).slice(1)}</td> : <td className="text-center td-bgd-green">{formatter.format(sortDate[j]['tienvaiphulieu']).slice(1)}</td>}
+            {isTT === 'GH' ? 
+              <td className="text-center">{isTypeBook === ROLE.NOI_BO ? formatter.format(sortDate[j]['slgiao'] * detailMH[0]?.gianhap).slice(1) : formatter.format(sortDate[j]['slgiao'] * detailMH[0]?.giagiao).slice(1)}</td> 
+              : isTT === 'HL' ? 
+              <td className="text-center td-bgd-red">{isTypeBook === ROLE.NOI_BO ? formatter.format(sortDate[j]['slhu'] * detailMH[0]?.gianhap).slice(1) : formatter.format(sortDate[j]['slhu'] * detailMH[0]?.giagiao).slice(1)}</td> 
+              : isTT === 'TT' ? 
+              <td className="text-center td-bgd-black">{formatter.format(sortDate[j]['tientratruoc']).slice(1)}</td> 
+              : 
+              <td className="text-center td-bgd-green">{formatter.format(sortDate[j]['tienvaiphulieu']).slice(1)}</td>
+            }
 
             <td className={`${isTT === 'TT' ? 'td-bgd-black' : isTT === 'HL' ? 'td-bgd-red' : isTT === 'VPL' ? 'td-bgd-green' : ''}`}>{ReactHtmlParser(sortDate[j]['ghichu'].replace(/\n/g, "<br />"))}</td>
 
@@ -156,7 +174,7 @@ const KHItem = (props) => {
 
             {j < 1 && <td className="text-center td-bgd-red" rowSpan={count}>{formatter.format(reverseArrMoneyFail[i]).slice(1)}</td>}
 
-            {j < 1 && <td className="text-center td-bgd" rowSpan={count}>{formatter.format(reverseArrMoneyCustomer[i]).slice(1)}</td>}
+            {j < 1 && <td className="text-center td-bgd-black" rowSpan={count}>{formatter.format(reverseArrMoneyCustomer[i]).slice(1)}</td>}
 
             {j < 1 && <td className={`text-center ${i === 0 && j === 0 ? 'td-bgd-purple' : ''}`} rowSpan={count}>{reverseArrMoneyFinal[i] > 0 ? formatter.format(reverseArrMoneyFinal[i]).slice(1) : formatter.format(reverseArrMoneyFinal[i]).replace(formatter.format(reverseArrMoneyFinal[i]).slice(1, 2), '')}</td>}
           </tr>

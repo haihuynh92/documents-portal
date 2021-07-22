@@ -2,7 +2,7 @@ import { themHangLoi, themThongTin, themTienTraTruoc, themTienVaiPhuLieu, xoaTho
 import { DatePicker, Select } from 'antd';
 import Empty from 'components/common/Empty/Empty';
 import ErrorMsg from 'components/common/ErrorMsg/ErrorMsg';
-import { CONFIG_MONEY } from 'constant/currentUser';
+import { CONFIG_MONEY, ROLE } from 'constant/currentUser';
 import _ from 'lodash';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
@@ -15,7 +15,7 @@ import KHItem from './KHItem';
 const { Option } = Select;
 
 const DanhSachMH = (props) => {
-  const { DSKH, DSKHGroupBy, DSMaHang, nameArr, currentUser } = props;
+  const { DSKH, DSKHGroupBy, DSMaHang, nameArr, currentUser, isTypeBook } = props;
   const dispatch = useDispatch();
   const [isError, setIsError] = useState(false);
 
@@ -444,8 +444,12 @@ const DanhSachMH = (props) => {
 
                 <Col sm="2">
                   <Form.Group>
-                    <Form.Label>Giá giao</Form.Label>
-                    <p className="mt-2 text-readonly">{chiTietMaHangFail[0]?.giagiao ? formatter.format(chiTietMaHangFail[0]?.giagiao).slice(1) : '0'} VNĐ</p>
+                    <Form.Label>{isTypeBook === ROLE.NOI_BO ? 'Giá nhập' : 'Giá giao'}</Form.Label>
+                    {isTypeBook === ROLE.NOI_BO ? 
+                      <p className="mt-2 text-readonly">{chiTietMaHangFail[0]?.gianhap ? formatter.format(chiTietMaHangFail[0]?.gianhap).slice(1) : '0'} VNĐ</p>
+                      :
+                      <p className="mt-2 text-readonly">{chiTietMaHangFail[0]?.giagiao ? formatter.format(chiTietMaHangFail[0]?.giagiao).slice(1) : '0'} VNĐ</p>
+                    }
                   </Form.Group>
                 </Col>
               </Row>
@@ -561,8 +565,12 @@ const DanhSachMH = (props) => {
 
                 <Col sm="2">
                   <Form.Group>
-                    <Form.Label>Giá giao</Form.Label>
-                    <p className="mt-2 text-readonly">{chiTietMaHang[0]?.giagiao ? formatter.format(chiTietMaHang[0]?.giagiao).slice(1) : '0'} VNĐ</p>
+                    <Form.Label>{isTypeBook === ROLE.NOI_BO ? 'Giá nhập' : 'Giá giao'}</Form.Label>
+                    {isTypeBook === ROLE.NOI_BO ? 
+                      <p className="mt-2 text-readonly">{chiTietMaHang[0]?.gianhap ? formatter.format(chiTietMaHang[0]?.gianhap).slice(1) : '0'} VNĐ</p>
+                      : 
+                      <p className="mt-2 text-readonly">{chiTietMaHang[0]?.giagiao ? formatter.format(chiTietMaHang[0]?.giagiao).slice(1) : '0'} VNĐ</p>
+                    }
                   </Form.Group>
                 </Col>
               </Row>
@@ -721,7 +729,11 @@ const DanhSachMH = (props) => {
                 <th className="text-center th-action-small">Hành <br />động</th>
                 <th className="th-ma text-center">Mã hàng</th>
                 <th className="th-min">Tên hàng</th>
-                <th className="th-gia text-center">Giá giao (VNĐ)</th>
+                {isTypeBook === ROLE.NOI_BO ?
+                  <th className="th-gia text-center">Giá nhập (VNĐ)</th>
+                  :
+                  <th className="th-gia text-center">Giá giao (VNĐ)</th>
+                }
                 <th className="th-sl text-center">SL giao (cái)</th>
                 <th className="th-sl text-center">SL hư (cái)</th>
                 <th className="th-money text-center">Thành tiền <br />(VNĐ)</th>
@@ -743,6 +755,7 @@ const DanhSachMH = (props) => {
                 confirmDeleteKH={confirmDeleteKH}
                 confirmDeleteTTVPL={confirmDeleteTTVPL}
                 viewLN={viewLN}
+                isTypeBook={isTypeBook}
               />
             </tbody>
           </Table> : <Empty />
@@ -820,11 +833,11 @@ const DanhSachMH = (props) => {
                         </tr>
                         {index === hangDaGiao.length - 1 && 
                           <tr>
-                            <td className="text-right td-bgd1" colSpan={3}>Tổng thành phần</td>
-                            <td className="text-center td-bgd1">{formatter.format(sumSLGiao).slice(1)}</td>
-                            <td className="text-center td-bgd1">{formatter.format(sumLN1).slice(1)}</td>
-                            <td className="text-center td-bgd1">{formatter.format(sumLN2).slice(1)}</td>
-                            <td className="text-center td-bgd1">{formatter.format(sumLN1).slice(1)}</td>
+                            <td className="text-right td-bgd-orange" colSpan={3}>Tổng thành phần</td>
+                            <td className="text-center td-bgd-orange">{formatter.format(sumSLGiao).slice(1)}</td>
+                            <td className="text-center td-bgd-orange">{formatter.format(sumLN1).slice(1)}</td>
+                            <td className="text-center td-bgd-orange">{formatter.format(sumLN2).slice(1)}</td>
+                            <td className="text-center td-bgd-orange">{formatter.format(sumLN1).slice(1)}</td>
                           </tr>
                         }
                       </tbody>
