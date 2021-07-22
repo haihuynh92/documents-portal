@@ -406,9 +406,10 @@ button {
     td {
       padding: 5px 10px;
       vertical-align: middle;
-      &.td-bgd {background-color: $color-black-3;}
-      &.td-bgd1 {background-color: $main-color;}
-      &.td-fail {
+      &.td-bgd-black {background-color: $color-black-3;}
+      &.td-bgd-green {background-color: $main-color;}
+      &.td-bgd-purple {background-color: $color-purple-1;}
+      &.td-bgd-red {
         background-color: $color-red-1;
         .btn-delete:hover {color: $color-black;}
       }

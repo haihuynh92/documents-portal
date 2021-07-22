@@ -362,7 +362,7 @@ const DanhSachMH = (props) => {
         <div className="d-flex-between align-items-flex-end">
           <Button variant="warning" size="sm" className="btn-add ml-3" onClick={handleShowTU}>
             <i className="fa fa-usd mr-1" aria-hidden="true"></i>
-            Tiền khách đưa
+            Tiền khách trả
           </Button>
           <Button variant="info" size="sm" className="btn-add ml-3" onClick={handleShowVPL}>
             <i className="fa fa-usd mr-1" aria-hidden="true"></i>
@@ -726,6 +726,8 @@ const DanhSachMH = (props) => {
                 <th className="th-sl text-center">SL hư (cái)</th>
                 <th className="th-money text-center">Thành tiền <br />(VNĐ)</th>
                 <th className="th-min">Ghi chú</th>
+                <th className="th-sl text-center">Tổng SL giao <br />(cái)</th>
+                <th className="th-sl text-center">Tổng SL hư <br />(cái)</th>
                 <th className="th-money text-center">Tổng tiền <br /> trong ngày <br />(VNĐ)</th>
                 <th className="th-money text-center">Tổng tiền <br /> vải, phụ liệu <br />(VNĐ)</th>
                 <th className="th-money text-center">Tổng tiền <br /> hàng lỗi <br />(VNĐ)</th>
