@@ -14,7 +14,6 @@ import './csm.scss';
 const DanhSachCSM = (props) => {
   const { DSCSM } = props;
   const dispatch = useDispatch();
-  const dateNow = moment().format('DD/MM/YYYY HH:mm:ss');
   const [valDefault, setValDefault] = useState({
     id: '',
     macs: '',
@@ -41,7 +40,7 @@ const DanhSachCSM = (props) => {
   const handleShow = () => {
     setValDefault({
       ...valDefault,
-      ngaytao: dateNow
+      ngaytao: moment().format('DD/MM/YYYY HH:mm:ss')
     });
     setIsShow(true);
   }
@@ -92,7 +91,7 @@ const DanhSachCSM = (props) => {
       diachi: detail.diachi.trim(),
       sdt: detail.sdt.trim(),
       ghichu: detail.ghichu.trim(),
-      ngaytao: dateNow
+      ngaytao: moment().format('DD/MM/YYYY HH:mm:ss')
     });
     setIsShow(true);
   }

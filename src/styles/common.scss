@@ -183,6 +183,10 @@ button {
     box-shadow: none !important;
   }
 }
+.btn-view {
+  color: $color-white;
+  &:hover {color: $color-orange;}
+}
 
 .d-flex-between {
   display: flex;
@@ -397,14 +401,17 @@ button {
 .custom-table {
   margin-bottom: 0;
   thead th {vertical-align: middle;}
-  tbody td {
-    padding: 5px 10px;
-    vertical-align: middle;
-    &.td-bgd {background-color: $color-black-3;}
-    &.td-bgd1 {background-color: $main-color;}
-    &.td-fail {
-      background-color: $color-red-1;
-      .btn-delete:hover {color: $color-black;}
+  tbody {
+    border: 0 !important;
+    td {
+      padding: 5px 10px;
+      vertical-align: middle;
+      &.td-bgd {background-color: $color-black-3;}
+      &.td-bgd1 {background-color: $main-color;}
+      &.td-fail {
+        background-color: $color-red-1;
+        .btn-delete:hover {color: $color-black;}
+      }
     }
   }
   .td-relative {
@@ -483,6 +490,7 @@ button {
   }
   .modal-body, .modal-footer {background-color: $color-black-2;}
   .modal-footer {border-color: $color-black-3;}
+  &.modal-view .modal-body {padding: 0;}
 }
 
 .pagination-custom {
@@ -590,9 +598,8 @@ button {
 .datepicker-custom {
   color: $color-black;
   .ant-picker {width: 100%;}
-  input::placeholder {
-    color: $color-black;
-  }
+  input::placeholder {color: $color-black;}
+  .invalid {border: solid 1px $color-red;}
 }
 .ant-picker-cell-disabled {pointer-events: unset;}
 .ant-picker-cell:not(.ant-picker-cell-disabled):hover .ant-picker-cell-inner {
@@ -602,6 +609,7 @@ button {
 
 .select-custom {
   .ant-select {width: 100%;}
+  .ant-select-selection-placeholder {color: $color-black;}
   &.invalid {
     .ant-select-selector {
       border-color: $color-red !important;

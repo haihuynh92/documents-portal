@@ -2,24 +2,20 @@ import { themHangLoi, themThongTin, themTienTraTruoc, themTienVaiPhuLieu, xoaTho
 import { DatePicker, Select } from 'antd';
 import Empty from 'components/common/Empty/Empty';
 import ErrorMsg from 'components/common/ErrorMsg/ErrorMsg';
+import { CONFIG_MONEY } from 'constant/currentUser';
 import _ from 'lodash';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { Button, Col, Form, Modal, Row, Table } from 'react-bootstrap';
 import CurrencyFormat from 'react-currency-format';
 import { useDispatch } from 'react-redux';
+import { formatter } from 'services/common';
 import KHItem from './KHItem';
 
 const { Option } = Select;
 
 const DanhSachMH = (props) => {
-  const { DSKH, DSKHGroupBy, DSMaHang, nameArr } = props;
-
-  let formatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'VND',
-  });
-  const dateNow = moment().format('DD/MM/YYYY HH:mm:ss');
+  const { DSKH, DSKHGroupBy, DSMaHang, nameArr, currentUser } = props;
   const dispatch = useDispatch();
   const [isError, setIsError] = useState(false);
 
@@ -30,7 +26,9 @@ const DanhSachMH = (props) => {
     slgiao: '',
     ghichu: '',
     ngaytao: '',
-    thongtin: 'giaohang'
+    thongtin: 'giaohang',
+    month: '',
+    year: ''
   });
   const [isShow, setIsShow] = useState(false);
   const handleClose = () => {
@@ -43,14 +41,18 @@ const DanhSachMH = (props) => {
       slgiao: '',
       ghichu: '',
       ngaytao: '',
-      thongtin: 'giaohang'
+      thongtin: 'giaohang',
+      month: '',
+      year: ''
     });
   };
   const handleShow = () => {
     setValDefault({
       ...valDefault,
       ngaynhap: moment().format('DD/MM/YYYY'),
-      ngaytao: dateNow
+      ngaytao: moment().format('DD/MM/YYYY HH:mm:ss'),
+      month: moment().format('MM/YYYY'),
+      year: moment().format('YYYY')
     });
     setIsShow(true);
   }
@@ -128,7 +130,9 @@ const DanhSachMH = (props) => {
     tientratruoc: '',
     ghichu: '',
     ngaytao: '',
-    thongtin: 'tientratruoc'
+    thongtin: 'tientratruoc',
+    month: '',
+    year: ''
   });
   const [isShowTU, setIsShowTU] = useState(false);
   const [isErrorTU, setIsErrorTU] = useState(false);
@@ -141,14 +145,18 @@ const DanhSachMH = (props) => {
       tientratruoc: '',
       ghichu: '',
       ngaytao: '',
-      thongtin: 'tientratruoc'
+      thongtin: 'tientratruoc',
+      month: '',
+      year: ''
     });
   };
   const handleShowTU = () => {
     setValDefaultTU({
       ...valDefaultTU,
       ngaynhap: moment().format('DD/MM/YYYY'),
-      ngaytao: dateNow
+      ngaytao: moment().format('DD/MM/YYYY HH:mm:ss'),
+      month: moment().format('MM/YYYY'),
+      year: moment().format('YYYY')
     });
     setIsShowTU(true);
   }
@@ -183,7 +191,9 @@ const DanhSachMH = (props) => {
     slhu: '',
     ghichu: '',
     ngaytao: '',
-    thongtin: 'hangloi'
+    thongtin: 'hangloi',
+    month: '',
+    year: ''
   });
   const [isShowFail, setIsShowFail] = useState(false);
   const [isErrorFail, setIsErrorFail] = useState(false);
@@ -197,14 +207,18 @@ const DanhSachMH = (props) => {
       slhu: '',
       ghichu: '',
       ngaytao: '',
-      thongtin: 'hangloi'
+      thongtin: 'hangloi',
+      month: '',
+      year: ''
     });
   };
   const handleShowFail = () => {
     setValDefaultFail({
       ...valDefaultFail,
       ngaynhap: moment().format('DD/MM/YYYY'),
-      ngaytao: dateNow
+      ngaytao: moment().format('DD/MM/YYYY HH:mm:ss'),
+      month: moment().format('MM/YYYY'),
+      year: moment().format('YYYY')
     });
     setIsShowFail(true);
   }
@@ -272,7 +286,9 @@ const DanhSachMH = (props) => {
     tienvaiphulieu: '',
     ghichu: '',
     ngaytao: '',
-    thongtin: 'tienvaiphulieu'
+    thongtin: 'tienvaiphulieu',
+    month: '',
+    year: ''
   });
   const [isShowVPL, setIsShowVPL] = useState(false);
   const [isErrorVPL, setIsErrorVPL] = useState(false);
@@ -285,14 +301,18 @@ const DanhSachMH = (props) => {
       tienvaiphulieu: '',
       ghichu: '',
       ngaytao: '',
-      thongtin: 'tienvaiphulieu'
+      thongtin: 'tienvaiphulieu',
+      month: '',
+      year: ''
     });
   };
   const handleShowVPL = () => {
     setValDefaultVPL({
       ...valDefaultVPL,
       ngaynhap: moment().format('DD/MM/YYYY'),
-      ngaytao: dateNow
+      ngaytao: moment().format('DD/MM/YYYY HH:mm:ss'),
+      month: moment().format('MM/YYYY'),
+      year: moment().format('YYYY')
     });
     setIsShowVPL(true);
   }
@@ -317,6 +337,19 @@ const DanhSachMH = (props) => {
       ...valDefaultVPL,
       [nameInput]: objVal.value
     });
+  }
+
+  // ===================================================================xem lợi nhuận
+  const [hangDaGiao, setHangDaGiao] = useState([]);
+  const [isShowLN, setIsShowLN] = useState(false);
+  let sumSLGiao = 0;
+  let sumLN1 = 0;
+  let sumLN2 = 0;
+  
+  const handleCloseLN = () => setIsShowLN(false);
+  const viewLN = (data) => {
+    setHangDaGiao(data);
+    setIsShowLN(true);
   }
 
   return (
@@ -701,12 +734,20 @@ const DanhSachMH = (props) => {
               </tr>
             </thead>
             <tbody>
-              <KHItem  data={DSKHGroupBy} listMH={DSMaHang} confirmDeleteKH={confirmDeleteKH} confirmDeleteTTVPL={confirmDeleteTTVPL} />
+              <KHItem
+                currentUser={currentUser}
+                data={DSKHGroupBy}
+                listMH={DSMaHang}
+                confirmDeleteKH={confirmDeleteKH}
+                confirmDeleteTTVPL={confirmDeleteTTVPL}
+                viewLN={viewLN}
+              />
             </tbody>
           </Table> : <Empty />
         }
       </div>
-
+      
+      {/* modal delete */}
       <Modal
         show={isShowDelete}
         onHide={handleCloseDelete}
@@ -728,6 +769,71 @@ const DanhSachMH = (props) => {
         <Modal.Footer>
           <Button variant="secondary" size="sm" onClick={handleCloseDelete}>Hủy</Button>
           <Button variant="danger" size="sm" onClick={onDeleteKH}>Xóa</Button>
+        </Modal.Footer>
+      </Modal>
+      
+      {/* modal lợi nhuận */}
+      <Modal
+        show={isShowLN}
+        onHide={handleCloseLN}
+        backdrop="static"
+        keyboard={false}
+        size="xl"
+        dialogClassName="modal-custom modal-view"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>{`Xem chi tiết lợi nhuận ngày ${!!hangDaGiao.length ? hangDaGiao[0]['ngaynhap'] : '???'}`}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {!!hangDaGiao.length ?
+            <Table bordered responsive variant="dark" className="custom-table">
+                <thead>
+                  <tr>
+                    <th className="th-stt text-center">STT</th>
+                    <th className="th-ma text-center">Mã hàng</th>
+                    <th className="th-min">Tên hàng</th>
+                    <th className="th-sl text-center">SL giao (cái)</th>
+                    <th className="th-money text-center">Lợi nhuận 1 <br />(VNĐ)</th>
+                    <th className="th-money text-center">Lợi nhuận 2 <br />(VNĐ)</th>
+                    <th className="th-money text-center">Chi TT <br />(VNĐ)</th>
+                  </tr>
+                </thead>
+                {
+                  hangDaGiao.map((item, index) => {
+                    let detailMH = _.filter(DSMaHang, (x) => {return x.id === item.mahangId});
+                    sumSLGiao += +item.slgiao;
+                    sumLN1 += CONFIG_MONEY * item.slgiao;
+                    sumLN2 += (detailMH[0].giagiao - detailMH[0].gianhap - CONFIG_MONEY) * item.slgiao
+
+                    return (
+                      <tbody key={item.id}>
+                        <tr>
+                          <td className="text-center">{index + 1}</td>
+                          <td className="text-center">{detailMH.length && detailMH[0]?.mahang}</td>
+                          <td>{detailMH.length && detailMH[0]?.tenhang}</td>
+                          <td className="text-center">{formatter.format(item.slgiao).slice(1)}</td>
+                          <td className="text-center">{formatter.format(CONFIG_MONEY * item.slgiao).slice(1)}</td>
+                          <td className="text-center">{formatter.format((detailMH[0].giagiao - detailMH[0].gianhap - CONFIG_MONEY) * item.slgiao).slice(1)}</td>
+                          <td className="text-center">{formatter.format(CONFIG_MONEY * item.slgiao).slice(1)}</td>
+                        </tr>
+                        {index === hangDaGiao.length - 1 && 
+                          <tr>
+                            <td className="text-right td-bgd1" colSpan={3}>Tổng thành phần</td>
+                            <td className="text-center td-bgd1">{formatter.format(sumSLGiao).slice(1)}</td>
+                            <td className="text-center td-bgd1">{formatter.format(sumLN1).slice(1)}</td>
+                            <td className="text-center td-bgd1">{formatter.format(sumLN2).slice(1)}</td>
+                            <td className="text-center td-bgd1">{formatter.format(sumLN1).slice(1)}</td>
+                          </tr>
+                        }
+                      </tbody>
+                    );
+                  })
+                }
+              </Table> : <Empty />
+          }
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" size="sm" onClick={handleCloseLN}>Đóng</Button>
         </Modal.Footer>
       </Modal>
 

@@ -1,18 +1,13 @@
+import _ from 'lodash';
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import ReactHtmlParser from 'react-html-parser';
-import _ from 'lodash';
-
+import { formatter } from 'services/common';
 
 const SCItem = (props) => {
   const { item, getDetailSC, confirmDeleteSC, listCSM, listMH } = props;
   const detailCSM = _.filter(listCSM, (x) => {return x.id === item?.cosomayId});
   const detailMH = _.filter(listMH, (x) => {return x.id === item?.mahangId});
-
-  let formatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'VND',
-  });
 
   return (
     <tr>

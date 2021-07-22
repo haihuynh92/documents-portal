@@ -9,6 +9,15 @@ const user = createSlice({
       password: 'Hai@jr99',
       firstName: 'Hải',
       lastName: 'Huỳnh',
+      role: 'admin'
+    },
+    {
+      id: 'RNIcXqsYBxH139puqOHae4n5CRgWMAdP',
+      email: 'hhuynh88@dxc.com',
+      password: '123456',
+      firstName: 'Hằng',
+      lastName: 'Huỳnh',
+      role: 'user'
     }
   ],
   reducers: {

@@ -1,10 +1,14 @@
 @import './../../styles/variable.scss';
 
+@keyframes moveTopRight {
+  0% {right: 5px;}
+  100% {right: 0;}
+}
 .sumary-block {
   margin: 0;
   .bgd {
-    padding: 0;
     .inner {
+      position: relative;
       overflow: hidden;
       color: $color-white;
       border-radius: 10px;
@@ -40,6 +44,50 @@
       background: #c14f4f!important;
       background: linear-gradient(45deg,#d16767,#c14f4f)!important;
       border-color: #c14f4f!important;
+    }
+  }
+  .link-detail {
+    padding: 0 10px;
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    z-index: 5;
+    transition-property: right;
+    &:hover {
+      animation: moveTopRight .3s infinite alternate;
+      -webkit-animation: moveTopRight .3s infinite alternate;
+    }
+  }
+}
+
+.show-info-money {
+  overflow: hidden;
+  margin-top: 20px;
+  border-radius: 10px;
+  background-color: $color-black-1;
+  .title {
+    padding: 12px 15px 15px;
+    background-color: $color-black-3;
+    color: $color-white;
+    font-size: 20px;
+  }
+  > .inner {padding: 20px 15px;}
+  .detail-money-block {
+    padding: 0 15px;
+    li {padding: 5px 0;}
+    .ttl-detail {
+      position: relative;
+      display: inline-block;
+      min-width: 170px;
+      padding-right: 15px;
+      text-align: right;
+      &:before {
+        content: ':';
+        position: absolute;
+        top: 0;
+        right: 10px;
+        z-index: 1;
+      }
     }
   }
 }

@@ -1,14 +1,11 @@
+import { ROLE } from 'constant/currentUser';
 import _ from 'lodash';
 import { Button } from 'react-bootstrap';
 import ReactHtmlParser from 'react-html-parser';
+import { formatter } from 'services/common';
 
 const KHItem = (props) => {
-  const { data, listMH, confirmDeleteKH, confirmDeleteTTVPL } = props;
-
-  let formatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'VND',
-  });
+  const { data, listMH, confirmDeleteKH, confirmDeleteTTVPL, viewLN, currentUser } = props;
 
   const arrDate = Object.keys(data);
     const cloneArr = [...arrDate];
@@ -87,6 +84,7 @@ const KHItem = (props) => {
     resultFinal = arrDate.map((item, i) => {
       let result = null;
       const sortDate = data[arrDate[i]][0]['thongtin'] === 'giaohang' ? data[arrDate[i]].slice().sort((a, b) => a.ngaytao > b.ngaytao ? -1 : 1) : data[arrDate[i]].slice().sort((a, b) => b.ngaytao > a.ngaytao ? -1 : 1);
+      const getThongTinGH = _.filter(sortDate, (x) => {return x.thongtin === 'giaohang'});
 
       result = sortDate.map((item, j) => {
         let count = sortDate.length;
@@ -95,7 +93,17 @@ const KHItem = (props) => {
 
         return (
           <tr key={item.id}>
-            {j < 1 && <td className="text-center" rowSpan={count}>{sortDate[j]['ngaynhap']}</td>}
+            {j < 1 && 
+              <td className="text-center" rowSpan={count}>
+                {sortDate[j]['ngaynhap']}
+                {JSON.parse(currentUser)?.role === ROLE.ADMIN &&
+                  <Button variant="default" size="sm" className="btn-view" onClick={() => viewLN(getThongTinGH)}>
+                    <i className="fa fa-eye mr-1" aria-hidden="true"></i>
+                    Xem
+                  </Button>
+                }
+              </td>
+            }
             
             {['GH', 'HL'].includes(isTT) && <td className={`text-center ${isTT === 'HL' ? 'td-fail' : ''}`}>
               <Button variant="default" className="button-control reset-button btn-delete" onClick={() => confirmDeleteKH(item)}>

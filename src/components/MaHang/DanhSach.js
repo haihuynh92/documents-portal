@@ -1,4 +1,3 @@
-import { yupResolver } from '@hookform/resolvers/yup';
 import { capNhatMH, themMH, XoaMH } from 'actions/mahang';
 import { Pagination } from "antd";
 import Empty from 'components/common/Empty/Empty';
@@ -8,15 +7,12 @@ import moment from 'moment';
 import React, { useState } from 'react';
 import { Button, Col, Form, Modal, Row, Table } from 'react-bootstrap';
 import CurrencyFormat from 'react-currency-format';
-import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import * as yup from 'yup';
 import MHItem from './MHItem';
 
 const DanhSachMH = (props) => {
   const { DSMH, infoPag, handlePaging, onSearchMH } = props;
   const dispatch = useDispatch();
-  const dateNow = moment().format('DD/MM/YYYY HH:mm:ss');
   const [valDefault, setValDefault] = useState({
     id: '',
     mahang: '',
@@ -24,14 +20,18 @@ const DanhSachMH = (props) => {
     giamay: '',
     gianhap: '',
     giagiao: '',
+    giachau: '',
     ghichu: '',
-    ngaytao: ''
+    ngaytao: '',
+    month: '',
+    year: ''
   });
 
   const [isShow, setIsShow] = useState(false);
 
   const handleClose = () => {
     setIsShow(false);
+    setIsError(false);
     setValDefault({
       id: '',
       mahang: '',
@@ -39,26 +39,22 @@ const DanhSachMH = (props) => {
       giamay: '',
       gianhap: '',
       giagiao: '',
+      giachau: '',
       ghichu: '',
-      ngaytao: ''
+      ngaytao: '',
+      month: '',
+      year: ''
     });
   };
   const handleShow = () => {
     setValDefault({
       ...valDefault,
-      ngaytao: dateNow
+      ngaytao: moment().format('DD/MM/YYYY HH:mm:ss'),
+      month: moment().format('MM/YYYY'),
+      year: moment().format('YYYY')
     });
     setIsShow(true);
   }
-
-  let validationSchema = yup.object().shape({
-    mahang: yup.string().required('Mã bắt buộc'),
-    tenhang: yup.string().required('Tên bắt buộc')
-  });
-  const { register, handleSubmit, errors } = useForm({
-    mode: 'onSubmit',
-    resolver: yupResolver(validationSchema)
-  });
 
   // input change
   const handleChange = (e) => {
@@ -76,19 +72,25 @@ const DanhSachMH = (props) => {
   }
   
   // save and update
+  const [isError, setIsError] = useState(false);
   const luuMaHang = () => {
     if (!!valDefault?.id) {
       dispatch(capNhatMH(valDefault, {
         page: 1,
         limit: infoPag?._limit
       }));
+      handleClose();
     } else {
-      dispatch(themMH(valDefault, {
-        page: 1,
-        limit: infoPag?._limit
-      }));
+      if (!!valDefault.mahang && !!valDefault.tenhang && !!valDefault.gianhap && !!valDefault.giagiao) {
+        dispatch(themMH(valDefault, {
+          page: 1,
+          limit: infoPag?._limit
+        }));
+        handleClose();
+      } else {
+        setIsError(true);
+      }
     }
-    handleClose();
   }
 
   // get detail
@@ -100,8 +102,11 @@ const DanhSachMH = (props) => {
       giamay: detail.giamay.trim(),
       gianhap: detail.gianhap.trim(),
       giagiao: detail.giagiao.trim(),
+      giachau: detail.giachau.trim(),
       ghichu: detail.ghichu.trim(),
-      ngaytao: dateNow
+      ngaytao: moment().format('DD/MM/YYYY HH:mm:ss'),
+      month: moment().format('MM/YYYY'),
+      year: moment().format('YYYY')
     });
     setIsShow(true);
   }
@@ -170,15 +175,14 @@ const DanhSachMH = (props) => {
             <Modal.Title>{`${!!valDefault?.id ? 'Cập nhật' : 'Thêm'} mã hàng`}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Form onSubmit={handleSubmit(luuMaHang)}>
+            <Form onSubmit={e => e.preventDefault()}>
               <Form.Control 
                 type="hidden"
                 name="ngaytao"
                 defaultValue={valDefault.ngaytao}
-                ref={register}
               />
               <Row>
-                <Col sm="6">
+                <Col sm="4">
                   <Form.Group controlId="mahang">
                     <Form.Label>Mã hàng <span>*</span></Form.Label>
                     <Form.Control
@@ -187,17 +191,16 @@ const DanhSachMH = (props) => {
                       name="mahang"
                       autoComplete="off"
                       autoFocus
-                      ref={register}
                       onChange={handleChange}
                       maxLength={10}
                       defaultValue={valDefault.mahang}
-                      className={`${errors?.mahang ? 'invalid' : ''}`}
+                      className={`${isError && !valDefault.mahang ? 'invalid' : ''}`}
                     />
-                    {errors?.mahang?.type === 'required' && <ErrorMsg msgError={errors?.mahang?.message} />}
+                    {isError && !valDefault.mahang && <ErrorMsg msgError="Mã bắt buộc" />}
                   </Form.Group>
                 </Col>
 
-                <Col sm="6">
+                <Col sm="4">
                   <Form.Group controlId="tenhang">
                     <Form.Label>Tên hàng <span>*</span></Form.Label>
                     <Form.Control
@@ -205,18 +208,15 @@ const DanhSachMH = (props) => {
                       placeholder="Nhập tên"
                       name="tenhang"
                       autoComplete="off"
-                      ref={register}
                       onChange={handleChange}
                       defaultValue={valDefault.tenhang}
-                      className={`${errors.tenhang ? 'invalid' : ''}`}
+                      className={`${isError && !valDefault.tenhang ? 'invalid' : ''}`}
                     />
-                    {errors?.tenhang?.type === 'required' && <ErrorMsg msgError={errors?.tenhang?.message} />}
+                    {isError && !valDefault.tenhang && <ErrorMsg msgError="Tên bắt buộc" />}
                   </Form.Group>
                 </Col>
-              </Row>
 
-              <Row>
-                <Col sm="6">
+                <Col sm="4">
                   <Form.Group controlId="giamay">
                     <Form.Label>Giá may</Form.Label>
                     <span className="prefix">VNĐ</span>
@@ -233,15 +233,17 @@ const DanhSachMH = (props) => {
                     />
                   </Form.Group>
                 </Col>
+              </Row>
 
-                <Col sm="6">
+              <Row>
+                <Col sm="4">
                   <Form.Group controlId="gianhap">
-                    <Form.Label>Giá nhập</Form.Label>
+                    <Form.Label>Giá nhập <span>*</span></Form.Label>
                     <span className="prefix">VNĐ</span>
                     <CurrencyFormat 
                       thousandSeparator={true}
                       onValueChange={(value) => onValueChangeFormat('gianhap', value)}
-                      className="form-control"
+                      className={`form-control ${isError && !valDefault?.gianhap ? 'invalid' : ''}`}
                       placeholder="Nhập giá"
                       autoComplete="off"
                       maxLength={10}
@@ -249,25 +251,43 @@ const DanhSachMH = (props) => {
                       id="gianhap"
                       value={valDefault.gianhap}
                     />
+                    {isError && !valDefault?.gianhap && <ErrorMsg msgError="Giá nhập bắt buộc" />}
                   </Form.Group>
                 </Col>
-              </Row>
 
-              <Row>
-                <Col sm="6">
+                <Col sm="4">
                   <Form.Group controlId="giagiao">
-                    <Form.Label>Giá giao</Form.Label>
+                    <Form.Label>Giá giao <span>*</span></Form.Label>
                     <span className="prefix">VNĐ</span>
                     <CurrencyFormat 
                       thousandSeparator={true}
                       onValueChange={(value) => onValueChangeFormat('giagiao', value)}
-                      className="form-control"
+                      className={`form-control ${isError && !valDefault?.giagiao ? 'invalid' : ''}`}
                       placeholder="Nhập giá"
                       autoComplete="off"
                       maxLength={10}
                       name="giagiao"
                       id="giagiao"
                       value={valDefault.giagiao}
+                    />
+                    {isError && !valDefault?.giagiao && <ErrorMsg msgError="Giá giao bắt buộc" />}
+                  </Form.Group>
+                </Col>
+
+                <Col sm="4">
+                  <Form.Group controlId="giachau">
+                    <Form.Label>Giá Châu</Form.Label>
+                    <span className="prefix">VNĐ</span>
+                    <CurrencyFormat 
+                      thousandSeparator={true}
+                      onValueChange={(value) => onValueChangeFormat('giachau', value)}
+                      className="form-control"
+                      placeholder="Nhập giá"
+                      autoComplete="off"
+                      maxLength={10}
+                      name="giachau"
+                      id="giachau"
+                      value={valDefault.giachau}
                     />
                   </Form.Group>
                 </Col>
@@ -282,7 +302,6 @@ const DanhSachMH = (props) => {
                       placeholder="Nhập ghi chú..."
                       name="ghichu"
                       autoComplete="off"
-                      ref={register}
                       onChange={handleChange}
                       maxLength={250}
                       defaultValue={valDefault.ghichu}
@@ -295,7 +314,7 @@ const DanhSachMH = (props) => {
                 <Button variant="secondary" size="sm" onClick={handleClose}>
                   Hủy
                 </Button>
-                <Button variant="primary" type="submit" size="sm" className="ml-2">{`${!!valDefault?.id ? 'Cập nhật' : 'Lưu'}`}</Button>
+                <Button variant="primary" type="submit" size="sm" className="ml-2" onClick={luuMaHang}>{`${!!valDefault?.id ? 'Cập nhật' : 'Lưu'}`}</Button>
               </div>
             </Form>        
           </Modal.Body>
@@ -309,9 +328,11 @@ const DanhSachMH = (props) => {
                 <th className="th-stt text-center">STT</th>
                 <th className="th-ma text-center">Mã hàng</th>
                 <th className="th-min">Tên hàng</th>
-                <th className="th-gia text-center">Giá may (VNĐ)</th>
-                <th className="th-gia text-center">Giá nhập (VNĐ)</th>
-                <th className="th-gia text-center">Giá giao (VNĐ)</th>
+                <th className="th-gia text-center">Giá may <br />(VNĐ)</th>
+                <th className="th-gia text-center">Giá Châu <br />(VNĐ)</th>
+                <th className="th-gia text-center">Giá nhập <br />(VNĐ)</th>
+                <th className="th-gia text-center">Giá giao <br />(VNĐ)</th>
+                <th className="th-gia text-center">Giá chênh lệch <br />(VNĐ)</th>
                 <th className="th-min">Ghi chú</th>
                 <th className="text-center th-action">Hành động</th>
               </tr>

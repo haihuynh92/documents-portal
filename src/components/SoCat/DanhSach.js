@@ -18,7 +18,6 @@ const { Option } = Select;
 const DanhSachMH = (props) => {
   const { DSSC, infoPag, DSMaHang, DSCoSoMay, handlePaging, onSearchSC } = props;
   const dispatch = useDispatch();
-  const dateNow = moment().format('DD/MM/YYYY HH:mm:ss');
   const [valDefault, setValDefault] = useState({
     id: '',
     ngaycat: '',
@@ -27,7 +26,9 @@ const DanhSachMH = (props) => {
     slgiao: '',
     cosomayId: '',
     ghichu: '',
-    ngaytao: ''
+    ngaytao: '',
+    month: '',
+    year: ''
   });
   
   const [isShow, setIsShow] = useState(false);
@@ -43,14 +44,18 @@ const DanhSachMH = (props) => {
       slgiao: '',
       cosomayId: '',
       ghichu: '',
-      ngaytao: ''
+      ngaytao: '',
+      month: '',
+      year: ''
     });
   };
   const handleShow = () => {
     setValDefault({
       ...valDefault,
       ngaycat: moment().format('DD/MM/YYYY'),
-      ngaytao: dateNow
+      ngaytao: moment().format('DD/MM/YYYY HH:mm:ss'),
+      month: moment().format('MM/YYYY'),
+      year: moment().format('YYYY')
     });
     setIsShow(true);
   }
@@ -120,7 +125,9 @@ const DanhSachMH = (props) => {
       slgiao: detail.slgiao.trim(),
       cosomayId: detail.cosomayId,
       ghichu: detail.ghichu.trim(),
-      ngaytao: dateNow
+      ngaytao: moment().format('DD/MM/YYYY HH:mm:ss'),
+      month: moment().format('MM/YYYY'),
+      year: moment().format('YYYY')
     });
     setIsShow(true);
   }

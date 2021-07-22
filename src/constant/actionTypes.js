@@ -31,3 +31,7 @@ export const THEM_TIEN_TRA_TRUOC = 'THEM_TIEN_TRA_TRUOC';
 export const THEM_HANG_LOI = 'THEM_HANG_LOI';
 export const THEM_TIEN_VAI_PHULIEU = 'THEM_TIEN_VAI_PHULIEU';
 export const XOA_THONG_TIN = 'XOA_THONG_TIN';
+
+// kiểm tra lợi nhuận hàng tháng
+export const KIEM_TRA_LOI_NHUAN_THANG = 'KIEM_TRA_LOI_NHUAN_THANG';
+export const KIEM_TRA_LOI_NHUAN_NAM = 'KIEM_TRA_LOI_NHUAN_NAM';

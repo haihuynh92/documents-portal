@@ -4,6 +4,7 @@ import Footer from "components/common/Footer/Footer";
 import Header from "components/common/Header/Header";
 import SideBar from "components/common/SideBar/SideBar";
 import DanhSach from "components/KhachHang/DanhSach";
+import { CURRENT_USER } from "constant/currentUser";
 import * as pathNameTypes from 'constant/pathName';
 import _ from 'lodash';
 import React, { useEffect } from "react";
@@ -14,6 +15,7 @@ import { useHistory } from "react-router-dom";
 const QuanLyKhachHang = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+  let currentUser = localStorage.getItem(CURRENT_USER);
   const DSKH = useSelector((state) => state.khachHangReduder);
   const DSMaHang = useSelector((state) => state.homeReducer.dsmahang);
   const showMenu = useSelector((state) => state.menuReduder);
@@ -55,6 +57,7 @@ const QuanLyKhachHang = () => {
         <div className="outer">
           <Container fluid>
             <DanhSach
+              currentUser={currentUser}
               nameArr={nameArr}
               DSMaHang={DSMaHang}
               DSKH={DSKH}

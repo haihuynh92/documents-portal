@@ -1,3 +1,4 @@
+import { danhSachTatCaMaHang } from "actions/mahang";
 import "antd/dist/antd.css";
 import Footer from 'components/common/Footer/Footer';
 import Header from 'components/common/Header/Header';
@@ -11,6 +12,7 @@ const HomePage = () => {
   const dispatch = useDispatch();
   let [currentUser, setCurrentUser] = useState(null);
   const showMenu = useSelector((state) => state.menuReduder);
+  const dsmahang = useSelector((state) => state.homeReducer).dsmahang;
 
   useEffect(() => {
     let getUser = localStorage.getItem(CURRENT_USER);
@@ -21,10 +23,9 @@ const HomePage = () => {
     }
   }, [dispatch, currentUser]);
   
-  // useMemo(() => {
-  //   dispatch(danhSachTatCaMaHang());
-  //   dispatch(danhSachTatCaCoSoMay());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(danhSachTatCaMaHang());
+  }, [dispatch]);
 
   return !!currentUser && (
     <div className="wrapper-container">
@@ -33,7 +34,7 @@ const HomePage = () => {
       <div className={`main-content ${showMenu ? 'full-content' : ''}`}>
         <Header />
         <div className="outer">
-          <Dashboard />
+          <Dashboard currentUser={currentUser} dsmahang={dsmahang} />
         </div>
         <Footer />
       </div>
