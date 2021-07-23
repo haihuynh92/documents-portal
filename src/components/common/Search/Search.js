@@ -3,7 +3,7 @@ import { Button, Form } from 'react-bootstrap';
 import './Search.scss';
 
 const Search = (props) => {
-  const { onSearch, handlePaging } = props;
+  const { onSearch, handlePaging, placeholder } = props;
   const [searchTerm, setSearchTerm] = useState('');
   const searchRef = useRef(null);
 
@@ -39,7 +39,7 @@ const Search = (props) => {
           name="search" 
           autoComplete="off"
           value={searchTerm}
-          placeholder="Tìm kiếm..."
+          placeholder={placeholder}
           onChange={handleChangeSearch}
           onKeyDown={handleKeyDown}
           ref={searchRef}

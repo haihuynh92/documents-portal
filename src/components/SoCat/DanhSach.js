@@ -7,11 +7,11 @@ import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { Button, Col, Form, Modal, Row, Table } from 'react-bootstrap';
 import CurrencyFormat from 'react-currency-format';
-import DatePickerEle from 'react-date-picker';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import SCItem from './SCItem';
 import './socat.scss';
+import DateRangePicker from '@wojtekmaj/react-daterange-picker';
 
 const { Option } = Select;
 
@@ -93,9 +93,10 @@ const DanhSachMH = (props) => {
         page: 1,
         limit: infoPag?._limit
       }));
-      setSelected({
-        ngaycat: '',
-        mahangId: ''
+      setFormSearch({
+        ngaycat: [],
+        mahangId: '',
+        cosomayId: ''
       });
       handleClose();
     } else {
@@ -104,9 +105,10 @@ const DanhSachMH = (props) => {
           page: 1,
           limit: infoPag?._limit
         }));
-        setSelected({
-          ngaycat: '',
-          mahangId: ''
+        setFormSearch({
+          ngaycat: [],
+          mahangId: '',
+          cosomayId: ''
         });
         handleClose();
       } else {
@@ -198,9 +200,10 @@ const DanhSachMH = (props) => {
       page: 1,
       limit: infoPag?._limit
     }));
-    setSelected({
-      ngaycat: '',
-      mahangId: ''
+    setFormSearch({
+      ngaycat: [],
+      mahangId: '',
+      cosomayId: ''
     });
     handleCloseDelete();
   }
@@ -238,37 +241,49 @@ const DanhSachMH = (props) => {
     });
   }
 
-  // tìm kiếm mã hàng, ngày cắt
-  const [selected, setSelected] = useState({
-    ngaycat: '',
-    mahangId: ''
+  // ===========================================tìm kiếm mã hàng, ngày cắt
+  const [formSearch, setFormSearch] = useState({
+    ngaycat: null,
+    mahangId: '',
+    cosomayId: ''
   });
 
   const onChangeSearchMaHang = (value) => {
-    setSelected({
-      ...selected,
+    setFormSearch({
+      ...formSearch,
       mahangId: value
     });
+    handlePaging(1);
+  }
+
+  const onChangeSelectSearchCSM = (value) => {
+    setFormSearch({
+      ...formSearch,
+      cosomayId: value
+    });
+    handlePaging(1);
   }
 
   const onChangeDateSearch = (value) => {
-    setSelected({
-      ...selected,
+    console.log(value);
+    setFormSearch({
+      ...formSearch,
       ngaycat: value
     });
     handlePaging(1);
   }
 
   const refreshControl = () => {
-    setSelected({
-      ngaycat: '',
-      mahangId: ''
+    setFormSearch({
+      ngaycat: null,
+      mahangId: '',
+      cosomayId: ''
     });
     handlePaging(1);
   }
   useEffect(() => {
-    onSearchSC(selected);
-  }, [dispatch, selected, onSearchSC]);
+    onSearchSC(formSearch);
+  }, [dispatch, formSearch, onSearchSC]);
 
 
   return (
@@ -281,26 +296,26 @@ const DanhSachMH = (props) => {
         <div className="d-flex-between align-items-flex-end">
           <div className="search-socat">
             <Row>
-              <Col sm="6">
+              <Col sm="5">
                 <Form.Group>
                   <div className="datepicker-custom">
-                    <DatePickerEle
-                      className={`${!!selected.ngaycat ? 'isValue' : ''}`}
+                    <DateRangePicker
+                      className={`${formSearch.ngaycat && !!formSearch.ngaycat.length ? 'isValue' : ''}`}
                       onChange={onChangeDateSearch}
-                      value={!!selected.ngaycat ? selected.ngaycat : ''}
-                      format="dd/MM/y"
+                      value={formSearch.ngaycat && !!formSearch.ngaycat.length ? formSearch.ngaycat : null}
                       maxDate={new Date()}
+                      format="dd/MM/y"
                     />
                   </div>
                 </Form.Group>
               </Col>
 
-              <Col sm="6">
+              <Col sm="3">
                 <Form.Group>
                   <div className="select-custom">
                     <Select
                       showSearch
-                      value={!!selected.mahangId ? selected.mahangId : 'Tìm mã hàng'}
+                      value={!!formSearch.mahangId ? formSearch.mahangId : 'Tìm mã hàng'}
                       optionFilterProp="children"
                       filterOption={(input, option) =>
                         option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -316,11 +331,30 @@ const DanhSachMH = (props) => {
                 </Form.Group>
               </Col>
 
+              <Col sm="4">
+                <Form.Group>
+                  <div className="select-custom">
+                    <Select
+                      showSearch
+                      optionFilterProp="children"
+                      filterOption={(input, option) =>
+                        option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                      }
+                      filterSort={(optionA, optionB) =>
+                        optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
+                      }
+                      onChange={onChangeSelectSearchCSM}
+                      value={`${!!formSearch?.cosomayId ? formSearch?.cosomayId : 'Tìm cơ sở'}`}
+                    >
+                      {showDSCoSoMay(DSCoSoMay)}
+                    </Select>
+                  </div>
+                </Form.Group>
+              </Col>
+              <Button variant="default" onClick={refreshControl} className="btn-refresh" title="Làm mới Table">
+                <i className="fa fa-refresh" aria-hidden="true"></i>
+              </Button>
             </Row>
-
-            <Button variant="default" onClick={refreshControl} className="btn-refresh" title="Làm mới Table">
-              <i className="fa fa-refresh" aria-hidden="true"></i>
-            </Button>
           </div>
           
           <Button variant="success" size="sm" className="btn-add ml-3" onClick={handleShow}>

@@ -77,15 +77,17 @@ export function* xoaSoCat(action) {
 export function* timKiemSoCat(action) {
   const { payload } = action;
   try {
-    if (!payload.dataSearch.ngaycat && !payload.dataSearch.mahangId) {
+    if (payload.dataSearch.ngaycat === null && !payload.dataSearch.mahangId && !payload.dataSearch.cosomayId) {
       return;
     }
     const convertData = {
-      ngaycat: !moment(payload.dataSearch.ngaycat).isValid() ? "" : moment(payload.dataSearch.ngaycat).format('DD/MM/YYYY'),
-      mahangId: payload.dataSearch.mahangId
+      ngaycat: payload.dataSearch.ngaycat === null ? null : [moment(payload.dataSearch.ngaycat[0]).format('DD/MM/YYYY'), moment(payload.dataSearch.ngaycat[1]).format('DD/MM/YYYY')],
+      mahangId: payload.dataSearch.mahangId,
+      cosomayId: payload.dataSearch.cosomayId
     };
     yield put(showLoading());
     const result = yield call(timKiemSoCatApi, convertData, payload.pagingState);
+    
     if (result.status === 200) {
       yield delay(1000);
       yield put(hideLoading());

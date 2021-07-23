@@ -1,7 +1,7 @@
 import axiosClient from './axiosClient';
 
 export const layDSSoCatApi = (pagination) => {
-  return axiosClient.get(`/socats?_sort=ngaytao&_order=desc&_page=${pagination.page}&_limit=${pagination.limit}`);
+  return axiosClient.get(`/socats?_sort=ngaycat&_order=desc&_page=${pagination.page}&_limit=${pagination.limit}`);
 };
 
 export const themSoCatApi = (dataPost) => {
@@ -17,11 +17,19 @@ export const xoaSoCatApi = (id) => {
 };
 
 export const timKiemSoCatApi = (dataSearch, pagination) => {
-  if (!!dataSearch.mahangId && !dataSearch.ngaycat) {
-    return axiosClient.get(`/socats?mahangId=${dataSearch.mahangId}&_sort=ngaytao&_order=desc&_page=${pagination.page}&_limit=${pagination.limit}`);
-  } else if (!dataSearch.mahangId && !!dataSearch.ngaycat) {
-    return axiosClient.get(`/socats?ngaycat=${dataSearch.ngaycat}&_sort=ngaytao&_order=desc&_page=${pagination.page}&_limit=${pagination.limit}`);
-  } else {
-    return axiosClient.get(`/socats?ngaycat=${dataSearch.ngaycat}&mahangId=${dataSearch.mahangId}&_sort=ngaytao&_order=desc&_page=${pagination.page}&_limit=${pagination.limit}`);
+  if (!!dataSearch.mahangId && !dataSearch.cosomayId && dataSearch.ngaycat === null) {
+    return axiosClient.get(`/socats?mahangId=${dataSearch.mahangId}&_sort=ngaycat&_order=desc&_page=${pagination.page}&_limit=${pagination.limit}`);
+  } else if (!!dataSearch.cosomayId && !dataSearch.mahangId && dataSearch.ngaycat === null) {
+    return axiosClient.get(`/socats?cosomayId=${dataSearch.cosomayId}&_sort=ngaycat&_order=desc&_page=${pagination.page}&_limit=${pagination.limit}`);
+  } else if (!dataSearch.cosomayId && !dataSearch.mahangId && !!dataSearch.ngaycat.length) {
+    return axiosClient.get(`/socats?ngaycat_gte=${dataSearch.ngaycat[0]}&ngaycat_lte=${dataSearch.ngaycat[1]}&_sort=ngaycat&_order=desc&_page=${pagination.page}&_limit=${pagination.limit}`);
+  } else if (!!dataSearch.cosomayId && !!dataSearch.mahangId && dataSearch.ngaycat === null) {
+    return axiosClient.get(`/socats?&mahangId=${dataSearch.mahangId}&cosomayId=${dataSearch.cosomayId}&_sort=ngaycat&_order=desc&_page=${pagination.page}&_limit=${pagination.limit}`);
+  } else if (!dataSearch.cosomayId && !!dataSearch.mahangId && !!dataSearch.ngaycat.length) {
+    return axiosClient.get(`/socats?ngaycat_gte=${dataSearch.ngaycat[0]}&ngaycat_lte=${dataSearch.ngaycat[1]}&mahangId=${dataSearch.mahangId}&_sort=ngaycat&_order=desc&_page=${pagination.page}&_limit=${pagination.limit}`);
+  } else if (!!dataSearch.cosomayId && !dataSearch.mahangId && !!dataSearch.ngaycat.length) {
+    return axiosClient.get(`/socats?ngaycat_gte=${dataSearch.ngaycat[0]}&ngaycat_lte=${dataSearch.ngaycat[1]}&cosomayId=${dataSearch.cosomayId}&_sort=ngaycat&_order=desc&_page=${pagination.page}&_limit=${pagination.limit}`);
+  } else if (!!dataSearch.cosomayId && !!dataSearch.mahangId && !!dataSearch.ngaycat.length) {
+    return axiosClient.get(`/socats?ngaycat_gte=${dataSearch.ngaycat[0]}&ngaycat_lte=${dataSearch.ngaycat[1]}&mahangId=${dataSearch.mahangId}&cosomayId=${dataSearch.cosomayId}&_sort=ngaycat&_order=desc&_page=${pagination.page}&_limit=${pagination.limit}`);
   }
 };

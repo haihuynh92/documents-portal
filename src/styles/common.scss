@@ -379,18 +379,22 @@ button {
 }
 
 .list-default {
-  overflow: hidden;
-  border-radius: 5px;
   .btn-add {color: $color-white;}
   .title-heading {
     padding: 10px 20px;
     background-color: $color-black-1;
     border-bottom: solid 1px $color-black-3;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
     align-items: center;
     .ttl-list {font-size: 18px;}
     .fa-list-alt {font-size: 30px;}
   }
-  .body-heading {background-color: $color-black-2;}
+  .body-heading {
+    background-color: $color-black-2;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
 }
 
 @keyframes moveTopBottom {
@@ -620,46 +624,50 @@ button {
   }
 }
 
-.react-date-picker {
+.react-daterange-picker {
   height: 32px;
   width: 100%;
-  &:hover .react-date-picker__wrapper {border-color: #40a9ff;}
-  .react-date-picker__calendar {width: 280px;}
-  .react-date-picker__wrapper {
+  display: block !important;
+  &:hover .react-daterange-picker__wrapper {border-color: #40a9ff;}
+  .react-daterange-picker__calendar {width: 280px;}
+  .react-daterange-picker__wrapper {
+    position: relative;
+    height: 100%;
     border: 1px solid #d9d9d9;
     border-radius: 2px;
-  }
-  .react-date-picker__inputGroup {
-    padding-left: 10px;
-    padding-right: 30px;
     background-color: $color-white;
+  }
+  .react-daterange-picker__inputGroup {
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
     span, input {
       background-color: transparent !important;
       color: $color-black;
       font-family: $font-vnfoptimaregular !important;
       vertical-align: 0;
     }
-    .react-date-picker__inputGroup__year {width: 77px !important;}
+    .react-daterange-picker__inputGroup__input react-daterange-picker__inputGroup__day {width: 20px !important;}
   }
-  .react-date-picker__clear-button, .react-date-picker__calendar-button {
+  .react-daterange-picker__clear-button, .react-daterange-picker__calendar-button {
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
   }
-  .react-date-picker__clear-button {
+  .react-daterange-picker__clear-button {
     z-index: 1;
     opacity: 0;
     visibility: hidden;
   }
-  .react-date-picker__calendar-button {z-index: 5;}
+  .react-daterange-picker__calendar-button {z-index: 5;}
   &.isValue {
-    .react-date-picker__clear-button {
+    .react-daterange-picker__clear-button {
       opacity: 1;
       z-index: 5;
       visibility: visible;
     }
-    .react-date-picker__calendar-button {
+    .react-daterange-picker__calendar-button {
       z-index: 1;
       opacity: 0;
       visibility: hidden;

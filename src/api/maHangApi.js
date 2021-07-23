@@ -21,5 +21,5 @@ export const xoaMaHangApi = (id) => {
 };
 
 export const timKiemMaHangApi = (keySearch, pagination) => {
-  return axiosClient.get(`/mahangs?q=${keySearch}&_sort=ngaytao&_order=desc&_page=${pagination.page}&_limit=${pagination.limit}`);
+  return axiosClient.get(`/mahangs?mahang_like=${keySearch}&_sort=ngaytao&_order=desc&_page=${pagination.page}&_limit=${pagination.limit}`);
 };

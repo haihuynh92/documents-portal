@@ -10,7 +10,7 @@ GET http://localhost:9000/mahangs?q=08
 GET http://localhost:9000/mahangs?_sort=tenhang&_order=desc&_page=2&_limit=2
 
 ###
-GET http://localhost:9000/socats
+GET http://localhost:9000/socats?ngaycat_gte=11/07/2021&ngaycat_lte=12/07/2021
 
 ###delete
 DELETE http://localhost:9000/socats/b6729e1f-20ef-58d5-d370-e7b1721a5556

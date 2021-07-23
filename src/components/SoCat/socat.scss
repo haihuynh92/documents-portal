@@ -2,9 +2,9 @@
 @import './../../components/common/Search/Search.scss';
 
 .search-socat {
-  min-width: 400px;
-  padding-right: 40px;
+  min-width: 700px;
   position: relative;
+  padding-right: 50px;
   .form-group {margin: 0;}
-  .btn-search {right: -5px;}
+  .btn-refresh {right: 0;}
 }

@@ -33,14 +33,13 @@ const SoCat = () => {
     dispatch(danhSachTatCaMaHang());
     dispatch(danhSachTatCaCoSoMay());
   }, [dispatch]);
-  
-  useEffect(() => {
-    dispatch(danhSachSoCat(pagingState));
-  }, [dispatch, pagingState]);
 
   useEffect(() => {
-    if (!!dataSearch.ngaycat || !!dataSearch.mahangId) {
+    if ((dataSearch.ngaycat && !!dataSearch.ngaycat.length) || !!dataSearch.mahangId || !!dataSearch.cosomayId) {
       dispatch(timKiemSC(dataSearch, pagingState));
+    }
+    if (dataSearch.ngaycat === null && !dataSearch.mahangId && !dataSearch.cosomayId) {
+      dispatch(danhSachSoCat(pagingState));
     }
   }, [dispatch, pagingState, dataSearch]);
   
@@ -48,13 +47,6 @@ const SoCat = () => {
   const onSearchSoCat = (data) => {
     seDataSearch(data);
   }
-
-  useEffect(() => {
-    dispatch(timKiemSC(dataSearch, {
-      page: 1,
-      limit: pagingState.limit
-    }));
-  }, [dispatch, dataSearch, pagingState.limit]);
 
   return (
     <div className="wrapper-container">

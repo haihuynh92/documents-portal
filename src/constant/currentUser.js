@@ -1,4 +1,5 @@
 export const CURRENT_USER = 'CURRENT_USER';
+export const LIMIT_ITEM = 2;
 export const ROLE = {
   ADMIN: 'admin',
   NOI_BO: 'sonoibo',
