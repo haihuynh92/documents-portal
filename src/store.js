@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import coSoMayReducer from 'reducers/coSoMayReducer';
 import homeReducer from 'reducers/homeReducer';
 import khachHangReduder from 'reducers/khachHangReducer';
+import soCoSoReducer from 'reducers/soCoSoReducer';
 import loadingReducer from 'reducers/loadingReducer';
 import loginReducer from 'reducers/loginReducer';
 import maHangReducer from 'reducers/maHangReducer';
@@ -20,7 +21,8 @@ const rootReducer = {
   soCatReduder,
   khachHangReduder,
   menuReduder,
-  kiemTraLoiNhuanReduder
+  kiemTraLoiNhuanReduder,
+  soCoSoReducer
 }
 
 const sagaMiddleware = createSagaMiddleware();

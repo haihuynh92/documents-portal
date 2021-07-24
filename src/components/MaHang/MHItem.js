@@ -14,6 +14,7 @@ const MHItem = (props) => {
       <td>{item.tenhang}</td>
       <td className="text-center">{formatter.format(item.giamay).slice(1)}</td>
       <td className="text-center">{formatter.format(item.giachau).slice(1)}</td>
+      <td className="text-center">{formatter.format(item.giaket).slice(1)}</td>
       <td className="text-center">{formatter.format(item.gianhap).slice(1)}</td>
       <td className="text-center">{formatter.format(item.giagiao).slice(1)}</td>
       <td className="text-center">{formatter.format(item.giagiao - item.gianhap - CONFIG_MONEY).slice(1)}</td>

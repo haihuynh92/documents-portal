@@ -1,8 +1,8 @@
-import { themHangLoi, themThongTin, themTienTraTruoc, themTienVaiPhuLieu, xoaThongTin } from 'actions/khachhang';
+import { themHangLoiSCS, themThongTinSCS, themTienUngSCS, xoaThongTinSCS } from 'actions/socoso';
 import { DatePicker, Select } from 'antd';
 import Empty from 'components/common/Empty/Empty';
 import ErrorMsg from 'components/common/ErrorMsg/ErrorMsg';
-import { CONFIG_MONEY, DATA_BOOK, ROLE } from 'constant/currentUser';
+import { DATA_SCS } from 'constant/currentUser';
 import _ from 'lodash';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
@@ -10,12 +10,12 @@ import { Button, Col, Form, Modal, Row, Table } from 'react-bootstrap';
 import CurrencyFormat from 'react-currency-format';
 import { useDispatch } from 'react-redux';
 import { formatter } from 'services/common';
-import KHItem from './KHItem';
+import SCSItem from './SCSItem';
 
 const { Option } = Select;
 
-const DanhSachKH = (props) => {
-  const { DSKH, DSKHGroupBy, DSMaHang, nameArr, currentUser, isTypeBook } = props;
+const DanhSachThongTinCS = (props) => {
+  const { DSThongTinSCS, DSSCSGroupBy, DSMaHang, nameArr } = props;
   const dispatch = useDispatch();
   const [isError, setIsError] = useState(false);
 
@@ -115,7 +115,7 @@ const DanhSachKH = (props) => {
       ghichu: data.ghichu
     });
     if (!!valDefault?.mahangId) {
-      dispatch(themThongTin(valDefault, nameArr));
+      dispatch(themThongTinSCS(valDefault, nameArr));
       handleClose();
     } else {
       setIsError(true);
@@ -123,14 +123,14 @@ const DanhSachKH = (props) => {
   }
 
 
-  // ===================================================================config tiền khách đưa trước
+  // ===================================================================config tiền ứng
   const [valDefaultTU, setValDefaultTU] = useState({
     id: '',
     ngaynhap: '',
-    tientratruoc: '',
+    tienung: '',
     ghichu: '',
     ngaytao: '',
-    thongtin: 'tientratruoc',
+    thongtin: 'tienung',
     month: '',
     year: ''
   });
@@ -142,10 +142,10 @@ const DanhSachKH = (props) => {
     setValDefaultTU({
       id: '',
       ngaynhap: '',
-      tientratruoc: '',
+      tienung: '',
       ghichu: '',
       ngaytao: '',
-      thongtin: 'tientratruoc',
+      thongtin: 'tienung',
       month: '',
       year: ''
     });
@@ -161,10 +161,10 @@ const DanhSachKH = (props) => {
     setIsShowTU(true);
   }
 
-  // lưu thông tin tiền khách trả
-  const luuThongTinTienKhach = () => {
-    if (!!valDefaultTU?.tientratruoc) {
-      dispatch(themTienTraTruoc(valDefaultTU, nameArr));
+  // lưu thông tin tiền ứng
+  const luuThongTinTienUng = () => {
+    if (!!valDefaultTU?.tienung) {
+      dispatch(themTienUngSCS(valDefaultTU, nameArr));
       handleCloseTU();
     } else {
       setIsErrorTU(true);
@@ -189,6 +189,7 @@ const DanhSachKH = (props) => {
     ngaynhap: '',
     mahangId: '',
     slhu: '',
+    giasua: '',
     ghichu: '',
     ngaytao: '',
     thongtin: 'hangloi',
@@ -205,6 +206,7 @@ const DanhSachKH = (props) => {
       ngaynhap: '',
       mahangId: '',
       slhu: '',
+      giasua: '',
       ghichu: '',
       ngaytao: '',
       thongtin: 'hangloi',
@@ -226,7 +228,7 @@ const DanhSachKH = (props) => {
   // lưu thông tin hàng lỗi
   const luuHangLoi = () => {
     if (!!valDefaultFail?.mahangId) {
-      dispatch(themHangLoi(valDefaultFail, nameArr));
+      dispatch(themHangLoiSCS(valDefaultFail, nameArr));
       handleCloseFail();
     } else {
       setIsErrorFail(true);
@@ -266,94 +268,21 @@ const DanhSachKH = (props) => {
   const handleShowDelete = () => setIsShowDelete(true);
   let detailKH = _.filter(DSMaHang, (x) => {return x.id === itemDelete.mahangId});
 
-  const confirmDeleteKH = (detail) => {
+  const confirmDeleteSCS = (detail) => {
     setItemDelete(detail);
     handleShowDelete();
   }
-  const onDeleteKH = () => {
-    dispatch(xoaThongTin(itemDelete.id, nameArr));
+  const onDeleteSCS = () => {
+    dispatch(xoaThongTinSCS(itemDelete.id, nameArr));
     handleCloseDelete();
   }
 
-  const confirmDeleteTTVPL = (id) => {
-    dispatch(xoaThongTin(id, nameArr));
-  }
-
-  // ===================================================================config tiền vải, phụ liệu
-  const [valDefaultVPL, setValDefaultVPL] = useState({
-    id: '',
-    ngaynhap: '',
-    tienvaiphulieu: '',
-    ghichu: '',
-    ngaytao: '',
-    thongtin: 'tienvaiphulieu',
-    month: '',
-    year: ''
-  });
-  const [isShowVPL, setIsShowVPL] = useState(false);
-  const [isErrorVPL, setIsErrorVPL] = useState(false);
-  const handleCloseVPL = () => {
-    setIsShowVPL(false);
-    setIsErrorVPL(false);
-    setValDefaultVPL({
-      id: '',
-      ngaynhap: '',
-      tienvaiphulieu: '',
-      ghichu: '',
-      ngaytao: '',
-      thongtin: 'tienvaiphulieu',
-      month: '',
-      year: ''
-    });
-  };
-  const handleShowVPL = () => {
-    setValDefaultVPL({
-      ...valDefaultVPL,
-      ngaynhap: moment().format('DD/MM/YYYY'),
-      ngaytao: moment().format('DD/MM/YYYY HH:mm:ss'),
-      month: moment().format('MM/YYYY'),
-      year: moment().format('YYYY')
-    });
-    setIsShowVPL(true);
-  }
-
-  // lưu thông tin tiền khách trả
-  const luuThongTinVPL = () => {
-    if (!!valDefaultVPL?.tienvaiphulieu) {
-      dispatch(themTienVaiPhuLieu(valDefaultVPL, nameArr));
-      handleCloseVPL();
-    } else {
-      setIsErrorVPL(true);
-    }
-  }
-  const handleChangeVPL = (e) => {
-    setValDefaultVPL({
-      ...valDefaultVPL,
-      [e.target.name]: e.target.value
-    });
-  }
-  const onValueChangeFormatVPL = (nameInput, objVal) => {
-    setValDefaultVPL({
-      ...valDefaultVPL,
-      [nameInput]: objVal.value
-    });
-  }
-
-  // ===================================================================xem lợi nhuận
-  const [hangDaGiao, setHangDaGiao] = useState([]);
-  const [isShowLN, setIsShowLN] = useState(false);
-  let sumSLGiao = 0;
-  let sumLN1 = 0;
-  let sumLN2 = 0;
-  
-  const handleCloseLN = () => setIsShowLN(false);
-  const viewLN = (data) => {
-    setHangDaGiao(data);
-    setIsShowLN(true);
+  const confirmDeleteTU = (id) => {
+    dispatch(xoaThongTinSCS(id, nameArr));
   }
 
   const getName = (nameArr) => {
-    return _.filter(DATA_BOOK, (x) => {return x.value === nameArr})[0]['name'];
+    return _.filter(DATA_SCS, (x) => {return x.value === nameArr})[0]['name'];
   }
 
   return (
@@ -366,15 +295,11 @@ const DanhSachKH = (props) => {
         <div className="d-flex-between align-items-flex-end">
           <Button variant="warning" size="sm" className="btn-add ml-3" onClick={handleShowTU}>
             <i className="fa fa-usd mr-1" aria-hidden="true"></i>
-            Tiền khách trả
-          </Button>
-          <Button variant="info" size="sm" className="btn-add ml-3" onClick={handleShowVPL}>
-            <i className="fa fa-usd mr-1" aria-hidden="true"></i>
-            Tiền vải, phụ liệu
+            Tiền ứng
           </Button>
           <Button variant="danger" size="sm" className="btn-add ml-3" onClick={handleShowFail}>
             <i className="fa fa-exclamation mr-1" aria-hidden="true"></i>
-            Hàng lỗi
+            Phát sinh
           </Button>
           <Button variant="success" size="sm" className="btn-add ml-3" onClick={handleShow}>
             <i className="fa fa-plus mr-1" aria-hidden="true"></i>
@@ -382,7 +307,7 @@ const DanhSachKH = (props) => {
           </Button>
         </div>
 
-        {/* Hàng lỗi */}
+        {/* Hàng phát sinh */}
         <Modal
           show={isShowFail}
           onHide={handleCloseFail}
@@ -392,7 +317,7 @@ const DanhSachKH = (props) => {
           size="lg"
         >
           <Modal.Header closeButton>
-            <Modal.Title>Thêm hàng lỗi</Modal.Title>
+            <Modal.Title>Thêm phát sinh</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form onSubmit={e => e.preventDefault()}>
@@ -421,7 +346,7 @@ const DanhSachKH = (props) => {
                   </Form.Group>
                 </Col>
 
-                <Col sm="4">
+                <Col sm="3">
                   <Form.Group>
                     <Form.Label>Tên hàng</Form.Label>
                     <p className="mt-2 text-readonly">{chiTietMaHangFail[0]?.tenhang}</p>
@@ -430,7 +355,7 @@ const DanhSachKH = (props) => {
 
                 <Col sm="3">
                   <Form.Group controlId="slhu">
-                    <Form.Label>Số lượng hư</Form.Label>
+                    <Form.Label>Số lượng sửa</Form.Label>
                     <span className="prefix">Cái</span>
                     <CurrencyFormat 
                       thousandSeparator={true}
@@ -446,14 +371,21 @@ const DanhSachKH = (props) => {
                   </Form.Group>
                 </Col>
 
-                <Col sm="2">
-                  <Form.Group>
-                    <Form.Label>{isTypeBook === ROLE.NOI_BO ? 'Giá nhập' : 'Giá giao'}</Form.Label>
-                    {isTypeBook === ROLE.NOI_BO ? 
-                      <p className="mt-2 text-readonly">{chiTietMaHangFail[0]?.gianhap ? formatter.format(chiTietMaHangFail[0]?.gianhap).slice(1) : '0'} VNĐ</p>
-                      :
-                      <p className="mt-2 text-readonly">{chiTietMaHangFail[0]?.giagiao ? formatter.format(chiTietMaHangFail[0]?.giagiao).slice(1) : '0'} VNĐ</p>
-                    }
+                <Col sm="3">
+                  <Form.Group controlId="giasua">
+                    <Form.Label>Giá sửa</Form.Label>
+                    <span className="prefix">VNĐ</span>
+                    <CurrencyFormat 
+                      thousandSeparator={true}
+                      onValueChange={(value) => onValueChangeFormatFail('giasua', value)}
+                      placeholder="Nhập tiền"
+                      autoComplete="off"
+                      className="form-control"
+                      name="giasua"
+                      id="giasua"
+                      maxLength={10}
+                      value={valDefaultFail.giasua}
+                    />
                   </Form.Group>
                 </Col>
               </Row>
@@ -569,12 +501,8 @@ const DanhSachKH = (props) => {
 
                 <Col sm="2">
                   <Form.Group>
-                    <Form.Label>{isTypeBook === ROLE.NOI_BO ? 'Giá nhập' : 'Giá giao'}</Form.Label>
-                    {isTypeBook === ROLE.NOI_BO ? 
-                      <p className="mt-2 text-readonly">{chiTietMaHang[0]?.gianhap ? formatter.format(chiTietMaHang[0]?.gianhap).slice(1) : '0'} VNĐ</p>
-                      : 
-                      <p className="mt-2 text-readonly">{chiTietMaHang[0]?.giagiao ? formatter.format(chiTietMaHang[0]?.giagiao).slice(1) : '0'} VNĐ</p>
-                    }
+                    <Form.Label>Giá may</Form.Label>
+                    <p className="mt-2 text-readonly">{chiTietMaHang[0]?.giamay ? formatter.format(chiTietMaHang[0]?.giamay).slice(1) : '0'} VNĐ</p>
                   </Form.Group>
                 </Col>
               </Row>
@@ -615,26 +543,26 @@ const DanhSachKH = (props) => {
           size="lg"
         >
           <Modal.Header closeButton>
-            <Modal.Title>Thêm tiền khách trả</Modal.Title>
+            <Modal.Title>Thêm tiền ứng</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form onSubmit={e => e.preventDefault()}>
               <Row>
                 <Col sm="4">
-                  <Form.Group controlId="tientratruoc">
-                    <Form.Label>Tiền khách trả <span>*</span></Form.Label>
+                  <Form.Group controlId="tienung">
+                    <Form.Label>Tiền ứng <span>*</span></Form.Label>
                     <span className="prefix">VNĐ</span>
                     <CurrencyFormat 
                       thousandSeparator={true}
-                      onValueChange={(value) => onValueChangeFormatTU('tientratruoc', value)}
-                      className={`form-control ${isErrorTU && !valDefaultTU.tientratruoc ? 'invalid' : ''}`}
+                      onValueChange={(value) => onValueChangeFormatTU('tienung', value)}
+                      className={`form-control ${isErrorTU && !valDefaultTU.tienung ? 'invalid' : ''}`}
                       placeholder="Nhập tiền"
                       autoComplete="off"
-                      name="tientratruoc"
-                      id="tientratruoc"
-                      value={valDefaultTU.tientratruoc}
+                      name="tienung"
+                      id="tienung"
+                      value={valDefaultTU.tienung}
                     />
-                    {(isErrorTU && !valDefaultTU.tientratruoc) && <ErrorMsg msgError="Tiền khách đưa là bắt buộc" />}
+                    {(isErrorTU && !valDefaultTU.tienung) && <ErrorMsg msgError="Tiền ứng là bắt buộc" />}
                   </Form.Group>
                 </Col>
               </Row>
@@ -658,66 +586,7 @@ const DanhSachKH = (props) => {
                 <Button variant="secondary" size="sm" onClick={handleCloseTU}>
                   Hủy
                 </Button>
-                <Button variant="primary" type="submit" size="sm" className="ml-2" onClick={luuThongTinTienKhach}>Lưu</Button>
-              </div>
-            </Form>
-          </Modal.Body>
-        </Modal>
-
-        {/* Tiền vải, phụ liệu */}
-        <Modal
-          show={isShowVPL}
-          onHide={handleCloseVPL}
-          backdrop="static"
-          keyboard={false}
-          dialogClassName="modal-custom"
-          size="lg"
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>Thêm tiền vải, phụ liệu</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form onSubmit={e => e.preventDefault()}>
-              <Row>
-                <Col sm="4">
-                  <Form.Group controlId="tienvaiphulieu">
-                    <Form.Label>Tiền vải, phụ liệu <span>*</span></Form.Label>
-                    <span className="prefix">VNĐ</span>
-                    <CurrencyFormat 
-                      thousandSeparator={true}
-                      onValueChange={(value) => onValueChangeFormatVPL('tienvaiphulieu', value)}
-                      className={`form-control ${isErrorVPL && !valDefaultVPL.tienvaiphulieu ? 'invalid' : ''}`}
-                      placeholder="Nhập tiền"
-                      autoComplete="off"
-                      name="tienvaiphulieu"
-                      id="tienvaiphulieu"
-                      value={valDefaultVPL.tienvaiphulieu}
-                    />
-                    {(isErrorVPL && !valDefaultVPL.tienvaiphulieu) && <ErrorMsg msgError="Tiền vải, phụ liệu là bắt buộc" />}
-                  </Form.Group>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <Form.Group controlId="ghichu">
-                    <Form.Label>Ghi chú</Form.Label>
-                    <Form.Control
-                      as="textarea"
-                      placeholder="Nhập ghi chú..."
-                      name="ghichu"
-                      autoComplete="off"
-                      onChange={handleChangeVPL}
-                      maxLength={250}
-                      defaultValue={valDefaultVPL.ghichu}
-                    />
-                  </Form.Group>
-                </Col>
-              </Row>
-              <div className="group-control text-right">
-                <Button variant="secondary" size="sm" onClick={handleCloseVPL}>
-                  Hủy
-                </Button>
-                <Button variant="primary" type="submit" size="sm" className="ml-2" onClick={luuThongTinVPL}>Lưu</Button>
+                <Button variant="primary" type="submit" size="sm" className="ml-2" onClick={luuThongTinTienUng}>Lưu</Button>
               </div>
             </Form>
           </Modal.Body>
@@ -725,7 +594,7 @@ const DanhSachKH = (props) => {
 
       </div>
       <div className="body-heading">
-        {DSKH.data && !!DSKH.data.length ?
+        {DSThongTinSCS.data && !!DSThongTinSCS.data.length ?
           <Table bordered responsive variant="dark" className="custom-table">
             <thead>
               <tr>
@@ -733,33 +602,23 @@ const DanhSachKH = (props) => {
                 <th className="text-center th-action-small">Hành <br />động</th>
                 <th className="th-ma text-center">Mã hàng</th>
                 <th className="th-min">Tên hàng</th>
-                {isTypeBook === ROLE.NOI_BO ?
-                  <th className="th-gia text-center">Giá nhập (VNĐ)</th>
-                  :
-                  <th className="th-gia text-center">Giá giao (VNĐ)</th>
-                }
+                <th className="th-gia text-center">Giá may (VNĐ)</th>
                 <th className="th-sl text-center">SL giao (cái)</th>
-                <th className="th-sl text-center">SL hư (cái)</th>
+                <th className="th-gia text-center">Giá sửa (VNĐ)</th>
+                <th className="th-sl text-center">SL sửa (cái)</th>
                 <th className="th-money text-center">Thành tiền <br />(VNĐ)</th>
                 <th className="th-min">Ghi chú</th>
-                <th className="th-sl text-center">Tổng SL giao <br />(cái)</th>
-                <th className="th-sl text-center">Tổng SL hư <br />(cái)</th>
-                <th className="th-money text-center">Tổng tiền <br /> trong ngày <br />(VNĐ)</th>
-                <th className="th-money text-center">Tổng tiền <br /> vải, phụ liệu <br />(VNĐ)</th>
-                <th className="th-money text-center">Tổng tiền <br /> hàng lỗi <br />(VNĐ)</th>
-                <th className="th-money text-center">Tổng tiền <br /> khách đưa <br />(VNĐ)</th>
+                <th className="th-money text-center">Tổng tiền <br /> phát sinh <br />(VNĐ)</th>
+                <th className="th-money text-center">Tổng tiền ứng <br />(VNĐ)</th>
                 <th className="th-money text-center">Tổng tiền <br /> còn lại <br />(VNĐ)</th>
               </tr>
             </thead>
             <tbody>
-              <KHItem
-                currentUser={currentUser}
-                data={DSKHGroupBy}
+              <SCSItem
+                data={DSSCSGroupBy}
                 listMH={DSMaHang}
-                confirmDeleteKH={confirmDeleteKH}
-                confirmDeleteTTVPL={confirmDeleteTTVPL}
-                viewLN={viewLN}
-                isTypeBook={isTypeBook}
+                confirmDeleteSCS={confirmDeleteSCS}
+                confirmDeleteTU={confirmDeleteTU}
               />
             </tbody>
           </Table> : <Empty />
@@ -787,72 +646,7 @@ const DanhSachKH = (props) => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" size="sm" onClick={handleCloseDelete}>Hủy</Button>
-          <Button variant="danger" size="sm" onClick={onDeleteKH}>Xóa</Button>
-        </Modal.Footer>
-      </Modal>
-      
-      {/* modal lợi nhuận */}
-      <Modal
-        show={isShowLN}
-        onHide={handleCloseLN}
-        backdrop="static"
-        keyboard={false}
-        size="xl"
-        dialogClassName="modal-custom modal-view"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>{`Xem chi tiết lợi nhuận ngày ${!!hangDaGiao.length ? hangDaGiao[0]['ngaynhap'] : '???'}`}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {!!hangDaGiao.length ?
-            <Table bordered responsive variant="dark" className="custom-table">
-                <thead>
-                  <tr>
-                    <th className="th-stt text-center">STT</th>
-                    <th className="th-ma text-center">Mã hàng</th>
-                    <th className="th-min">Tên hàng</th>
-                    <th className="th-sl text-center">SL giao (cái)</th>
-                    <th className="th-money text-center">Lợi nhuận 1 <br />(VNĐ)</th>
-                    <th className="th-money text-center">Lợi nhuận 2 <br />(VNĐ)</th>
-                    <th className="th-money text-center">Chi TT <br />(VNĐ)</th>
-                  </tr>
-                </thead>
-                {
-                  hangDaGiao.map((item, index) => {
-                    let detailMH = _.filter(DSMaHang, (x) => {return x.id === item.mahangId});
-                    sumSLGiao += +item.slgiao;
-                    sumLN1 += CONFIG_MONEY * item.slgiao;
-                    sumLN2 += (detailMH[0].giagiao - detailMH[0].gianhap - CONFIG_MONEY) * item.slgiao
-
-                    return (
-                      <tbody key={item.id}>
-                        <tr>
-                          <td className="text-center">{index + 1}</td>
-                          <td className="text-center">{detailMH.length && detailMH[0]?.mahang}</td>
-                          <td>{detailMH.length && detailMH[0]?.tenhang}</td>
-                          <td className="text-center">{formatter.format(item.slgiao).slice(1)}</td>
-                          <td className="text-center">{formatter.format(CONFIG_MONEY * item.slgiao).slice(1)}</td>
-                          <td className="text-center">{formatter.format((detailMH[0].giagiao - detailMH[0].gianhap - CONFIG_MONEY) * item.slgiao).slice(1)}</td>
-                          <td className="text-center">{formatter.format(CONFIG_MONEY * item.slgiao).slice(1)}</td>
-                        </tr>
-                        {index === hangDaGiao.length - 1 && 
-                          <tr>
-                            <td className="text-right" colSpan={3}>Tổng thành phần</td>
-                            <td className="text-center">{formatter.format(sumSLGiao).slice(1)}</td>
-                            <td className="text-center">{formatter.format(sumLN1).slice(1)}</td>
-                            <td className="text-center">{formatter.format(sumLN2).slice(1)}</td>
-                            <td className="text-center">{formatter.format(sumLN1).slice(1)}</td>
-                          </tr>
-                        }
-                      </tbody>
-                    );
-                  })
-                }
-              </Table> : <Empty />
-          }
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" size="sm" onClick={handleCloseLN}>Đóng</Button>
+          <Button variant="danger" size="sm" onClick={onDeleteSCS}>Xóa</Button>
         </Modal.Footer>
       </Modal>
 
@@ -860,4 +654,4 @@ const DanhSachKH = (props) => {
   );
 };
 
-export default DanhSachKH;
+export default DanhSachThongTinCS;

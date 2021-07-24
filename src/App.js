@@ -9,6 +9,7 @@ import LoginPage from 'pages/login';
 import DSMaHang from 'pages/mahang';
 import NotFoundPage from 'pages/notfound';
 import QuanLyKhachHang from 'pages/quanlykhachhang';
+import QuanLySoCoSo from 'pages/quanlysocoso';
 import SoCat from 'pages/socat';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
@@ -34,6 +35,7 @@ function App() {
           <Route path={pathNameTypes.SO_NGHI} component={QuanLyKhachHang} />
           <Route path={pathNameTypes.SO_UT} component={QuanLyKhachHang} />
           <Route path={pathNameTypes.SO_NGOC} component={QuanLyKhachHang} />
+          <Route path={pathNameTypes.SO_NGUYET} component={QuanLySoCoSo} />
           <Route component={NotFoundPage} />
         </Switch>
         

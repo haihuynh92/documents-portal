@@ -14,16 +14,16 @@ const HomePage = () => {
   let [currentUser, setCurrentUser] = useState(null);
   const showMenu = useSelector((state) => state.menuReduder);
   const dsmahang = useSelector((state) => state.homeReducer).dsmahang;
-
+  let getUser = localStorage.getItem(CURRENT_USER);
+  
   useEffect(() => {
-    let getUser = localStorage.getItem(CURRENT_USER);
     setCurrentUser(getUser);
     if (getUser === null) {
       window.location.href = pathNameTypes.LOGIN;
       return;
     }
-  }, [dispatch, currentUser]);
-  
+  }, [getUser]);
+
   useEffect(() => {
     dispatch(danhSachTatCaMaHang());
   }, [dispatch]);

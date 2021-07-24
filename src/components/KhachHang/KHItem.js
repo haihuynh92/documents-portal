@@ -104,7 +104,7 @@ const KHItem = (props) => {
     let resultFinal = null;
     resultFinal = arrDate.map((item, i) => {
       let result = null;
-      const sortDate = data[arrDate[i]][0]['thongtin'] === 'giaohang' ? data[arrDate[i]].slice().sort((a, b) => a.ngaytao > b.ngaytao ? -1 : 1) : data[arrDate[i]].slice().sort((a, b) => b.ngaytao > a.ngaytao ? -1 : 1);
+      const sortDate = data[arrDate[i]].slice().sort((a, b) => a.ngaytao > b.ngaytao ? -1 : 1);
       const getThongTinGH = _.filter(sortDate, (x) => {return x.thongtin === 'giaohang'});
 
       result = sortDate.map((item, j) => {
@@ -133,7 +133,7 @@ const KHItem = (props) => {
             </td>}
 
             {['TT', 'VPL'].includes(isTT) ? 
-              <td className={`text-right td-relative ${isTT === 'TT' ? 'td-bgd-black' : 'td-bgd-green'}`} colSpan="6">
+              <td className={`text-right td-relative ${isTT === 'TT' ? 'td-bgd-yellow' : 'td-bgd-blue'}`} colSpan="6">
                 <Button variant="default" className="button-control reset-button btn-delete btn-delete-ab" onClick={() => confirmDeleteTTVPL(item.id)}>
                   <i className="fa fa-times" aria-hidden="true"></i>
                 </Button>
@@ -157,12 +157,12 @@ const KHItem = (props) => {
               : isTT === 'HL' ? 
               <td className="text-center td-bgd-red">{isTypeBook === ROLE.NOI_BO ? formatter.format(sortDate[j]['slhu'] * detailMH[0]?.gianhap).slice(1) : formatter.format(sortDate[j]['slhu'] * detailMH[0]?.giagiao).slice(1)}</td> 
               : isTT === 'TT' ? 
-              <td className="text-center td-bgd-black">{formatter.format(sortDate[j]['tientratruoc']).slice(1)}</td> 
+              <td className="text-center td-bgd-yellow">{formatter.format(sortDate[j]['tientratruoc']).slice(1)}</td> 
               : 
-              <td className="text-center td-bgd-green">{formatter.format(sortDate[j]['tienvaiphulieu']).slice(1)}</td>
+              <td className="text-center td-bgd-blue">{formatter.format(sortDate[j]['tienvaiphulieu']).slice(1)}</td>
             }
 
-            <td className={`${isTT === 'TT' ? 'td-bgd-black' : isTT === 'HL' ? 'td-bgd-red' : isTT === 'VPL' ? 'td-bgd-green' : ''}`}>{ReactHtmlParser(sortDate[j]['ghichu'].replace(/\n/g, "<br />"))}</td>
+            <td className={`${isTT === 'TT' ? 'td-bgd-yellow' : isTT === 'HL' ? 'td-bgd-red' : isTT === 'VPL' ? 'td-bgd-blue' : ''}`}>{ReactHtmlParser(sortDate[j]['ghichu'].replace(/\n/g, "<br />"))}</td>
 
             {j < 1 && <td className="text-center" rowSpan={count}>{formatter.format(reverseArrTotalSend[i]).slice(1)}</td>}
 
@@ -170,11 +170,11 @@ const KHItem = (props) => {
 
             {j < 1 && <td className="text-center" rowSpan={count}>{formatter.format(reverseArrMoneyTotalDay[i]).slice(1)}</td>}
 
-            {j < 1 && <td className="text-center td-bgd-green" rowSpan={count}>{formatter.format(reverseArrMoneyVPL[i]).slice(1)}</td>}
+            {j < 1 && <td className="text-center td-bgd-blue" rowSpan={count}>{formatter.format(reverseArrMoneyVPL[i]).slice(1)}</td>}
 
             {j < 1 && <td className="text-center td-bgd-red" rowSpan={count}>{formatter.format(reverseArrMoneyFail[i]).slice(1)}</td>}
 
-            {j < 1 && <td className="text-center td-bgd-black" rowSpan={count}>{formatter.format(reverseArrMoneyCustomer[i]).slice(1)}</td>}
+            {j < 1 && <td className="text-center td-bgd-yellow" rowSpan={count}>{formatter.format(reverseArrMoneyCustomer[i]).slice(1)}</td>}
 
             {j < 1 && <td className={`text-center ${i === 0 && j === 0 ? 'td-bgd-purple' : ''}`} rowSpan={count}>{reverseArrMoneyFinal[i] > 0 ? formatter.format(reverseArrMoneyFinal[i]).slice(1) : formatter.format(reverseArrMoneyFinal[i]).replace(formatter.format(reverseArrMoneyFinal[i]).slice(1, 2), '')}</td>}
           </tr>

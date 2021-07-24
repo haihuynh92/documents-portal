@@ -6,6 +6,7 @@ import { watchKhachHang } from './khachHangSaga';
 import { watchKiemTraLoiNhuan } from './kiemTraLoiNhuanSaga';
 import { watchMaHang } from './maHangSaga';
 import { watchSoCat } from './soCatSaga';
+import { watchSoCoSo } from './soCoSoSaga';
 
 export default function* rootSaga() {
   yield all([
@@ -15,6 +16,7 @@ export default function* rootSaga() {
     ...watchMaHang,
     ...watchSoCat,
     ...watchKhachHang,
-    ...watchKiemTraLoiNhuan
+    ...watchKiemTraLoiNhuan,
+    ...watchSoCoSo
   ])
 }

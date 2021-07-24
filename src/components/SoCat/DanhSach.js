@@ -265,7 +265,6 @@ const DanhSachMH = (props) => {
   }
 
   const onChangeDateSearch = (value) => {
-    console.log(value);
     setFormSearch({
       ...formSearch,
       ngaycat: value

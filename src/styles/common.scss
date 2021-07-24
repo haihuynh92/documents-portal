@@ -410,12 +410,18 @@ button {
     td {
       padding: 5px 10px;
       vertical-align: middle;
-      &.td-bgd-black {background-color: $color-black-3;}
-      &.td-bgd-green {background-color: $main-color;}
+      &.td-bgd-yellow {
+        background-color: $color-yellow;
+        color: $color-black;
+        .btn-delete {
+          color: $color-black;
+          &:hover {color: $color-red;}
+        }
+      }
+      &.td-bgd-blue {background-color: $color-blue-1;}
       &.td-bgd-purple {background-color: $color-purple-1;}
-      &.td-bgd-orange {background-color: $color-orange;}
       &.td-bgd-red {
-        background-color: $color-red-1;
+        background-color: $color-red-2;
         .btn-delete:hover {color: $color-black;}
       }
     }

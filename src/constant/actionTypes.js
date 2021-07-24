@@ -35,3 +35,10 @@ export const XOA_THONG_TIN = 'XOA_THONG_TIN';
 // kiểm tra lợi nhuận hàng tháng
 export const KIEM_TRA_LOI_NHUAN_THANG = 'KIEM_TRA_LOI_NHUAN_THANG';
 export const KIEM_TRA_LOI_NHUAN_NAM = 'KIEM_TRA_LOI_NHUAN_NAM';
+
+// quản lý sổ tất cả sổ cơ sở
+export const DANH_SACH_THONG_TIN_SCS = 'DANH_SACH_THONG_TIN_SCS';
+export const THEM_THONG_TIN_SCS = 'THEM_THONG_TIN_SCS';
+export const THEM_TIEN_UNG_SCS = 'THEM_TIEN_UNG_SCS';
+export const THEM_HANG_LOI_SCS = 'THEM_HANG_LOI_SCS';
+export const XOA_THONG_TIN_SCS = 'XOA_THONG_TIN_SCS';

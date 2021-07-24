@@ -21,6 +21,7 @@ const DanhSachMH = (props) => {
     gianhap: '',
     giagiao: '',
     giachau: '',
+    giaket: '',
     ghichu: '',
     ngaytao: '',
     month: '',
@@ -40,6 +41,7 @@ const DanhSachMH = (props) => {
       gianhap: '',
       giagiao: '',
       giachau: '',
+      giaket: '',
       ghichu: '',
       ngaytao: '',
       month: '',
@@ -103,6 +105,7 @@ const DanhSachMH = (props) => {
       gianhap: detail.gianhap.trim(),
       giagiao: detail.giagiao.trim(),
       giachau: detail.giachau.trim(),
+      giaket: detail.giaket.trim(),
       ghichu: detail.ghichu.trim(),
       ngaytao: moment().format('DD/MM/YYYY HH:mm:ss'),
       month: moment().format('MM/YYYY'),
@@ -294,6 +297,26 @@ const DanhSachMH = (props) => {
               </Row>
 
               <Row>
+                <Col sm="4">
+                  <Form.Group controlId="giaket">
+                    <Form.Label>Giá kết</Form.Label>
+                    <span className="prefix">VNĐ</span>
+                    <CurrencyFormat 
+                      thousandSeparator={true}
+                      onValueChange={(value) => onValueChangeFormat('giaket', value)}
+                      className="form-control"
+                      placeholder="Nhập giá"
+                      autoComplete="off"
+                      maxLength={10}
+                      name="giaket"
+                      id="giaket"
+                      value={valDefault.giaket}
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>
+
+              <Row>
                 <Col>
                   <Form.Group controlId="ghichu">
                     <Form.Label>Ghi chú</Form.Label>
@@ -330,6 +353,7 @@ const DanhSachMH = (props) => {
                 <th className="th-min">Tên hàng</th>
                 <th className="th-gia text-center">Giá may <br />(VNĐ)</th>
                 <th className="th-gia text-center">Giá Châu <br />(VNĐ)</th>
+                <th className="th-gia text-center">Giá kết <br />(VNĐ)</th>
                 <th className="th-gia text-center">Giá nhập <br />(VNĐ)</th>
                 <th className="th-gia text-center">Giá giao <br />(VNĐ)</th>
                 <th className="th-gia text-center">Giá chênh lệch <br />(VNĐ)</th>

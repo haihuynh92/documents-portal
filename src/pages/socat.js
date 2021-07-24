@@ -5,6 +5,7 @@ import Footer from "components/common/Footer/Footer";
 import Header from "components/common/Header/Header";
 import SideBar from "components/common/SideBar/SideBar";
 import DanhSach from "components/SoCat/DanhSach";
+import { LIMIT_ITEM } from "constant/currentUser";
 import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,7 +19,7 @@ const SoCat = () => {
   
   const [pagingState, setPagingState] = useState({
     page: 1,
-    limit: 2
+    limit: LIMIT_ITEM
   });
   const handlePaging = (currPage) => {
     setPagingState({

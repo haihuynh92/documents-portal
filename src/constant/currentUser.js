@@ -43,4 +43,50 @@ export const DATA_BOOK = [
     name: 'sổ Bác Ngọc',
     value: 'songocs'
   }
+];
+export const DATA_SCS = [
+  {
+    name: 'sổ Nguyệt',
+    value: 'songuyets'
+  },
+  {
+    name: 'sổ Quyên',
+    value: 'soquyens'
+  },
+  {
+    name: 'sổ Diễm',
+    value: 'sodiems'
+  },
+  {
+    name: 'sổ chú Sanh',
+    value: 'sochusanhs'
+  },
+  {
+    name: 'sổ chị Phượng',
+    value: 'sochiphuongs'
+  },
+  {
+    name: 'sổ chị Duyên',
+    value: 'sochiduyens'
+  },
+  {
+    name: 'sổ Phương Anh',
+    value: 'sophuonganhs'
+  },
+  {
+    name: 'sổ chị Hà',
+    value: 'sochihas'
+  },
+  {
+    name: 'sổ Thủy Vịnh',
+    value: 'sothuyvinhs'
+  },
+  {
+    name: 'sổ Thủy kết châu',
+    value: 'sothuyketchaus'
+  },
+  {
+    name: 'sổ chị Tím',
+    value: 'sochitims'
+  }
 ]
