@@ -1,5 +1,6 @@
-import { layDSThongTinSCSApi, themThongTinSCSApi, xoaThongTinSCSApi } from 'api/soCoSoApi';
+import { filterThongTinSCSApi, layDSThongTinSCSApi, themThongTinSCSApi, xoaThongTinSCSApi } from 'api/soCoSoApi';
 import * as actionTypes from 'constant/actionTypes';
+import moment from 'moment';
 import { hideLoading, showLoading } from 'reducers/loadingReducer';
 import { DSTTCSC, themTTSCS, xoaTTSCS } from 'reducers/soCoSoReducer';
 import { call, delay, put, takeLatest } from 'redux-saga/effects';
@@ -54,10 +55,33 @@ export function* xoaThongTinSCS(action) {
   }
 }
 
+export function* filterThongTinSCS(action) {
+  const { payload } = action;
+  try {
+    if (payload.arrDate === null) {
+      return;
+    }
+    const convertData = {
+      ngaynhap: payload.arrDate === null ? null : [moment(payload.arrDate[0]).format('DD/MM/YYYY'), moment(payload.arrDate[1]).format('DD/MM/YYYY')]
+    };
+    yield put(showLoading());
+    const result = yield call(filterThongTinSCSApi, convertData, payload.nameArr);
+
+    if (result.status === 200) {
+      yield delay(1000);
+      yield put(hideLoading());
+      yield put(DSTTCSC(result.data));
+    }
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
 export const watchSoCoSo = [
   takeLatest(actionTypes.DANH_SACH_THONG_TIN_SCS, layDSThongTinSCS),
   takeLatest(actionTypes.THEM_THONG_TIN_SCS, themThongTinSCS),
   takeLatest(actionTypes.THEM_TIEN_UNG_SCS, themThongTinSCS),
   takeLatest(actionTypes.THEM_HANG_LOI_SCS, themThongTinSCS),
-  takeLatest(actionTypes.XOA_THONG_TIN_SCS, xoaThongTinSCS)
+  takeLatest(actionTypes.XOA_THONG_TIN_SCS, xoaThongTinSCS),
+  takeLatest(actionTypes.FILTER_THONG_TIN_SCS, filterThongTinSCS)
 ]

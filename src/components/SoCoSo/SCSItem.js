@@ -4,7 +4,8 @@ import ReactHtmlParser from 'react-html-parser';
 import { formatter } from 'services/common';
 
 const SCSItem = (props) => {
-  const { data, listMH, confirmDeleteSCS, confirmDeleteTU } = props;
+  const { data, listMH, confirmDeleteSCS, confirmDeleteTU, getDateDisable } = props;
+  console.log(getDateDisable);
 
   const arrDate = Object.keys(data);
     const cloneArr = [...arrDate];
@@ -48,12 +49,12 @@ const SCSItem = (props) => {
       });
       arrMoneyAfterMinusAll.push(totalCountMoneyDay - totalMoneyCustomerU - totalCountMoneyFail);
     }
-
+    
     // 
     const reverseArrMoneyAfterMinusAll = _.reverse(arrMoneyAfterMinusAll);
     const reverseArrMoneyCustomerU = _.reverse(arrMoneyCustomerU);
     const reverseArrMoneyFail = _.reverse(arrMoneyFail);
-   
+    
     // =========================
     let resultFinal = null;
     resultFinal = arrDate.map((item, i) => {
@@ -68,7 +69,7 @@ const SCSItem = (props) => {
         return (
           <tr key={item.id}>
             {j < 1 && <td className="text-center" rowSpan={count}>{sortDate[j]['ngaynhap']}</td>}
-            
+
             {['GH', 'HL'].includes(isTT) && <td className={`text-center ${['HL'].includes(isTT) ? 'td-bgd-red' : ''}`}>
               <Button variant="default" className="button-control reset-button btn-delete" onClick={() => confirmDeleteSCS(item)}>
                 <i className="fa fa-trash" aria-hidden="true"></i>

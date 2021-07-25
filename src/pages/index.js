@@ -17,6 +17,7 @@ const HomePage = () => {
   let getUser = localStorage.getItem(CURRENT_USER);
   
   useEffect(() => {
+    window.scrollTo(0,0);
     setCurrentUser(getUser);
     if (getUser === null) {
       window.location.href = pathNameTypes.LOGIN;

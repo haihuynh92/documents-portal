@@ -28,6 +28,7 @@ const QuanLyKhachHang = () => {
   }
 
   useEffect(() => {
+    window.scrollTo(0,0);
     dispatch(danhSachTatCaMaHang());
   }, [dispatch]);
 
@@ -62,6 +63,7 @@ const QuanLyKhachHang = () => {
   }
 
   useEffect(() => {
+    window.scrollTo(0,0);
     dispatch(danhSachThongTin(nameArr));
   }, [dispatch, nameArr]);
   

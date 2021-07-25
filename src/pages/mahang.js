@@ -25,6 +25,7 @@ const Mahang = () => {
   };
 
   useEffect(() => {
+    window.scrollTo(0,0);
     if (!keySearch) {
       dispatch(danhSachMaHang(pagingState));
     } else {
@@ -36,6 +37,7 @@ const Mahang = () => {
     seKeySearch(value);
   }
   useEffect(() => {
+    window.scrollTo(0,0);
     if (!!keySearch) {
       dispatch(timKiemTH(keySearch, {
         page: 1,

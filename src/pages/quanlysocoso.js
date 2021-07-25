@@ -1,5 +1,5 @@
 import { danhSachTatCaMaHang } from "actions/mahang";
-import { danhSachThongTinSCS } from "actions/socoso";
+import { danhSachThongTinSCS, filterThongTinSCS } from "actions/socoso";
 import Footer from "components/common/Footer/Footer";
 import Header from "components/common/Header/Header";
 import SideBar from "components/common/SideBar/SideBar";
@@ -14,12 +14,9 @@ import { useHistory } from "react-router-dom";
 const QuanLySoCoSo = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  // let currentUser = localStorage.getItem(CURRENT_USER);
   const DSThongTinSCS = useSelector((state) => state.soCoSoReducer);
   const DSMaHang = useSelector((state) => state.homeReducer.dsmahang);
   const showMenu = useSelector((state) => state.menuReduder);
-  // let isTypeBook = '';
-  
 
   let dataListGroupBy = null;
   if (DSThongTinSCS.data && !!DSThongTinSCS.data.length) {
@@ -27,6 +24,7 @@ const QuanLySoCoSo = () => {
   }
 
   useEffect(() => {
+    window.scrollTo(0,0);
     dispatch(danhSachTatCaMaHang());
   }, [dispatch]);
 
@@ -55,10 +53,19 @@ const QuanLySoCoSo = () => {
     nameArr = 'sochitims';
   }
 
+  const refreshSCS = () => {
+    dispatch(danhSachThongTinSCS(nameArr));
+  }
+
   useEffect(() => {
+    window.scrollTo(0,0);
     dispatch(danhSachThongTinSCS(nameArr));
   }, [dispatch, nameArr]);
-  
+
+  const filterDate = (arrDate)  => {
+    dispatch(filterThongTinSCS(arrDate, nameArr));
+  }
+
   return (
     <div className="wrapper-container">
       <SideBar classEle={`${showMenu ? 'full-sidebar' : ''}`} />
@@ -72,6 +79,8 @@ const QuanLySoCoSo = () => {
               DSMaHang={DSMaHang}
               DSThongTinSCS={DSThongTinSCS}
               DSSCSGroupBy={dataListGroupBy}
+              filterDate={filterDate}
+              refreshSCS={refreshSCS}
             />
           </Container>
         </div>

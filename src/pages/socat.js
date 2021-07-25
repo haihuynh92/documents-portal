@@ -31,11 +31,13 @@ const SoCat = () => {
   const [dataSearch, seDataSearch] = useState({});
 
   useEffect(() => {
+    window.scrollTo(0,0);
     dispatch(danhSachTatCaMaHang());
     dispatch(danhSachTatCaCoSoMay());
   }, [dispatch]);
 
   useEffect(() => {
+    window.scrollTo(0,0);
     if ((dataSearch.ngaycat && !!dataSearch.ngaycat.length) || !!dataSearch.mahangId || !!dataSearch.cosomayId) {
       dispatch(timKiemSC(dataSearch, pagingState));
     }

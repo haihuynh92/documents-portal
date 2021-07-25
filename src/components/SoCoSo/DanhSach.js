@@ -1,3 +1,4 @@
+import DateRangePicker from '@wojtekmaj/react-daterange-picker';
 import { themHangLoiSCS, themThongTinSCS, themTienUngSCS, xoaThongTinSCS } from 'actions/socoso';
 import { DatePicker, Select } from 'antd';
 import Empty from 'components/common/Empty/Empty';
@@ -15,7 +16,7 @@ import SCSItem from './SCSItem';
 const { Option } = Select;
 
 const DanhSachThongTinCS = (props) => {
-  const { DSThongTinSCS, DSSCSGroupBy, DSMaHang, nameArr } = props;
+  const { DSThongTinSCS, DSSCSGroupBy, DSMaHang, nameArr, filterDate, refreshSCS } = props;
   const dispatch = useDispatch();
   const [isError, setIsError] = useState(false);
 
@@ -285,6 +286,70 @@ const DanhSachThongTinCS = (props) => {
     return _.filter(DATA_SCS, (x) => {return x.value === nameArr})[0]['name'];
   }
 
+  // =============================================Thanh toán sổ
+  const [formSearch, setFormSearch] = useState({
+    ngaynhap: null
+  });
+  const onChangeDateSearch = (value) => {
+    value === null ? refreshSCS() : filterDate(value);
+    setFormSearch({
+      ngaynhap: value
+    });
+    setIsChecked(false);
+  }
+  
+  let arrMoneyAfterMinusAll = 0;
+  // tính tổng tiền trong ngày
+  for(let k = 0; k < DSThongTinSCS.data.length; k++) {
+    let totalMoneyCustomerU = 0;
+    let totalCountMoneyDay = 0;
+    let totalCountMoneyFail = 0;
+
+    // thông tin hàng lỗi
+    DSThongTinSCS.data.map(x => {
+      if (x.thongtin === 'hangloi') {
+        return totalCountMoneyFail += +x.slhu * x.giasua;
+      }
+      if (x.thongtin === 'tienung') {
+        return totalMoneyCustomerU += +x.tienung;
+      }
+      if (x.thongtin === 'giaohang') {
+        let giamay = _.filter(DSMaHang, k => {return k.id === x.mahangId})[0]['giamay'];
+        return totalCountMoneyDay += +x.slgiao * giamay;
+      }
+      return false;
+    });
+    arrMoneyAfterMinusAll = totalCountMoneyDay - totalMoneyCustomerU - totalCountMoneyFail;
+  }
+
+  // ====================================
+  const [isShowConfirm, setIsShowConfirm] = useState(false);
+  const handleCloseConfirm = () => {
+    setIsShowConfirm(false);
+    setIsChecked(false);
+  }
+  const handleShowConfirm = () => {
+    if (formSearch.ngaynhap !== null) {
+      setIsShowConfirm(true)
+    }
+  };
+
+  const [isChecked, setIsChecked] = useState(false);
+  const handleChangeCheckAgree = (e) => {
+    setIsChecked(!isChecked);
+  }
+
+  const [getDateDisable, setGetDateDisable] = useState([]);
+  const confirmSuccessfull = () => {
+    setGetDateDisable(formSearch.ngaynhap);
+    setFormSearch({
+      ngaynhap: null
+    });
+    setIsShowConfirm(false);
+    refreshSCS();
+  }
+  
+
   return (
     <div className="list-default">
       <div className="title-heading d-flex-between">
@@ -293,6 +358,20 @@ const DanhSachThongTinCS = (props) => {
           Thông tin {getName(nameArr)}
         </p>
         <div className="d-flex-between align-items-flex-end">
+          <Row className="row-tt">
+            <Col>
+              <div className="datepicker-custom">
+                <DateRangePicker
+                  className={`${formSearch.ngaynhap && !!formSearch.ngaynhap.length ? 'isValue' : ''}`}
+                  onChange={onChangeDateSearch}
+                  value={formSearch.ngaynhap && !!formSearch.ngaynhap.length ? formSearch.ngaynhap : null}
+                  maxDate={new Date()}
+                  format="dd/MM/y"
+                />
+              </div>
+            </Col>
+          </Row>
+
           <Button variant="warning" size="sm" className="btn-add ml-3" onClick={handleShowTU}>
             <i className="fa fa-usd mr-1" aria-hidden="true"></i>
             Tiền ứng
@@ -614,11 +693,29 @@ const DanhSachThongTinCS = (props) => {
               </tr>
             </thead>
             <tbody>
+              {formSearch.ngaynhap && !!formSearch.ngaynhap.length &&
+                <tr>
+                  <td className="text-right td-bgd-purple" colSpan="12">
+                    Tổng tiền thanh toán <br />
+                    <Button variant="danger" size="sm" className="mt-1" onClick={handleShowConfirm}>
+                      Xác nhận
+                    </Button>
+                  </td>
+                  <td className="text-center td-bgd-purple">
+                    {arrMoneyAfterMinusAll > 0 ? 
+                      formatter.format(arrMoneyAfterMinusAll).slice(1) 
+                      :
+                      formatter.format(arrMoneyAfterMinusAll).replace(formatter.format(arrMoneyAfterMinusAll).slice(1, 2), '')
+                    }
+                  </td>
+                </tr>
+              }
               <SCSItem
                 data={DSSCSGroupBy}
                 listMH={DSMaHang}
                 confirmDeleteSCS={confirmDeleteSCS}
                 confirmDeleteTU={confirmDeleteTU}
+                getDateDisable={getDateDisable}
               />
             </tbody>
           </Table> : <Empty />
@@ -647,6 +744,39 @@ const DanhSachThongTinCS = (props) => {
         <Modal.Footer>
           <Button variant="secondary" size="sm" onClick={handleCloseDelete}>Hủy</Button>
           <Button variant="danger" size="sm" onClick={onDeleteSCS}>Xóa</Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* modal confirm */}
+      <Modal
+        show={isShowConfirm}
+        onHide={handleCloseConfirm}
+        backdrop="static"
+        keyboard={false}
+        dialogClassName="modal-custom"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Xác nhận thanh toán</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Tổng tiền cần thanh toán cho <span className="font-bold">"{getName(nameArr)}"</span> <br />
+          {formSearch.ngaynhap && !!formSearch.ngaynhap.length && `Từ ngày "${moment(formSearch?.ngaynhap[0]).format('DD/MM/YYYY')}" đến ngày "${moment(formSearch?.ngaynhap[1]).format('DD/MM/YYYY')}" là: ${arrMoneyAfterMinusAll > 0 ? 
+                      formatter.format(arrMoneyAfterMinusAll).slice(1) 
+                      :
+                      formatter.format(arrMoneyAfterMinusAll).replace(formatter.format(arrMoneyAfterMinusAll).slice(1, 2), '')
+                    } VNĐ.`}
+          <Form.Group className="mt-3" controlId="agreeTT">
+            <Form.Check 
+              type="checkbox" 
+              label="Tôi đồng ý thanh toán." 
+              onChange={handleChangeCheckAgree}
+              checked={isChecked}
+            />
+          </Form.Group>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" size="sm" onClick={handleCloseConfirm}>Hủy</Button>
+          <Button variant="info" size="sm" onClick={confirmSuccessfull} disabled={!isChecked}>Xác nhận thanh toán</Button>
         </Modal.Footer>
       </Modal>
 

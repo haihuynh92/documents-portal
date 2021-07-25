@@ -11,3 +11,7 @@ export const themThongTinSCSApi = (dataPost, nameArr) => {
 export const xoaThongTinSCSApi = (id, nameArr) => {
   return axiosClient.delete(`/${nameArr}/${id}`);
 };
+
+export const filterThongTinSCSApi = (convertData, nameArr) => {
+  return axiosClient.get(`/${nameArr}?ngaynhap_gte=${convertData.ngaynhap[0]}&ngaynhap_lte=${convertData.ngaynhap[1]}&_sort=ngaynhap&_order=desc`);
+};

@@ -46,3 +46,13 @@ export const xoaThongTinSCS = (id, nameArr) => {
     }
   }
 }
+
+export const filterThongTinSCS = (arrDate, nameArr) => {
+  return {
+    type: actionTypes.FILTER_THONG_TIN_SCS,
+    payload: {
+      arrDate,
+      nameArr
+    }
+  }
+}

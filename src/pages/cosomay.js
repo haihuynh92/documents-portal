@@ -13,6 +13,7 @@ const CoSoMay = () => {
   const showMenu = useSelector((state) => state.menuReduder);
 
   useEffect(() => {
+    window.scrollTo(0,0);
     dispatch(danhSachCoSoMay());
   }, [dispatch]);
 

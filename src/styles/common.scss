@@ -183,6 +183,9 @@ button {
     box-shadow: none !important;
   }
 }
+button:disabled {
+  &:hover {cursor: not-allowed;}
+}
 .btn-view {
   color: $color-white;
   &:hover {color: $color-orange;}
@@ -395,6 +398,7 @@ button {
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
   }
+  .row-tt {width: 260px;}
 }
 
 @keyframes moveTopBottom {
@@ -635,6 +639,10 @@ button {
   width: 100%;
   display: block !important;
   &:hover .react-daterange-picker__wrapper {border-color: #40a9ff;}
+  &.invalid {
+    border: 0;
+    .react-daterange-picker__wrapper {border-color: $color-red;}
+  }
   .react-daterange-picker__calendar {width: 280px;}
   .react-daterange-picker__wrapper {
     position: relative;
