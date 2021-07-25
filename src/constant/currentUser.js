@@ -3,7 +3,9 @@ export const LIMIT_ITEM = 2;
 export const ROLE = {
   ADMIN: 'admin',
   NOI_BO: 'sonoibo',
-  SO_KHACH: 'sokhach'
+  SO_KHACH: 'sokhach',
+  SO_MAY: 'somay',
+  SO_KET: 'soket'
 };
 export const CONFIG_MONEY = 1000;
 export const DATA_KH = [

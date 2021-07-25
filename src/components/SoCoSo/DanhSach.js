@@ -1,9 +1,9 @@
 import DateRangePicker from '@wojtekmaj/react-daterange-picker';
-import { themHangLoiSCS, themThongTinSCS, themTienUngSCS, xoaThongTinSCS } from 'actions/socoso';
+import { themHangLoiSCS, themThongTinSCS, themTienUngSCS, updateThongTinSCS, xoaThongTinSCS } from 'actions/socoso';
 import { DatePicker, Select } from 'antd';
 import Empty from 'components/common/Empty/Empty';
 import ErrorMsg from 'components/common/ErrorMsg/ErrorMsg';
-import { DATA_SCS } from 'constant/currentUser';
+import { DATA_SCS, ROLE } from 'constant/currentUser';
 import _ from 'lodash';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
@@ -16,7 +16,7 @@ import SCSItem from './SCSItem';
 const { Option } = Select;
 
 const DanhSachThongTinCS = (props) => {
-  const { DSThongTinSCS, DSSCSGroupBy, DSMaHang, nameArr, filterDate, refreshSCS } = props;
+  const { DSThongTinSCS, DSSCSGroupBy, DSMaHang, nameArr, filterDate, refreshSCS, isTypeBook } = props;
   const dispatch = useDispatch();
   const [isError, setIsError] = useState(false);
 
@@ -28,6 +28,7 @@ const DanhSachThongTinCS = (props) => {
     ghichu: '',
     ngaytao: '',
     thongtin: 'giaohang',
+    thanhtoan: false,
     month: '',
     year: ''
   });
@@ -43,6 +44,7 @@ const DanhSachThongTinCS = (props) => {
       ghichu: '',
       ngaytao: '',
       thongtin: 'giaohang',
+      thanhtoan: false,
       month: '',
       year: ''
     });
@@ -132,6 +134,7 @@ const DanhSachThongTinCS = (props) => {
     ghichu: '',
     ngaytao: '',
     thongtin: 'tienung',
+    thanhtoan: false,
     month: '',
     year: ''
   });
@@ -147,6 +150,7 @@ const DanhSachThongTinCS = (props) => {
       ghichu: '',
       ngaytao: '',
       thongtin: 'tienung',
+      thanhtoan: false,
       month: '',
       year: ''
     });
@@ -194,6 +198,7 @@ const DanhSachThongTinCS = (props) => {
     ghichu: '',
     ngaytao: '',
     thongtin: 'hangloi',
+    thanhtoan: false,
     month: '',
     year: ''
   });
@@ -211,6 +216,7 @@ const DanhSachThongTinCS = (props) => {
       ghichu: '',
       ngaytao: '',
       thongtin: 'hangloi',
+      thanhtoan: false,
       month: '',
       year: ''
     });
@@ -307,15 +313,20 @@ const DanhSachThongTinCS = (props) => {
 
     // thông tin hàng lỗi
     DSThongTinSCS.data.map(x => {
-      if (x.thongtin === 'hangloi') {
+      if (x.thongtin === 'hangloi' && !x.thanhtoan) {
         return totalCountMoneyFail += +x.slhu * x.giasua;
       }
-      if (x.thongtin === 'tienung') {
+      if (x.thongtin === 'tienung' && !x.thanhtoan) {
         return totalMoneyCustomerU += +x.tienung;
       }
-      if (x.thongtin === 'giaohang') {
-        let giamay = _.filter(DSMaHang, k => {return k.id === x.mahangId})[0]['giamay'];
-        return totalCountMoneyDay += +x.slgiao * giamay;
+      if (x.thongtin === 'giaohang' && !x.thanhtoan) {
+        if(isTypeBook === ROLE.SO_KET) {
+          let giaket = _.filter(DSMaHang, k => {return k.id === x.mahangId})[0]['giaket'];
+          return totalCountMoneyDay += +x.slgiao * giaket;
+        } else {
+          let giamay = _.filter(DSMaHang, k => {return k.id === x.mahangId})[0]['giamay'];
+          return totalCountMoneyDay += +x.slgiao * giamay;
+        }
       }
       return false;
     });
@@ -339,9 +350,9 @@ const DanhSachThongTinCS = (props) => {
     setIsChecked(!isChecked);
   }
 
-  const [getDateDisable, setGetDateDisable] = useState([]);
+  
   const confirmSuccessfull = () => {
-    setGetDateDisable(formSearch.ngaynhap);
+    dispatch(updateThongTinSCS(DSThongTinSCS.data, nameArr));
     setFormSearch({
       ngaynhap: null
     });
@@ -580,8 +591,12 @@ const DanhSachThongTinCS = (props) => {
 
                 <Col sm="2">
                   <Form.Group>
-                    <Form.Label>Giá may</Form.Label>
-                    <p className="mt-2 text-readonly">{chiTietMaHang[0]?.giamay ? formatter.format(chiTietMaHang[0]?.giamay).slice(1) : '0'} VNĐ</p>
+                    <Form.Label>{isTypeBook === ROLE.SO_KET ? 'Giá kết' : 'Giá may'}</Form.Label>
+                    {isTypeBook === ROLE.SO_KET ? 
+                      <p className="mt-2 text-readonly">{chiTietMaHang[0]?.giaket ? formatter.format(chiTietMaHang[0]?.giaket).slice(1) : '0'} VNĐ</p>
+                      :
+                      <p className="mt-2 text-readonly">{chiTietMaHang[0]?.giamay ? formatter.format(chiTietMaHang[0]?.giamay).slice(1) : '0'} VNĐ</p>
+                    }
                   </Form.Group>
                 </Col>
               </Row>
@@ -681,7 +696,7 @@ const DanhSachThongTinCS = (props) => {
                 <th className="text-center th-action-small">Hành <br />động</th>
                 <th className="th-ma text-center">Mã hàng</th>
                 <th className="th-min">Tên hàng</th>
-                <th className="th-gia text-center">Giá may (VNĐ)</th>
+                <th className="th-gia text-center">{isTypeBook === ROLE.SO_KET ? 'Giá kết' : 'Giá may'} (VNĐ)</th>
                 <th className="th-sl text-center">SL giao (cái)</th>
                 <th className="th-gia text-center">Giá sửa (VNĐ)</th>
                 <th className="th-sl text-center">SL sửa (cái)</th>
@@ -715,7 +730,7 @@ const DanhSachThongTinCS = (props) => {
                 listMH={DSMaHang}
                 confirmDeleteSCS={confirmDeleteSCS}
                 confirmDeleteTU={confirmDeleteTU}
-                getDateDisable={getDateDisable}
+                isTypeBook={isTypeBook}
               />
             </tbody>
           </Table> : <Empty />
@@ -759,12 +774,12 @@ const DanhSachThongTinCS = (props) => {
           <Modal.Title>Xác nhận thanh toán</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Tổng tiền cần thanh toán cho <span className="font-bold">"{getName(nameArr)}"</span> <br />
-          {formSearch.ngaynhap && !!formSearch.ngaynhap.length && `Từ ngày "${moment(formSearch?.ngaynhap[0]).format('DD/MM/YYYY')}" đến ngày "${moment(formSearch?.ngaynhap[1]).format('DD/MM/YYYY')}" là: ${arrMoneyAfterMinusAll > 0 ? 
-                      formatter.format(arrMoneyAfterMinusAll).slice(1) 
-                      :
-                      formatter.format(arrMoneyAfterMinusAll).replace(formatter.format(arrMoneyAfterMinusAll).slice(1, 2), '')
-                    } VNĐ.`}
+          <p>Tổng tiền cần thanh toán cho <span className="font-bold">"{getName(nameArr)}"</span></p>
+          <p className="mt-1">
+            {formSearch.ngaynhap && !!formSearch.ngaynhap.length && 
+              `Từ ngày "${moment(formSearch?.ngaynhap[0]).format('DD/MM/YYYY')}" đến ngày "${moment(formSearch?.ngaynhap[1]).format('DD/MM/YYYY')}" là: ${arrMoneyAfterMinusAll > 0 ? formatter.format(arrMoneyAfterMinusAll).slice(1) : formatter.format(arrMoneyAfterMinusAll).replace(formatter.format(arrMoneyAfterMinusAll).slice(1, 2), '')} vnđ.`
+            }
+          </p>
           <Form.Group className="mt-3" controlId="agreeTT">
             <Form.Check 
               type="checkbox" 

@@ -411,6 +411,27 @@ button:disabled {
   thead th {vertical-align: middle;}
   tbody {
     border: 0 !important;
+    .tr-disabled {
+      td {
+        position: relative;
+        background-color: transparent !important;
+        color: $color-white !important;
+        &:before {
+          content: '';
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          background-color: rgba(255, 255, 255, .5);
+        }
+        &:hover {
+          padding-right: 10px;
+          cursor: not-allowed;
+        }
+        .btn-delete {display: none;}
+      }
+    }
     td {
       padding: 5px 10px;
       vertical-align: middle;
@@ -722,5 +743,34 @@ button:disabled {
   .ant-back-top-content {
     background-color: $color-purple;
     .anticon {vertical-align: 0;}
+  }
+}
+
+.accordion-custom {
+  background-color: transparent;
+  border: 0;
+  .ant-collapse-item {
+    border: 0;
+    .ant-collapse-header {
+      position: relative;
+      font-size: 16px;
+      white-space: nowrap;
+      color: transparent;
+      .anticon {
+        position: absolute;
+        top: 50%;
+        right: 18px;
+        z-index: 1;
+        margin-top: -6px;
+        margin-right: 0;
+        color: $color-white;
+      }
+    }
+  }
+  .ant-collapse-content {
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+    .ant-collapse-content-box {padding: 0;}
   }
 }

@@ -1,11 +1,11 @@
+import { ROLE } from 'constant/currentUser';
 import _ from 'lodash';
 import { Button } from 'react-bootstrap';
 import ReactHtmlParser from 'react-html-parser';
 import { formatter } from 'services/common';
 
 const SCSItem = (props) => {
-  const { data, listMH, confirmDeleteSCS, confirmDeleteTU, getDateDisable } = props;
-  console.log(getDateDisable);
+  const { data, listMH, confirmDeleteSCS, confirmDeleteTU, isTypeBook } = props;
 
   const arrDate = Object.keys(data);
     const cloneArr = [...arrDate];
@@ -42,8 +42,13 @@ const SCSItem = (props) => {
       // thông tin giao hàng
       data[reverseArr[k]].map(x => {
         if (x.thongtin === 'giaohang') {
-          let giamay = _.filter(listMH, k => {return k.id === x.mahangId})[0]['giamay'];
-          totalCountMoneyDay += +x.slgiao * giamay;
+          if(isTypeBook === ROLE.SO_KET) {
+            let giaket = _.filter(listMH, k => {return k.id === x.mahangId})[0]['giaket'];
+            totalCountMoneyDay += +x.slgiao * giaket;
+          } else {
+            let giamay = _.filter(listMH, k => {return k.id === x.mahangId})[0]['giamay'];
+            totalCountMoneyDay += +x.slgiao * giamay;
+          }
         }
         return totalCountMoneyDay;
       });
@@ -67,7 +72,7 @@ const SCSItem = (props) => {
         let detailMH = _.filter(listMH, (x) => {return x.id === sortDate[j]['mahangId']});
 
         return (
-          <tr key={item.id}>
+          <tr key={item.id} className={item.thanhtoan ? 'tr-disabled' : ''}>
             {j < 1 && <td className="text-center" rowSpan={count}>{sortDate[j]['ngaynhap']}</td>}
 
             {['GH', 'HL'].includes(isTT) && <td className={`text-center ${['HL'].includes(isTT) ? 'td-bgd-red' : ''}`}>
@@ -84,13 +89,13 @@ const SCSItem = (props) => {
                 Tiền ứng
               </td> 
               : 
-              <td className={`text-center ${['HL'].includes(isTT) && 'td-bgd-red'}`}>{detailMH.length && detailMH[0]?.mahang}</td>
+              <td className={`text-center ${['HL'].includes(isTT) ? 'td-bgd-red' : ''}`}>{detailMH.length && detailMH[0]?.mahang}</td>
             }
             
 
             {['GH', 'HL'].includes(isTT) && <td className={`${['HL'].includes(isTT) && 'td-bgd-red'}`}>{detailMH.length && detailMH[0]?.tenhang}</td>}
 
-            {['GH', 'HL'].includes(isTT) && <td className={`text-center ${['HL'].includes(isTT) ? 'td-bgd-red' : ''}`}>{formatter.format(detailMH[0]?.giamay).slice(1)}</td>}
+            {['GH', 'HL'].includes(isTT) && <td className={`text-center ${['HL'].includes(isTT) ? 'td-bgd-red' : ''}`}>{isTypeBook === ROLE.SO_KET ? formatter.format(detailMH[0]?.giaket).slice(1) : formatter.format(detailMH[0]?.giamay).slice(1)}</td>}
 
             {['GH'].includes(isTT) ? <td className="text-center">{formatter.format(sortDate[j]['slgiao']).slice(1)}</td> : ['HL'].includes(isTT) && <td className="text-center td-bgd-red">0</td>}
 
@@ -99,7 +104,7 @@ const SCSItem = (props) => {
             {['GH'].includes(isTT) ? <td className="text-center">0</td> : ['HL'].includes(isTT) && <td className="text-center td-bgd-red">{formatter.format(sortDate[j]['slhu']).slice(1)}</td>}
 
             {['GH'].includes(isTT) ? 
-              <td className="text-center">{formatter.format(sortDate[j]['slgiao'] * detailMH[0]?.giamay).slice(1)}</td> 
+              <td className="text-center">{isTypeBook === ROLE.SO_KET ? formatter.format(sortDate[j]['slgiao'] * detailMH[0]?.giaket).slice(1) : formatter.format(sortDate[j]['slgiao'] * detailMH[0]?.giamay).slice(1)}</td> 
               : ['HL'].includes(isTT) ? 
               <td className="text-center td-bgd-red">{formatter.format(sortDate[j]['slhu'] * sortDate[j]['giasua']).slice(1)}</td> 
               : <td className="text-center td-bgd-yellow">{formatter.format(sortDate[j]['tienung']).slice(1)}</td> 

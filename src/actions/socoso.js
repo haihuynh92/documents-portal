@@ -56,3 +56,13 @@ export const filterThongTinSCS = (arrDate, nameArr) => {
     }
   }
 }
+
+export const updateThongTinSCS = (dataUpate, nameArr) => {
+  return {
+    type: actionTypes.UPDATE_THONG_TIN_SCS,
+    payload: {
+      dataUpate,
+      nameArr
+    }
+  }
+}

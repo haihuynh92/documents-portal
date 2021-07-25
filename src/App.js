@@ -36,6 +36,16 @@ function App() {
           <Route path={pathNameTypes.SO_UT} component={QuanLyKhachHang} />
           <Route path={pathNameTypes.SO_NGOC} component={QuanLyKhachHang} />
           <Route path={pathNameTypes.SO_NGUYET} component={QuanLySoCoSo} />
+          <Route path={pathNameTypes.SO_QUYEN} component={QuanLySoCoSo} />
+          <Route path={pathNameTypes.SO_DIEM} component={QuanLySoCoSo} />
+          <Route path={pathNameTypes.SO_CHU_SANH} component={QuanLySoCoSo} />
+          <Route path={pathNameTypes.SO_CHI_PHUONG} component={QuanLySoCoSo} />
+          <Route path={pathNameTypes.SO_CHI_DUYEN} component={QuanLySoCoSo} />
+          <Route path={pathNameTypes.SO_PHUONG_ANH} component={QuanLySoCoSo} />
+          <Route path={pathNameTypes.SO_CHI_HA} component={QuanLySoCoSo} />
+          <Route path={pathNameTypes.SO_THUY_VINH} component={QuanLySoCoSo} />
+          <Route path={pathNameTypes.SO_THUY_KET_CHAU} component={QuanLySoCoSo} />
+          <Route path={pathNameTypes.SO_CHI_TIM} component={QuanLySoCoSo} />
           <Route component={NotFoundPage} />
         </Switch>
         

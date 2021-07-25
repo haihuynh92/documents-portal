@@ -1,4 +1,4 @@
-import { filterThongTinSCSApi, layDSThongTinSCSApi, themThongTinSCSApi, xoaThongTinSCSApi } from 'api/soCoSoApi';
+import { filterThongTinSCSApi, layDSThongTinSCSApi, themThongTinSCSApi, updateThongTinSCSApi, xoaThongTinSCSApi } from 'api/soCoSoApi';
 import * as actionTypes from 'constant/actionTypes';
 import moment from 'moment';
 import { hideLoading, showLoading } from 'reducers/loadingReducer';
@@ -77,11 +77,34 @@ export function* filterThongTinSCS(action) {
   }
 }
 
+export function* updateThongTinSCS(action) {
+  const { payload } = action;
+  try {
+    yield put(showLoading());
+    for(let i = 0; i < payload.dataUpate.length; i++) {
+      let dataPost = {
+        ...payload.dataUpate[i],
+        thanhtoan: true
+      }
+      yield call(updateThongTinSCSApi, dataPost, payload.nameArr);
+    }
+    const res = yield call(layDSThongTinSCSApi, payload.nameArr);
+    if (res.status === 200) {
+      yield delay(1000);
+      yield put(hideLoading());
+      yield put(DSTTCSC(res.data));
+    }
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
 export const watchSoCoSo = [
   takeLatest(actionTypes.DANH_SACH_THONG_TIN_SCS, layDSThongTinSCS),
   takeLatest(actionTypes.THEM_THONG_TIN_SCS, themThongTinSCS),
   takeLatest(actionTypes.THEM_TIEN_UNG_SCS, themThongTinSCS),
   takeLatest(actionTypes.THEM_HANG_LOI_SCS, themThongTinSCS),
   takeLatest(actionTypes.XOA_THONG_TIN_SCS, xoaThongTinSCS),
-  takeLatest(actionTypes.FILTER_THONG_TIN_SCS, filterThongTinSCS)
+  takeLatest(actionTypes.FILTER_THONG_TIN_SCS, filterThongTinSCS),
+  takeLatest(actionTypes.UPDATE_THONG_TIN_SCS, updateThongTinSCS)
 ]

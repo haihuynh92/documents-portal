@@ -733,11 +733,7 @@ const DanhSachKH = (props) => {
                 <th className="text-center th-action-small">Hành <br />động</th>
                 <th className="th-ma text-center">Mã hàng</th>
                 <th className="th-min">Tên hàng</th>
-                {isTypeBook === ROLE.NOI_BO ?
-                  <th className="th-gia text-center">Giá nhập (VNĐ)</th>
-                  :
-                  <th className="th-gia text-center">Giá giao (VNĐ)</th>
-                }
+                <th className="th-gia text-center">{isTypeBook === ROLE.NOI_BO ? 'Giá nhập' : 'Giá giao'} (VNĐ)</th>
                 <th className="th-sl text-center">SL giao (cái)</th>
                 <th className="th-sl text-center">SL hư (cái)</th>
                 <th className="th-money text-center">Thành tiền <br />(VNĐ)</th>

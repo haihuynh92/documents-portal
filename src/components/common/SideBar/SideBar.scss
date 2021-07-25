@@ -42,15 +42,6 @@
     .fa-tachometer:before {font-size: 20px;}
     &:hover {background-color: $color-blue;}
   }
-  .ttl-article {
-    opacity: 0;
-    padding: 0;
-    height: 0;
-    color: $color-white;
-    white-space: nowrap;
-    transition-duration: .3s;
-    transition-property: padding height opacity;
-  }
   .list-menu {
     .fa {
       min-width: 20px;
@@ -88,12 +79,14 @@
     width: 250px;
     .ttl-side-bar {padding: 15px 20px;}
     .sub-ttl {opacity: 1;}
-    .ttl-article {
-      padding: 10px 15px;
-      margin-top: 10px;
-      height: auto;
-      opacity: 1;
-    }
     .list-menu a {padding: 15px 30px;}
+    .accordion-custom {
+      .ant-collapse-item {
+        .ant-collapse-header {
+          color: $color-white;
+          .anticon {right: 10px;} 
+        }
+      }
+    }
   }
 }
