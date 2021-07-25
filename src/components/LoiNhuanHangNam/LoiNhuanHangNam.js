@@ -1,5 +1,5 @@
 import { DatePicker, Select } from "antd";
-import { DATA_BOOK } from 'constant/currentUser';
+import { DATA_KH } from 'constant/currentUser';
 import moment from 'moment';
 import React, { useState } from 'react';
 import { Button, Col, Form, Row } from "react-bootstrap";
@@ -90,7 +90,7 @@ const LoiNhuanHangNam = (props) => {
                   onChange={onChangeSelectSo}
                   placeholder="Tìm kiếm sổ"
                 >
-                  {showDSSo(DATA_BOOK)}
+                  {showDSSo(DATA_KH)}
                 </Select>
               </div>
             </Form.Group>

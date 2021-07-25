@@ -6,7 +6,7 @@ export const ROLE = {
   SO_KHACH: 'sokhach'
 };
 export const CONFIG_MONEY = 1000;
-export const DATA_BOOK = [
+export const DATA_KH = [
   {
     name: 'sổ Hằng Thùy',
     value: 'sohangthuys'

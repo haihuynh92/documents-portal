@@ -2,7 +2,7 @@ import { themHangLoi, themThongTin, themTienTraTruoc, themTienVaiPhuLieu, xoaTho
 import { DatePicker, Select } from 'antd';
 import Empty from 'components/common/Empty/Empty';
 import ErrorMsg from 'components/common/ErrorMsg/ErrorMsg';
-import { CONFIG_MONEY, DATA_BOOK, ROLE } from 'constant/currentUser';
+import { CONFIG_MONEY, DATA_KH, ROLE } from 'constant/currentUser';
 import _ from 'lodash';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
@@ -353,7 +353,7 @@ const DanhSachKH = (props) => {
   }
 
   const getName = (nameArr) => {
-    return _.filter(DATA_BOOK, (x) => {return x.value === nameArr})[0]['name'];
+    return _.filter(DATA_KH, (x) => {return x.value === nameArr})[0]['name'];
   }
 
   return (
