@@ -712,8 +712,8 @@ const DanhSachThongTinCS = (props) => {
                 <tr>
                   <td className="text-right td-bgd-purple" colSpan="12">
                     Tổng tiền thanh toán <br />
-                    <Button variant="danger" size="sm" className="mt-1" onClick={handleShowConfirm}>
-                      Xác nhận
+                    <Button variant="info" size="sm" className="mt-1" onClick={handleShowConfirm}>
+                      Thanh toán
                     </Button>
                   </td>
                   <td className="text-center td-bgd-purple">

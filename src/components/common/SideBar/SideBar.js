@@ -23,7 +23,7 @@ const SideBar = (props) => {
         </Link>
         <div className="inner">
           <Collapse accordion className="accordion-custom">
-            <Panel header="Quản lý hàng" key="1">
+            <Panel header="Quản lý tổng hợp" key="1">
               <ul className="list-menu">
                 <li className={`${history.location.pathname === pathNameTypes.DS_MA_HANG ? "active" : ""}`}>
                   <Link to={pathNameTypes.DS_MA_HANG} title="Mã hàng">
