@@ -2,13 +2,14 @@ import { configureStore } from '@reduxjs/toolkit';
 import coSoMayReducer from 'reducers/coSoMayReducer';
 import homeReducer from 'reducers/homeReducer';
 import khachHangReduder from 'reducers/khachHangReducer';
-import soCoSoReducer from 'reducers/soCoSoReducer';
+import kiemTraLoiNhuanReduder from 'reducers/kiemTraLoiNhuanReducer';
 import loadingReducer from 'reducers/loadingReducer';
 import loginReducer from 'reducers/loginReducer';
 import maHangReducer from 'reducers/maHangReducer';
-import soCatReduder from 'reducers/soCatReducer';
-import kiemTraLoiNhuanReduder from 'reducers/kiemTraLoiNhuanReducer';
 import menuReduder from 'reducers/menuReducer';
+import soCatReduder from 'reducers/soCatReducer';
+import soCoSoReducer from 'reducers/soCoSoReducer';
+import soTienLuongReduder from 'reducers/soTienLuongReducer';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from 'sagas';
 
@@ -22,7 +23,8 @@ const rootReducer = {
   khachHangReduder,
   menuReduder,
   kiemTraLoiNhuanReduder,
-  soCoSoReducer
+  soCoSoReducer,
+  soTienLuongReduder
 }
 
 const sagaMiddleware = createSagaMiddleware();

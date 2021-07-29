@@ -450,9 +450,9 @@ const DanhSachKH = (props) => {
                   <Form.Group>
                     <Form.Label>{isTypeBook === ROLE.NOI_BO ? 'Giá nhập' : 'Giá giao'}</Form.Label>
                     {isTypeBook === ROLE.NOI_BO ? 
-                      <p className="mt-2 text-readonly">{chiTietMaHangFail[0]?.gianhap ? formatter.format(chiTietMaHangFail[0]?.gianhap).slice(1) : '0'} VNĐ</p>
+                      <p className="mt-2 text-readonly">{chiTietMaHangFail[0]?.gianhap ? formatter.format(chiTietMaHangFail[0]?.gianhap) : '0'} VNĐ</p>
                       :
-                      <p className="mt-2 text-readonly">{chiTietMaHangFail[0]?.giagiao ? formatter.format(chiTietMaHangFail[0]?.giagiao).slice(1) : '0'} VNĐ</p>
+                      <p className="mt-2 text-readonly">{chiTietMaHangFail[0]?.giagiao ? formatter.format(chiTietMaHangFail[0]?.giagiao) : '0'} VNĐ</p>
                     }
                   </Form.Group>
                 </Col>
@@ -504,6 +504,7 @@ const DanhSachKH = (props) => {
                     <Form.Label>Ngày nhập</Form.Label>
                     <div className="datepicker-custom mt-2">
                       <DatePicker
+                        allowClear={false}
                         placeholder="Chọn ngày nhập"
                         inputReadOnly={true}
                         disabledDate={disabledDate}
@@ -571,9 +572,9 @@ const DanhSachKH = (props) => {
                   <Form.Group>
                     <Form.Label>{isTypeBook === ROLE.NOI_BO ? 'Giá nhập' : 'Giá giao'}</Form.Label>
                     {isTypeBook === ROLE.NOI_BO ? 
-                      <p className="mt-2 text-readonly">{chiTietMaHang[0]?.gianhap ? formatter.format(chiTietMaHang[0]?.gianhap).slice(1) : '0'} VNĐ</p>
+                      <p className="mt-2 text-readonly">{chiTietMaHang[0]?.gianhap ? formatter.format(chiTietMaHang[0]?.gianhap) : '0'} VNĐ</p>
                       : 
-                      <p className="mt-2 text-readonly">{chiTietMaHang[0]?.giagiao ? formatter.format(chiTietMaHang[0]?.giagiao).slice(1) : '0'} VNĐ</p>
+                      <p className="mt-2 text-readonly">{chiTietMaHang[0]?.giagiao ? formatter.format(chiTietMaHang[0]?.giagiao) : '0'} VNĐ</p>
                     }
                   </Form.Group>
                 </Col>
@@ -817,8 +818,8 @@ const DanhSachKH = (props) => {
                   hangDaGiao.map((item, index) => {
                     let detailMH = _.filter(DSMaHang, (x) => {return x.id === item.mahangId});
                     sumSLGiao += +item.slgiao;
-                    sumLN1 += CONFIG_MONEY * item.slgiao;
-                    sumLN2 += (detailMH[0].giagiao - detailMH[0].gianhap - CONFIG_MONEY) * item.slgiao
+                    sumLN1 += CONFIG_MONEY.default * item.slgiao;
+                    sumLN2 += (detailMH[0].giagiao - detailMH[0].gianhap - CONFIG_MONEY.default) * item.slgiao
 
                     return (
                       <tbody key={item.id}>
@@ -826,18 +827,18 @@ const DanhSachKH = (props) => {
                           <td className="text-center">{index + 1}</td>
                           <td className="text-center">{detailMH.length && detailMH[0]?.mahang}</td>
                           <td>{detailMH.length && detailMH[0]?.tenhang}</td>
-                          <td className="text-center">{formatter.format(item.slgiao).slice(1)}</td>
-                          <td className="text-center">{formatter.format(CONFIG_MONEY * item.slgiao).slice(1)}</td>
-                          <td className="text-center">{formatter.format((detailMH[0].giagiao - detailMH[0].gianhap - CONFIG_MONEY) * item.slgiao).slice(1)}</td>
-                          <td className="text-center">{formatter.format(CONFIG_MONEY * item.slgiao).slice(1)}</td>
+                          <td className="text-center">{formatter.format(item.slgiao)}</td>
+                          <td className="text-center">{formatter.format(CONFIG_MONEY.default * item.slgiao)}</td>
+                          <td className="text-center">{formatter.format((detailMH[0].giagiao - detailMH[0].gianhap - CONFIG_MONEY.default) * item.slgiao)}</td>
+                          <td className="text-center">{formatter.format(CONFIG_MONEY.default * item.slgiao)}</td>
                         </tr>
                         {index === hangDaGiao.length - 1 && 
                           <tr>
                             <td className="text-right" colSpan={3}>Tổng thành phần</td>
-                            <td className="text-center">{formatter.format(sumSLGiao).slice(1)}</td>
-                            <td className="text-center">{formatter.format(sumLN1).slice(1)}</td>
-                            <td className="text-center">{formatter.format(sumLN2).slice(1)}</td>
-                            <td className="text-center">{formatter.format(sumLN1).slice(1)}</td>
+                            <td className="text-center">{formatter.format(sumSLGiao)}</td>
+                            <td className="text-center">{formatter.format(sumLN1)}</td>
+                            <td className="text-center">{formatter.format(sumLN2)}</td>
+                            <td className="text-center">{formatter.format(sumLN1)}</td>
                           </tr>
                         }
                       </tbody>

@@ -12,12 +12,12 @@ const MHItem = (props) => {
       <td className="text-center">{index + (currPage - 1) + currPage}</td>
       <td className="text-center">{item.mahang}</td>
       <td>{item.tenhang}</td>
-      <td className="text-center">{formatter.format(item.giamay).slice(1)}</td>
-      <td className="text-center">{formatter.format(item.giachau).slice(1)}</td>
-      <td className="text-center">{formatter.format(item.giaket).slice(1)}</td>
-      <td className="text-center">{formatter.format(item.gianhap).slice(1)}</td>
-      <td className="text-center">{formatter.format(item.giagiao).slice(1)}</td>
-      <td className="text-center">{formatter.format(item.giagiao - item.gianhap - CONFIG_MONEY).slice(1)}</td>
+      <td className="text-center">{formatter.format(item.giamay)}</td>
+      <td className="text-center">{formatter.format(item.giachau)}</td>
+      <td className="text-center">{formatter.format(item.giaket)}</td>
+      <td className="text-center">{formatter.format(item.gianhap)}</td>
+      <td className="text-center">{formatter.format(item.giagiao)}</td>
+      <td className="text-center">{formatter.format(item.giagiao - item.gianhap - CONFIG_MONEY.default)}</td>
       <td>{ReactHtmlParser(item.ghichu.replace(/\n/g, "<br />"))}</td>
       <td className="text-center">
         <Button variant="default" className="button-control reset-button mr-3 btn-edit" onClick={() => getDetailMH(item)}>

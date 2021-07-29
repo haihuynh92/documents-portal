@@ -46,7 +46,18 @@ const SideBar = (props) => {
               </ul>
             </Panel>
 
-            <Panel header="Quản lý sổ khách" key="2">
+            <Panel header="Quản lý sổ lương" key="2">
+              <ul className="list-menu">
+                <li className={`${history.location.pathname === pathNameTypes.SO_TIEN_TRINH ? "active" : ""}`}>
+                  <Link to={pathNameTypes.SO_TIEN_TRINH} title="sổ tiền Trinh">
+                    <i className="fa fa-id-card mr-2" aria-hidden="true"></i>
+                    <span className="sub-ttl">Trinh</span>
+                  </Link>
+                </li>
+              </ul>
+            </Panel>
+
+            <Panel header="Quản lý sổ khách" key="3">
               <ul className="list-menu">
                 <li className={`${history.location.pathname === pathNameTypes.SO_HANG_THUY ? "active" : ""}`}>
                   <Link to={pathNameTypes.SO_HANG_THUY} title="Sổ Hằng Thùy">
@@ -87,7 +98,7 @@ const SideBar = (props) => {
               </ul>
             </Panel>
 
-            <Panel header="Quản lý sổ nội bộ" key="3">
+            <Panel header="Quản lý sổ nội bộ" key="4">
               <ul className="list-menu">
                 <li className={`${history.location.pathname === pathNameTypes.SO_NGHI ? "active" : ""}`}>
                   <Link to={pathNameTypes.SO_NGHI} title="Sổ Nghị Em">
@@ -110,71 +121,71 @@ const SideBar = (props) => {
               </ul>
             </Panel>
 
-            <Panel header="Quản lý sổ cơ sở" key="4">
+            <Panel header="Quản lý sổ cơ sở" key="5">
               <ul className="list-menu">
                 <li className={`${history.location.pathname === pathNameTypes.SO_NGUYET ? "active" : ""}`}>
                   <Link to={pathNameTypes.SO_NGUYET} title="Sổ Nguyệt">
-                    <i className="fa fa-address-book-o mr-2" aria-hidden="true"></i>
+                    <i className="fa fa-sliders mr-2" aria-hidden="true"></i>
                     <span className="sub-ttl">Sổ Nguyệt</span>
                   </Link>
                 </li>
                 <li className={`${history.location.pathname === pathNameTypes.SO_QUYEN ? "active" : ""}`}>
                   <Link to={pathNameTypes.SO_QUYEN} title="Sổ Quyên">
-                    <i className="fa fa-address-book-o mr-2" aria-hidden="true"></i>
+                    <i className="fa fa-life-ring mr-2" aria-hidden="true"></i>
                     <span className="sub-ttl">Sổ Quyên</span>
                   </Link>
                 </li>
                 <li className={`${history.location.pathname === pathNameTypes.SO_DIEM ? "active" : ""}`}>
                   <Link to={pathNameTypes.SO_DIEM} title="Sổ Diễm">
-                    <i className="fa fa-address-book-o mr-2" aria-hidden="true"></i>
+                    <i className="fa fa-indent mr-2" aria-hidden="true"></i>
                     <span className="sub-ttl">Sổ Diễm</span>
                   </Link>
                 </li>
                 <li className={`${history.location.pathname === pathNameTypes.SO_CHU_SANH ? "active" : ""}`}>
                   <Link to={pathNameTypes.SO_CHU_SANH} title="Sổ chú Sanh">
-                    <i className="fa fa-address-book-o mr-2" aria-hidden="true"></i>
+                    <i className="fa fa-dropbox mr-2" aria-hidden="true"></i>
                     <span className="sub-ttl">Sổ chú Sanh</span>
                   </Link>
                 </li>
                 <li className={`${history.location.pathname === pathNameTypes.SO_CHI_PHUONG ? "active" : ""}`}>
                   <Link to={pathNameTypes.SO_CHI_PHUONG} title="Sổ chị Phượng">
-                    <i className="fa fa-address-book-o mr-2" aria-hidden="true"></i>
+                    <i className="fa fa-joomla mr-2" aria-hidden="true"></i>
                     <span className="sub-ttl">Sổ chị Phượng</span>
                   </Link>
                 </li>
                 <li className={`${history.location.pathname === pathNameTypes.SO_CHI_DUYEN ? "active" : ""}`}>
                   <Link to={pathNameTypes.SO_CHI_DUYEN} title="Sổ chị Duyên">
-                    <i className="fa fa-address-book-o mr-2" aria-hidden="true"></i>
+                    <i className="fa fa-pagelines mr-2" aria-hidden="true"></i>
                     <span className="sub-ttl">Sổ chị Duyên</span>
                   </Link>
                 </li>
                 <li className={`${history.location.pathname === pathNameTypes.SO_PHUONG_ANH ? "active" : ""}`}>
                   <Link to={pathNameTypes.SO_PHUONG_ANH} title="Sổ Phương Anh">
-                    <i className="fa fa-address-book-o mr-2" aria-hidden="true"></i>
+                    <i className="fa fa-database mr-2" aria-hidden="true"></i>
                     <span className="sub-ttl">Sổ Phương Anh</span>
                   </Link>
                 </li>
                 <li className={`${history.location.pathname === pathNameTypes.SO_CHI_HA ? "active" : ""}`}>
                   <Link to={pathNameTypes.SO_CHI_HA} title="Sổ chị Hà">
-                    <i className="fa fa-address-book-o mr-2" aria-hidden="true"></i>
+                    <i className="fa fa-stumbleupon mr-2" aria-hidden="true"></i>
                     <span className="sub-ttl">Sổ chị Hà</span>
                   </Link>
                 </li>
                 <li className={`${history.location.pathname === pathNameTypes.SO_THUY_VINH ? "active" : ""}`}>
                   <Link to={pathNameTypes.SO_THUY_VINH} title="Sổ Thủy Vịnh">
-                    <i className="fa fa-address-book-o mr-2" aria-hidden="true"></i>
+                    <i className="fa fa-wpforms mr-2" aria-hidden="true"></i>
                     <span className="sub-ttl">Sổ Thủy Vịnh</span>
                   </Link>
                 </li>
                 <li className={`${history.location.pathname === pathNameTypes.SO_THUY_KET_CHAU ? "active" : ""}`}>
                   <Link to={pathNameTypes.SO_THUY_KET_CHAU} title="Sổ Thủy kết châu">
-                    <i className="fa fa-address-book-o mr-2" aria-hidden="true"></i>
+                    <i className="fa fa-object-group mr-2" aria-hidden="true"></i>
                     <span className="sub-ttl">Sổ Thủy kết châu</span>
                   </Link>
                 </li>
                 <li className={`${history.location.pathname === pathNameTypes.SO_CHI_TIM ? "active" : ""}`}>
                   <Link to={pathNameTypes.SO_CHI_TIM} title="Sổ chị Tím">
-                    <i className="fa fa-address-book-o mr-2" aria-hidden="true"></i>
+                    <i className="fa fa-server mr-2" aria-hidden="true"></i>
                     <span className="sub-ttl">Sổ chị Tím</span>
                   </Link>
                 </li>

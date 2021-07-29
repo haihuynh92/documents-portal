@@ -113,23 +113,23 @@ const LoiNhuanHangThang = (props) => {
           <ul>
             <li>
               <span className="ttl-detail">Tổng số lượng đã giao</span>
-              {formatter.format(objSumMonth.sumSLGiaoInMonth).slice(1)} cái
+              {formatter.format(objSumMonth.sumSLGiaoInMonth)} cái
             </li>
             <li>
               <span className="ttl-detail">Tổng số lượng hàng lỗi</span>
-              {formatter.format(objSumMonth.sumHangLoiInMonth).slice(1)} cái
+              {formatter.format(objSumMonth.sumHangLoiInMonth)} cái
             </li>
             <li>
               <span className="ttl-detail">Tổng lợi nhuận 1</span>
-              {formatter.format(objSumMonth.sumLN1InMonth).slice(1)} vnđ
+              {formatter.format(objSumMonth.sumLN1InMonth)} vnđ
             </li>
             <li>
               <span className="ttl-detail">Tổng lợi nhuận 2</span>
-              {formatter.format(objSumMonth.sumLN2InMonth).slice(1)} vnđ
+              {formatter.format(objSumMonth.sumLN2InMonth)} vnđ
             </li>
             <li>
               <span className="ttl-detail">Tổng chi TT</span>
-              {formatter.format(objSumMonth.sumLN1InMonth).slice(1)} vnđ
+              {formatter.format(objSumMonth.sumLN1InMonth)} vnđ
             </li>
           </ul>
         </div>

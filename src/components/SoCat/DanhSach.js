@@ -382,6 +382,7 @@ const DanhSachMH = (props) => {
                     <Form.Label>Ngày cắt</Form.Label>
                     <div className="datepicker-custom mt-2">
                       <DatePicker
+                        allowClear={false}
                         placeholder="Chọn ngày cắt"
                         inputReadOnly={true}
                         disabledDate={disabledDate}

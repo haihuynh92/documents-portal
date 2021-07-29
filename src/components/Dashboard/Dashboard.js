@@ -28,8 +28,8 @@ const Dashboard = (props) => {
       let detailMH = _.filter(dsmahang, (x) => {return x.id === dataInMonth[i].mahangId});
       if(dataInMonth[i]['thongtin'] === 'giaohang') {
         objSumMonth.sumSLGiaoInMonth += +dataInMonth[i].slgiao;
-        objSumMonth.sumLN1InMonth += CONFIG_MONEY * dataInMonth[i].slgiao;
-        objSumMonth.sumLN2InMonth += (detailMH[0].giagiao - detailMH[0].gianhap - CONFIG_MONEY) * dataInMonth[i].slgiao;
+        objSumMonth.sumLN1InMonth += CONFIG_MONEY.default * dataInMonth[i].slgiao;
+        objSumMonth.sumLN2InMonth += (detailMH[0].giagiao - detailMH[0].gianhap - CONFIG_MONEY.default) * dataInMonth[i].slgiao;
       }
       if(dataInMonth[i]['thongtin'] === 'hangloi') {
         objSumMonth.sumHangLoiInMonth += +dataInMonth[i].slhu;
@@ -54,8 +54,8 @@ const Dashboard = (props) => {
       let detailMH = _.filter(dsmahang, (x) => {return x.id === dataInYear[i].mahangId});
       if(dataInYear[i]['thongtin'] === 'giaohang') {
         objSumYear.sumSLGiaoInYear += +dataInYear[i].slgiao;
-        objSumYear.sumLN1InYear += CONFIG_MONEY * dataInYear[i].slgiao;
-        objSumYear.sumLN2InYear += (detailMH[0].giagiao - detailMH[0].gianhap - CONFIG_MONEY) * dataInYear[i].slgiao;
+        objSumYear.sumLN1InYear += CONFIG_MONEY.default * dataInYear[i].slgiao;
+        objSumYear.sumLN2InYear += (detailMH[0].giagiao - detailMH[0].gianhap - CONFIG_MONEY.default) * dataInYear[i].slgiao;
       }
       if(dataInYear[i]['thongtin'] === 'hangloi') {
         objSumYear.sumHangLoiInYear += +dataInYear[i].slhu;

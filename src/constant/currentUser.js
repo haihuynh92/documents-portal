@@ -7,7 +7,11 @@ export const ROLE = {
   SO_MAY: 'somay',
   SO_KET: 'soket'
 };
-export const CONFIG_MONEY = 1000;
+export const CONFIG_MONEY = {
+  default: 1000,
+  tangca: 1.3,
+  cn: 1.5
+};
 export const DATA_KH = [
   {
     name: 'sổ Hằng Thùy',
@@ -91,4 +95,12 @@ export const DATA_SCS = [
     name: 'sổ chị Tím',
     value: 'sochitims'
   }
-]
+];
+export const DATA_SL = [
+  {
+    name: 'Trinh',
+    value: 'sotienluongtrinhs',
+    luongcoban: '6200000',
+    tientrongnha: '1000000'
+  }
+];

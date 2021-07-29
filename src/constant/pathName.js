@@ -32,3 +32,6 @@ export const SO_CHI_HA = '/quanlysocoso/sochiha';
 export const SO_THUY_VINH = '/quanlysocoso/sothuyvinh';
 export const SO_THUY_KET_CHAU = '/quanlysocoso/sothuyketchau';
 export const SO_CHI_TIM = '/quanlysocoso/sochitim';
+
+// tiền lương
+export const SO_TIEN_TRINH = '/quanlytienluong/sotientring';

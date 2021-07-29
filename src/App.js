@@ -10,6 +10,7 @@ import DSMaHang from 'pages/mahang';
 import NotFoundPage from 'pages/notfound';
 import QuanLyKhachHang from 'pages/quanlykhachhang';
 import QuanLySoCoSo from 'pages/quanlysocoso';
+import QuanLySoTienLuong from 'pages/quanlysotienluong';
 import SoCat from 'pages/socat';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
@@ -22,19 +23,24 @@ function App() {
 
         <Switch>
           <Route path={pathNameTypes.LOGIN} component={LoginPage} />
+
           <Route path={pathNameTypes.HOMEPAGE} exact component={HomePage} />
+
           <Route path={pathNameTypes.DS_MA_HANG} component={DSMaHang} />
           <Route path={pathNameTypes.DS_CO_SO_MAY} component={DSCoSoMay} />
           <Route path={pathNameTypes.SO_CAT} component={SoCat} />
+
           <Route path={pathNameTypes.SO_HANG_THUY} component={QuanLyKhachHang} />
           <Route path={pathNameTypes.SO_HANG} component={QuanLyKhachHang} />
           <Route path={pathNameTypes.SO_LINH} component={QuanLyKhachHang} />
           <Route path={pathNameTypes.SO_THAO} component={QuanLyKhachHang} />
           <Route path={pathNameTypes.SO_LINHBAVAN} component={QuanLyKhachHang} />
           <Route path={pathNameTypes.SO_KIM} component={QuanLyKhachHang} />
+
           <Route path={pathNameTypes.SO_NGHI} component={QuanLyKhachHang} />
           <Route path={pathNameTypes.SO_UT} component={QuanLyKhachHang} />
           <Route path={pathNameTypes.SO_NGOC} component={QuanLyKhachHang} />
+
           <Route path={pathNameTypes.SO_NGUYET} component={QuanLySoCoSo} />
           <Route path={pathNameTypes.SO_QUYEN} component={QuanLySoCoSo} />
           <Route path={pathNameTypes.SO_DIEM} component={QuanLySoCoSo} />
@@ -46,6 +52,9 @@ function App() {
           <Route path={pathNameTypes.SO_THUY_VINH} component={QuanLySoCoSo} />
           <Route path={pathNameTypes.SO_THUY_KET_CHAU} component={QuanLySoCoSo} />
           <Route path={pathNameTypes.SO_CHI_TIM} component={QuanLySoCoSo} />
+
+          <Route path={pathNameTypes.SO_TIEN_TRINH} component={QuanLySoTienLuong} />
+          
           <Route component={NotFoundPage} />
         </Switch>
         

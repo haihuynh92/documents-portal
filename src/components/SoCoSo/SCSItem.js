@@ -95,28 +95,28 @@ const SCSItem = (props) => {
 
             {['GH', 'HL'].includes(isTT) && <td className={`${['HL'].includes(isTT) && 'td-bgd-red'}`}>{detailMH.length && detailMH[0]?.tenhang}</td>}
 
-            {['GH', 'HL'].includes(isTT) && <td className={`text-center ${['HL'].includes(isTT) ? 'td-bgd-red' : ''}`}>{isTypeBook === ROLE.SO_KET ? formatter.format(detailMH[0]?.giaket).slice(1) : formatter.format(detailMH[0]?.giamay).slice(1)}</td>}
+            {['GH', 'HL'].includes(isTT) && <td className={`text-center ${['HL'].includes(isTT) ? 'td-bgd-red' : ''}`}>{isTypeBook === ROLE.SO_KET ? formatter.format(detailMH[0]?.giaket) : formatter.format(detailMH[0]?.giamay)}</td>}
 
-            {['GH'].includes(isTT) ? <td className="text-center">{formatter.format(sortDate[j]['slgiao']).slice(1)}</td> : ['HL'].includes(isTT) && <td className="text-center td-bgd-red">0</td>}
+            {['GH'].includes(isTT) ? <td className="text-center">{formatter.format(sortDate[j]['slgiao'])}</td> : ['HL'].includes(isTT) && <td className="text-center td-bgd-red">0</td>}
 
-            {!['TU'].includes(isTT) && <td className={`text-center ${['HL'].includes(isTT) ? 'td-bgd-red' : ''}`}>{['GH'].includes(isTT) ? 0 : formatter.format(sortDate[j]['giasua']).slice(1)}</td>}
+            {!['TU'].includes(isTT) && <td className={`text-center ${['HL'].includes(isTT) ? 'td-bgd-red' : ''}`}>{['GH'].includes(isTT) ? 0 : formatter.format(sortDate[j]['giasua'])}</td>}
 
-            {['GH'].includes(isTT) ? <td className="text-center">0</td> : ['HL'].includes(isTT) && <td className="text-center td-bgd-red">{formatter.format(sortDate[j]['slhu']).slice(1)}</td>}
+            {['GH'].includes(isTT) ? <td className="text-center">0</td> : ['HL'].includes(isTT) && <td className="text-center td-bgd-red">{formatter.format(sortDate[j]['slhu'])}</td>}
 
             {['GH'].includes(isTT) ? 
-              <td className="text-center">{isTypeBook === ROLE.SO_KET ? formatter.format(sortDate[j]['slgiao'] * detailMH[0]?.giaket).slice(1) : formatter.format(sortDate[j]['slgiao'] * detailMH[0]?.giamay).slice(1)}</td> 
+              <td className="text-center">{isTypeBook === ROLE.SO_KET ? formatter.format(sortDate[j]['slgiao'] * detailMH[0]?.giaket) : formatter.format(sortDate[j]['slgiao'] * detailMH[0]?.giamay)}</td> 
               : ['HL'].includes(isTT) ? 
-              <td className="text-center td-bgd-red">{formatter.format(sortDate[j]['slhu'] * sortDate[j]['giasua']).slice(1)}</td> 
-              : <td className="text-center td-bgd-yellow">{formatter.format(sortDate[j]['tienung']).slice(1)}</td> 
+              <td className="text-center td-bgd-red">{formatter.format(sortDate[j]['slhu'] * sortDate[j]['giasua'])}</td> 
+              : <td className="text-center td-bgd-yellow">{formatter.format(sortDate[j]['tienung'])}</td> 
             }
 
             <td className={`${isTT === 'TU' ? 'td-bgd-yellow' : ['HL'].includes(isTT) ? 'td-bgd-red' : ''}`}>{ReactHtmlParser(sortDate[j]['ghichu'].replace(/\n/g, "<br />"))}</td>
 
-            {j < 1 && <td className="text-center td-bgd-red" rowSpan={count}>{formatter.format(reverseArrMoneyFail[i]).slice(1)}</td>}
+            {j < 1 && <td className="text-center td-bgd-red" rowSpan={count}>{formatter.format(reverseArrMoneyFail[i])}</td>}
 
-            {j < 1 && <td className="text-center td-bgd-yellow" rowSpan={count}>{formatter.format(reverseArrMoneyCustomerU[i]).slice(1)}</td>}
+            {j < 1 && <td className="text-center td-bgd-yellow" rowSpan={count}>{formatter.format(reverseArrMoneyCustomerU[i])}</td>}
 
-            {j < 1 && <td className="text-center" rowSpan={count}>{reverseArrMoneyAfterMinusAll[i] > 0 ? formatter.format(reverseArrMoneyAfterMinusAll[i]).slice(1) : formatter.format(reverseArrMoneyAfterMinusAll[i]).replace(formatter.format(reverseArrMoneyAfterMinusAll[i]).slice(1, 2), '')}</td>}
+            {j < 1 && <td className="text-center" rowSpan={count}>{reverseArrMoneyAfterMinusAll[i] > 0 ? formatter.format(reverseArrMoneyAfterMinusAll[i]) : formatter.format(reverseArrMoneyAfterMinusAll[i])}</td>}
           </tr>
         );
       });

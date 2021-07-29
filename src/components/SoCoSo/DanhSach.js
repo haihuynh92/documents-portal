@@ -526,6 +526,7 @@ const DanhSachThongTinCS = (props) => {
                     <Form.Label>Ngày nhập</Form.Label>
                     <div className="datepicker-custom mt-2">
                       <DatePicker
+                        allowClear={false}
                         placeholder="Chọn ngày nhập"
                         inputReadOnly={true}
                         disabledDate={disabledDate}
@@ -593,9 +594,9 @@ const DanhSachThongTinCS = (props) => {
                   <Form.Group>
                     <Form.Label>{isTypeBook === ROLE.SO_KET ? 'Giá kết' : 'Giá may'}</Form.Label>
                     {isTypeBook === ROLE.SO_KET ? 
-                      <p className="mt-2 text-readonly">{chiTietMaHang[0]?.giaket ? formatter.format(chiTietMaHang[0]?.giaket).slice(1) : '0'} VNĐ</p>
+                      <p className="mt-2 text-readonly">{chiTietMaHang[0]?.giaket ? formatter.format(chiTietMaHang[0]?.giaket) : '0'} VNĐ</p>
                       :
-                      <p className="mt-2 text-readonly">{chiTietMaHang[0]?.giamay ? formatter.format(chiTietMaHang[0]?.giamay).slice(1) : '0'} VNĐ</p>
+                      <p className="mt-2 text-readonly">{chiTietMaHang[0]?.giamay ? formatter.format(chiTietMaHang[0]?.giamay) : '0'} VNĐ</p>
                     }
                   </Form.Group>
                 </Col>
@@ -718,7 +719,7 @@ const DanhSachThongTinCS = (props) => {
                   </td>
                   <td className="text-center td-bgd-purple">
                     {arrMoneyAfterMinusAll > 0 ? 
-                      formatter.format(arrMoneyAfterMinusAll).slice(1) 
+                      formatter.format(arrMoneyAfterMinusAll) 
                       :
                       formatter.format(arrMoneyAfterMinusAll).replace(formatter.format(arrMoneyAfterMinusAll).slice(1, 2), '')
                     }
@@ -777,7 +778,7 @@ const DanhSachThongTinCS = (props) => {
           <p>Tổng tiền cần thanh toán cho <span className="font-bold">"{getName(nameArr)}"</span></p>
           <p className="mt-1">
             {formSearch.ngaynhap && !!formSearch.ngaynhap.length && 
-              `Từ ngày "${moment(formSearch?.ngaynhap[0]).format('DD/MM/YYYY')}" đến ngày "${moment(formSearch?.ngaynhap[1]).format('DD/MM/YYYY')}" là: ${arrMoneyAfterMinusAll > 0 ? formatter.format(arrMoneyAfterMinusAll).slice(1) : formatter.format(arrMoneyAfterMinusAll).replace(formatter.format(arrMoneyAfterMinusAll).slice(1, 2), '')} vnđ.`
+              `Từ ngày "${moment(formSearch?.ngaynhap[0]).format('DD/MM/YYYY')}" đến ngày "${moment(formSearch?.ngaynhap[1]).format('DD/MM/YYYY')}" là: ${arrMoneyAfterMinusAll > 0 ? formatter.format(arrMoneyAfterMinusAll) : formatter.format(arrMoneyAfterMinusAll).replace(formatter.format(arrMoneyAfterMinusAll).slice(1, 2), '')} vnđ.`
             }
           </p>
           <Form.Group className="mt-3" controlId="agreeTT">
