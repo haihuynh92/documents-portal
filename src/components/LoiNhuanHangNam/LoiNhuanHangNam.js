@@ -3,7 +3,7 @@ import { DATA_KH } from 'constant/currentUser';
 import moment from 'moment';
 import React, { useState } from 'react';
 import { Button, Col, Form, Row } from "react-bootstrap";
-import { formatter } from 'services/common';
+import { FORMAT_MONEY } from 'services/common';
 
 const { Option } = Select;
 
@@ -113,23 +113,23 @@ const LoiNhuanHangNam = (props) => {
           <ul>
             <li>
               <span className="ttl-detail">Tổng số lượng đã giao</span>
-              {formatter.format(objSumYear.sumSLGiaoInYear)} cái
+              {FORMAT_MONEY.format(objSumYear.sumSLGiaoInYear)} cái
             </li>
             <li>
               <span className="ttl-detail">Tổng số lượng hàng lỗi</span>
-              {formatter.format(objSumYear.sumHangLoiInYear)} cái
+              {FORMAT_MONEY.format(objSumYear.sumHangLoiInYear)} cái
             </li>
             <li>
               <span className="ttl-detail">Tổng lợi nhuận 1</span>
-              {formatter.format(objSumYear.sumLN1InYear)} vnđ
+              {FORMAT_MONEY.format(objSumYear.sumLN1InYear)} vnđ
             </li>
             <li>
               <span className="ttl-detail">Tổng lợi nhuận 2</span>
-              {formatter.format(objSumYear.sumLN2InYear)} vnđ
+              {FORMAT_MONEY.format(objSumYear.sumLN2InYear)} vnđ
             </li>
             <li>
               <span className="ttl-detail">Tổng chi TT</span>
-              {formatter.format(objSumYear.sumLN1InYear)} vnđ
+              {FORMAT_MONEY.format(objSumYear.sumLN1InYear)} vnđ
             </li>
           </ul>
         </div>

@@ -10,7 +10,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Col, Form, Modal, Row, Table } from 'react-bootstrap';
 import CurrencyFormat from 'react-currency-format';
 import { useDispatch } from 'react-redux';
-import { formatter } from 'services/common';
+import { FORMAT_MONEY } from 'services/common';
 import SCSItem from './SCSItem';
 
 const { Option } = Select;
@@ -594,9 +594,9 @@ const DanhSachThongTinCS = (props) => {
                   <Form.Group>
                     <Form.Label>{isTypeBook === ROLE.SO_KET ? 'Giá kết' : 'Giá may'}</Form.Label>
                     {isTypeBook === ROLE.SO_KET ? 
-                      <p className="mt-2 text-readonly">{chiTietMaHang[0]?.giaket ? formatter.format(chiTietMaHang[0]?.giaket) : '0'} VNĐ</p>
+                      <p className="mt-2 text-readonly">{chiTietMaHang[0]?.giaket ? FORMAT_MONEY.format(chiTietMaHang[0]?.giaket) : '0'} VNĐ</p>
                       :
-                      <p className="mt-2 text-readonly">{chiTietMaHang[0]?.giamay ? formatter.format(chiTietMaHang[0]?.giamay) : '0'} VNĐ</p>
+                      <p className="mt-2 text-readonly">{chiTietMaHang[0]?.giamay ? FORMAT_MONEY.format(chiTietMaHang[0]?.giamay) : '0'} VNĐ</p>
                     }
                   </Form.Group>
                 </Col>
@@ -719,9 +719,9 @@ const DanhSachThongTinCS = (props) => {
                   </td>
                   <td className="text-center td-bgd-purple">
                     {arrMoneyAfterMinusAll > 0 ? 
-                      formatter.format(arrMoneyAfterMinusAll) 
+                      FORMAT_MONEY.format(arrMoneyAfterMinusAll) 
                       :
-                      formatter.format(arrMoneyAfterMinusAll).replace(formatter.format(arrMoneyAfterMinusAll).slice(1, 2), '')
+                      FORMAT_MONEY.format(arrMoneyAfterMinusAll).replace(FORMAT_MONEY.format(arrMoneyAfterMinusAll).slice(1, 2), '')
                     }
                   </td>
                 </tr>
@@ -778,7 +778,7 @@ const DanhSachThongTinCS = (props) => {
           <p>Tổng tiền cần thanh toán cho <span className="font-bold">"{getName(nameArr)}"</span></p>
           <p className="mt-1">
             {formSearch.ngaynhap && !!formSearch.ngaynhap.length && 
-              `Từ ngày "${moment(formSearch?.ngaynhap[0]).format('DD/MM/YYYY')}" đến ngày "${moment(formSearch?.ngaynhap[1]).format('DD/MM/YYYY')}" là: ${arrMoneyAfterMinusAll > 0 ? formatter.format(arrMoneyAfterMinusAll) : formatter.format(arrMoneyAfterMinusAll).replace(formatter.format(arrMoneyAfterMinusAll).slice(1, 2), '')} vnđ.`
+              `Từ ngày "${moment(formSearch?.ngaynhap[0]).format('DD/MM/YYYY')}" đến ngày "${moment(formSearch?.ngaynhap[1]).format('DD/MM/YYYY')}" là: ${arrMoneyAfterMinusAll > 0 ? FORMAT_MONEY.format(arrMoneyAfterMinusAll) : FORMAT_MONEY.format(arrMoneyAfterMinusAll).replace(FORMAT_MONEY.format(arrMoneyAfterMinusAll).slice(1, 2), '')} vnđ.`
             }
           </p>
           <Form.Group className="mt-3" controlId="agreeTT">

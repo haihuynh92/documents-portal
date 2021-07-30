@@ -1,7 +1,7 @@
 import { CONFIG_MONEY } from 'constant/currentUser';
 import _ from 'lodash';
 import { Button } from 'react-bootstrap';
-import { formatter } from 'services/common';
+import { FORMAT_MONEY } from 'services/common';
 
 const STLItem = (props) => {
   const { data, confirmDeleteTL, confirmDeleteTUTBD, getDetailTL, getInfoTL } = props;
@@ -96,7 +96,7 @@ const STLItem = (props) => {
             {['CC'].includes(isTT) && <td className="text-center">{item.tiencom ? 'Có' : 'Không'}</td>}
 
             <td className="text-center">
-              {isTT === 'TU' ? formatter.format(item.tienung) : isTT === 'BD' ? formatter.format(item.tienbd) : sumTT}
+              {isTT === 'TU' ? FORMAT_MONEY.format(item.tienung) : isTT === 'BD' ? FORMAT_MONEY.format(item.tienbd) : sumTT}
             </td>
 
           </tr>

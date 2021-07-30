@@ -9,7 +9,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Col, Form, Modal, Row, Table } from 'react-bootstrap';
 import CurrencyFormat from 'react-currency-format';
 import { useDispatch } from 'react-redux';
-import { formatter } from 'services/common';
+import { FORMAT_MONEY } from 'services/common';
 import KHItem from './KHItem';
 
 const { Option } = Select;
@@ -450,9 +450,9 @@ const DanhSachKH = (props) => {
                   <Form.Group>
                     <Form.Label>{isTypeBook === ROLE.NOI_BO ? 'Giá nhập' : 'Giá giao'}</Form.Label>
                     {isTypeBook === ROLE.NOI_BO ? 
-                      <p className="mt-2 text-readonly">{chiTietMaHangFail[0]?.gianhap ? formatter.format(chiTietMaHangFail[0]?.gianhap) : '0'} VNĐ</p>
+                      <p className="mt-2 text-readonly">{chiTietMaHangFail[0]?.gianhap ? FORMAT_MONEY.format(chiTietMaHangFail[0]?.gianhap) : '0'} VNĐ</p>
                       :
-                      <p className="mt-2 text-readonly">{chiTietMaHangFail[0]?.giagiao ? formatter.format(chiTietMaHangFail[0]?.giagiao) : '0'} VNĐ</p>
+                      <p className="mt-2 text-readonly">{chiTietMaHangFail[0]?.giagiao ? FORMAT_MONEY.format(chiTietMaHangFail[0]?.giagiao) : '0'} VNĐ</p>
                     }
                   </Form.Group>
                 </Col>
@@ -572,9 +572,9 @@ const DanhSachKH = (props) => {
                   <Form.Group>
                     <Form.Label>{isTypeBook === ROLE.NOI_BO ? 'Giá nhập' : 'Giá giao'}</Form.Label>
                     {isTypeBook === ROLE.NOI_BO ? 
-                      <p className="mt-2 text-readonly">{chiTietMaHang[0]?.gianhap ? formatter.format(chiTietMaHang[0]?.gianhap) : '0'} VNĐ</p>
+                      <p className="mt-2 text-readonly">{chiTietMaHang[0]?.gianhap ? FORMAT_MONEY.format(chiTietMaHang[0]?.gianhap) : '0'} VNĐ</p>
                       : 
-                      <p className="mt-2 text-readonly">{chiTietMaHang[0]?.giagiao ? formatter.format(chiTietMaHang[0]?.giagiao) : '0'} VNĐ</p>
+                      <p className="mt-2 text-readonly">{chiTietMaHang[0]?.giagiao ? FORMAT_MONEY.format(chiTietMaHang[0]?.giagiao) : '0'} VNĐ</p>
                     }
                   </Form.Group>
                 </Col>
@@ -827,18 +827,18 @@ const DanhSachKH = (props) => {
                           <td className="text-center">{index + 1}</td>
                           <td className="text-center">{detailMH.length && detailMH[0]?.mahang}</td>
                           <td>{detailMH.length && detailMH[0]?.tenhang}</td>
-                          <td className="text-center">{formatter.format(item.slgiao)}</td>
-                          <td className="text-center">{formatter.format(CONFIG_MONEY.default * item.slgiao)}</td>
-                          <td className="text-center">{formatter.format((detailMH[0].giagiao - detailMH[0].gianhap - CONFIG_MONEY.default) * item.slgiao)}</td>
-                          <td className="text-center">{formatter.format(CONFIG_MONEY.default * item.slgiao)}</td>
+                          <td className="text-center">{FORMAT_MONEY.format(item.slgiao)}</td>
+                          <td className="text-center">{FORMAT_MONEY.format(CONFIG_MONEY.default * item.slgiao)}</td>
+                          <td className="text-center">{FORMAT_MONEY.format((detailMH[0].giagiao - detailMH[0].gianhap - CONFIG_MONEY.default) * item.slgiao)}</td>
+                          <td className="text-center">{FORMAT_MONEY.format(CONFIG_MONEY.default * item.slgiao)}</td>
                         </tr>
                         {index === hangDaGiao.length - 1 && 
                           <tr>
                             <td className="text-right" colSpan={3}>Tổng thành phần</td>
-                            <td className="text-center">{formatter.format(sumSLGiao)}</td>
-                            <td className="text-center">{formatter.format(sumLN1)}</td>
-                            <td className="text-center">{formatter.format(sumLN2)}</td>
-                            <td className="text-center">{formatter.format(sumLN1)}</td>
+                            <td className="text-center">{FORMAT_MONEY.format(sumSLGiao)}</td>
+                            <td className="text-center">{FORMAT_MONEY.format(sumLN1)}</td>
+                            <td className="text-center">{FORMAT_MONEY.format(sumLN2)}</td>
+                            <td className="text-center">{FORMAT_MONEY.format(sumLN1)}</td>
                           </tr>
                         }
                       </tbody>

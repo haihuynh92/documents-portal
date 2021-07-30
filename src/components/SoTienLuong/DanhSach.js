@@ -10,7 +10,7 @@ import React, { useState } from 'react';
 import { Button, Col, Form, Modal, Row, Table } from 'react-bootstrap';
 import CurrencyFormat from 'react-currency-format';
 import { useDispatch } from 'react-redux';
-import { formatter } from 'services/common';
+import { FORMAT_MONEY } from 'services/common';
 import STLItem from './STLItem';
 
 
@@ -348,25 +348,25 @@ const DanhSachThongTinTienLuong = (props) => {
             <Col sm="2">
               <Form.Group>
                 <Form.Label>Lương cơ bản/tháng</Form.Label>
-                <p className="mt-2">{formatter.format(getInfoTL.luongcoban)} vnđ</p>
+                <p className="mt-2">{FORMAT_MONEY.format(getInfoTL.luongcoban)} vnđ</p>
               </Form.Group>
             </Col>
             <Col sm="2">
               <Form.Group>
                 <Form.Label>Lương cơ bản/ngày</Form.Label>
-                <p className="mt-2">{parseFloat(formatter.format(getInfoTL.luongcoban/26))} vnđ</p>
+                <p className="mt-2">{parseFloat(FORMAT_MONEY.format(getInfoTL.luongcoban/26))} vnđ</p>
               </Form.Group>
             </Col>
             <Col sm="2">
               <Form.Group>
                 <Form.Label>Lương cơ bản/giờ</Form.Label>
-                <p className="mt-2">{parseFloat(formatter.format(getInfoTL.luongcoban/26/9))} vnđ</p>
+                <p className="mt-2">{parseFloat(FORMAT_MONEY.format(getInfoTL.luongcoban/26/9))} vnđ</p>
               </Form.Group>
             </Col>
             <Col sm="2">
               <Form.Group>
                 <Form.Label>Tiền trong nhà</Form.Label>
-                <p className="mt-2">{formatter.format(getInfoTL.tientrongnha)} vnđ</p>
+                <p className="mt-2">{FORMAT_MONEY.format(getInfoTL.tientrongnha)} vnđ</p>
               </Form.Group>
             </Col>
           </Row>
@@ -658,9 +658,9 @@ const DanhSachThongTinTienLuong = (props) => {
                     </td>
                     <td className="text-center td-bgd-purple">
                       {arrMoneyAfterMinusAll > 0 ? 
-                        formatter.format(arrMoneyAfterMinusAll) 
+                        FORMAT_MONEY.format(arrMoneyAfterMinusAll) 
                         :
-                        formatter.format(arrMoneyAfterMinusAll).replace(formatter.format(arrMoneyAfterMinusAll).slice(1, 2), '')
+                        FORMAT_MONEY.format(arrMoneyAfterMinusAll).replace(FORMAT_MONEY.format(arrMoneyAfterMinusAll).slice(1, 2), '')
                       }
                     </td>
                   </tr>
@@ -712,7 +712,7 @@ const DanhSachThongTinTienLuong = (props) => {
             <p>Tổng tiền cần thanh toán cho <span className="font-bold">"{getName(nameArr)}"</span></p>
             <p className="mt-1">
               {formSearch.ngaynhap && !!formSearch.ngaynhap.length && 
-                `Từ ngày "${moment(formSearch?.ngaynhap[0]).format('DD/MM/YYYY')}" đến ngày "${moment(formSearch?.ngaynhap[1]).format('DD/MM/YYYY')}" là: ${arrMoneyAfterMinusAll > 0 ? formatter.format(arrMoneyAfterMinusAll) : formatter.format(arrMoneyAfterMinusAll).replace(formatter.format(arrMoneyAfterMinusAll).slice(1, 2), '')} vnđ.`
+                `Từ ngày "${moment(formSearch?.ngaynhap[0]).format('DD/MM/YYYY')}" đến ngày "${moment(formSearch?.ngaynhap[1]).format('DD/MM/YYYY')}" là: ${arrMoneyAfterMinusAll > 0 ? FORMAT_MONEY.format(arrMoneyAfterMinusAll) : FORMAT_MONEY.format(arrMoneyAfterMinusAll).replace(FORMAT_MONEY.format(arrMoneyAfterMinusAll).slice(1, 2), '')} vnđ.`
               }
             </p>
             <Form.Group className="mt-3" controlId="agreeTT">

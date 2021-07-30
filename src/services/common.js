@@ -1,1 +1,1 @@
-export const formatter = new Intl.NumberFormat(('de-DE'));
+export const FORMAT_MONEY = new Intl.NumberFormat(('de-DE'));
