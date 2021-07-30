@@ -2,32 +2,32 @@ import { toastInfo } from "actions/notification";
 
 const { createSlice } = require("@reduxjs/toolkit");
 
-const thongtintienluong = createSlice({
-  name: 'thongtintienluong',
+const chamcong = createSlice({
+  name: 'chamcong',
   initialState: {
     data: []
   },
   reducers: {
-    DSTL: (state, action) => {
+    DSCC: (state, action) => {
       state.data = action.payload;
     },
-    themTL: (state, action) => {
+    themCC: (state, action) => {
       toastInfo('Thêm dữ liệu thành công!');
       return;
     },
-    xoaTL: (state, action) => {
+    xoaCC: (state, action) => {
       toastInfo('Xóa thành công!');
       return;
     },
-    capNhatTL: (state, action) => {
+    capNhatCC: (state, action) => {
       toastInfo('Cập nhật thành công!');
       return;
     }
   }
 });
 
-const { reducer, actions } = thongtintienluong;
+const { reducer, actions } = chamcong;
 
-export const { DSTL, themTL, xoaTL, capNhatTL } = actions;
+export const { DSCC, themCC, xoaCC, capNhatCC } = actions;
 
 export default reducer;

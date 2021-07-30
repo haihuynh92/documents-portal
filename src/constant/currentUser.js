@@ -10,7 +10,8 @@ export const ROLE = {
 export const CONFIG_MONEY = {
   default: 1000,
   tangca: 1.3,
-  cn: 1.5
+  cn: 1.5,
+  sunday: 7
 };
 export const DATA_KH = [
   {

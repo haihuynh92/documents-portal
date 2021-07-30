@@ -9,7 +9,7 @@ import maHangReducer from 'reducers/maHangReducer';
 import menuReduder from 'reducers/menuReducer';
 import soCatReduder from 'reducers/soCatReducer';
 import soCoSoReducer from 'reducers/soCoSoReducer';
-import soTienLuongReduder from 'reducers/soTienLuongReducer';
+import soChamCongReduder from 'reducers/soChamCongReducer';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from 'sagas';
 
@@ -24,7 +24,7 @@ const rootReducer = {
   menuReduder,
   kiemTraLoiNhuanReduder,
   soCoSoReducer,
-  soTienLuongReduder
+  soChamCongReduder
 }
 
 const sagaMiddleware = createSagaMiddleware();

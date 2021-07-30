@@ -46,10 +46,10 @@ export const FILTER_THONG_TIN_SCS = 'FILTER_THONG_TIN_SCS';
 export const UPDATE_THONG_TIN_SCS = 'UPDATE_THONG_TIN_SCS';
 
 // quản lý sổ tiền lương
-export const DANH_SACH_TIEN_LUONG = 'DANH_SACH_TIEN_LUONG';
+export const DANH_SACH_CHAM_CONG = 'DANH_SACH_CHAM_CONG';
 export const THEM_CHAM_CONG = 'THE_CHAM_CONG';
 export const THEM_TIEN_UNG_STL = 'THEM_TIEN_UNG_STL';
 export const THEM_TIEN_BOI_DUONG = 'THEM_TIEN_BOI_DUONG';
-export const XOA_NGAY_LAM = 'XOA_NGAY_LAM';
-export const CAP_NHAT_NGAY_LAM = 'CAP_NHAT_NGAY_LAM';
-export const LUONG_CO_BAN = 'LUONG_CO_BAN';
+export const XOA_CHAM_CONG = 'XOA_CHAM_CONG';
+export const CAP_NHAT_CHAM_CONG = 'CAP_NHAT_CHAM_CONG';
+export const FILTER_CHAM_CONG = 'FILTER_CHAM_CONG';

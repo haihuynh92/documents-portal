@@ -1,8 +1,8 @@
 import * as actionTypes from 'constant/actionTypes';
 
-export const danhSachTienLuong = (nameArr) => {
+export const danhSachChamCong = (nameArr) => {
   return {
-    type: actionTypes.DANH_SACH_TIEN_LUONG,
+    type: actionTypes.DANH_SACH_CHAM_CONG,
     nameArr
   }
 }
@@ -37,9 +37,9 @@ export const themTienBoiDuong = (data, nameArr) => {
   }
 }
 
-export const xoaNgayLam = (id, nameArr) => {
+export const xoaChamCong = (id, nameArr) => {
   return {
-    type: actionTypes.XOA_NGAY_LAM,
+    type: actionTypes.XOA_CHAM_CONG,
     payload: {
       id,
       nameArr
@@ -47,9 +47,9 @@ export const xoaNgayLam = (id, nameArr) => {
   }
 }
 
-export const capNhatNgayLam = (data, nameArr) => {
+export const capNhatChamCong = (data, nameArr) => {
   return {
-    type: actionTypes.CAP_NHAT_NGAY_LAM,
+    type: actionTypes.CAP_NHAT_CHAM_CONG,
     payload: {
       data,
       nameArr
@@ -57,25 +57,15 @@ export const capNhatNgayLam = (data, nameArr) => {
   }
 }
 
-export const themLuongCoBan = (data, nameArr) => {
+export const filterChamCong = (arrDate, nameArr) => {
   return {
-    type: actionTypes.LUONG_CO_BAN,
+    type: actionTypes.FILTER_CHAM_CONG,
     payload: {
-      data,
+      arrDate,
       nameArr
     }
   }
 }
-
-// export const filterThongTinSCS = (arrDate, nameArr) => {
-//   return {
-//     type: actionTypes.FILTER_THONG_TIN_SCS,
-//     payload: {
-//       arrDate,
-//       nameArr
-//     }
-//   }
-// }
 
 // export const updateThongTinSCS = (dataUpate, nameArr) => {
 //   return {

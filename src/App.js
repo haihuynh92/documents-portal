@@ -8,9 +8,9 @@ import HomePage from 'pages/index';
 import LoginPage from 'pages/login';
 import DSMaHang from 'pages/mahang';
 import NotFoundPage from 'pages/notfound';
+import QuanLyChamCong from 'pages/quanlychamcong';
 import QuanLyKhachHang from 'pages/quanlykhachhang';
 import QuanLySoCoSo from 'pages/quanlysocoso';
-import QuanLySoTienLuong from 'pages/quanlysotienluong';
 import SoCat from 'pages/socat';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
@@ -53,7 +53,7 @@ function App() {
           <Route path={pathNameTypes.SO_THUY_KET_CHAU} component={QuanLySoCoSo} />
           <Route path={pathNameTypes.SO_CHI_TIM} component={QuanLySoCoSo} />
 
-          <Route path={pathNameTypes.SO_TIEN_TRINH} component={QuanLySoTienLuong} />
+          <Route path={pathNameTypes.SO_TIEN_TRINH} component={QuanLyChamCong} />
           
           <Route component={NotFoundPage} />
         </Switch>

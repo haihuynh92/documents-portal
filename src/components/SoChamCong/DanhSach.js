@@ -1,9 +1,9 @@
 import DateRangePicker from '@wojtekmaj/react-daterange-picker';
-import { capNhatNgayLam, themChamCong, themTienBoiDuong, themTienUngSTL, xoaNgayLam } from 'actions/sotienluong';
+import { capNhatChamCong, themChamCong, themTienBoiDuong, themTienUngSTL, xoaChamCong } from 'actions/sochamcong';
 import { DatePicker } from 'antd';
 import Empty from 'components/common/Empty/Empty';
 import ErrorMsg from 'components/common/ErrorMsg/ErrorMsg';
-import { DATA_SL } from 'constant/currentUser';
+import { CONFIG_MONEY, DATA_SL } from 'constant/currentUser';
 import _ from 'lodash';
 import moment from 'moment';
 import React, { useState } from 'react';
@@ -11,12 +11,13 @@ import { Button, Col, Form, Modal, Row, Table } from 'react-bootstrap';
 import CurrencyFormat from 'react-currency-format';
 import { useDispatch } from 'react-redux';
 import { FORMAT_MONEY } from 'services/common';
-import STLItem from './STLItem';
+import STLItem from './SCCItem';
 
 
-const DanhSachThongTinTienLuong = (props) => {
-  const { DSThongTinTL, DSTLGroupBy, nameArr } = props;
+const DanhSachChamCong = (props) => {
+  const { DSChamCong, DSTLGroupBy, nameArr, refreshSTL, filterDate } = props;
   const dispatch = useDispatch();
+  let getInfoTL = _.filter(DATA_SL, x => x.value === nameArr)[0];
 
   const [isError, setIsError] = useState(false);
   const [valDefault, setValDefault] = useState({
@@ -88,11 +89,17 @@ const DanhSachThongTinTienLuong = (props) => {
       tiencom: valDefault.tiencom === 'true' || valDefault.tiencom === true ? true : false
     }
     if (!!valDefault?.id) {
-      dispatch(capNhatNgayLam(dataPost, nameArr));
+      dispatch(capNhatChamCong(dataPost, nameArr));
+      setFormSearch({
+        ngaynhap: null
+      });
       handleClose();
     } else {
       if (!!valDefault.giolam && gioRegExp.test(valDefault.giolam.trim()) && (!valDefault.giotangca || gioRegExp.test(valDefault.giotangca.trim()))) {
         dispatch(themChamCong(dataPost, nameArr));
+        setFormSearch({
+          ngaynhap: null
+        });
         handleClose();
       } else {
         setIsError(true);
@@ -161,6 +168,9 @@ const DanhSachThongTinTienLuong = (props) => {
   const luuThongTinTienUng = () => {
     if (!!valDefaultTU?.tienung) {
       dispatch(themTienUngSTL(valDefaultTU, nameArr));
+      setFormSearch({
+        ngaynhap: null
+      });
       handleCloseTU();
     } else {
       setIsErrorTU(true);
@@ -223,6 +233,9 @@ const DanhSachThongTinTienLuong = (props) => {
   const luuThongTinTienBD = () => {
     if (!!valDefaultBD?.tienbd) {
       dispatch(themTienBoiDuong(valDefaultBD, nameArr));
+      setFormSearch({
+        ngaynhap: null
+      });
       handleCloseBD();
     } else {
       setIsErrorBD(true);
@@ -253,12 +266,18 @@ const DanhSachThongTinTienLuong = (props) => {
     handleShowDelete();
   }
   const onDeleteTL = () => {
-    dispatch(xoaNgayLam(itemDelete.id, nameArr));
+    dispatch(xoaChamCong(itemDelete.id, nameArr));
+    setFormSearch({
+      ngaynhap: null
+    });
     handleCloseDelete();
   }
 
   const confirmDeleteTUTBD = (id) => {
-    dispatch(xoaNgayLam(id, nameArr));
+    dispatch(xoaChamCong(id, nameArr));
+    setFormSearch({
+      ngaynhap: null
+    });
   }
 
   const getName = (nameArr) => {
@@ -269,42 +288,45 @@ const DanhSachThongTinTienLuong = (props) => {
   const [formSearch, setFormSearch] = useState({
     ngaynhap: null
   });
-  // const onChangeDateSearch = (value) => {
-  //   value === null ? refreshSCS() : filterDate(value);
-  //   setFormSearch({
-  //     ngaynhap: value
-  //   });
-  //   setIsChecked(false);
-  // }
+  const onChangeDateSearch = (value) => {
+    value === null ? refreshSTL() : filterDate(value);
+    setFormSearch({
+      ngaynhap: value
+    });
+    setIsChecked(false);
+  }
   
-  // let arrMoneyAfterMinusAll = 0;
-  // // tính tổng tiền trong ngày
-  // for(let k = 0; k < DSThongTinSCS.data.length; k++) {
-  //   let totalMoneyCustomerU = 0;
-  //   let totalCountMoneyDay = 0;
-  //   let totalCountMoneyFail = 0;
+  let arrMoneyAfterMinusAll = 0;
+  let luongGio = getInfoTL.luongcoban/26/9;
+  // tính tổng tiền trong ngày
+  for(let k = 0; k < DSChamCong.data.length; k++) {
+    let totalUng = 0;
+    let totalCountMoneyDay = 0;
+    let totalBD = 0;
 
-  //   // thông tin hàng lỗi
-  //   DSThongTinSCS.data.map(x => {
-  //     if (x.thongtin === 'hangloi' && !x.thanhtoan) {
-  //       return totalCountMoneyFail += +x.slhu * x.giasua;
-  //     }
-  //     if (x.thongtin === 'tienung' && !x.thanhtoan) {
-  //       return totalMoneyCustomerU += +x.tienung;
-  //     }
-  //     if (x.thongtin === 'giaohang' && !x.thanhtoan) {
-  //       if(isTypeBook === ROLE.SO_KET) {
-  //         let giaket = _.filter(DSMaHang, k => {return k.id === x.mahangId})[0]['giaket'];
-  //         return totalCountMoneyDay += +x.slgiao * giaket;
-  //       } else {
-  //         let giamay = _.filter(DSMaHang, k => {return k.id === x.mahangId})[0]['giamay'];
-  //         return totalCountMoneyDay += +x.slgiao * giamay;
-  //       }
-  //     }
-  //     return false;
-  //   });
-  //   arrMoneyAfterMinusAll = totalCountMoneyDay - totalMoneyCustomerU - totalCountMoneyFail;
-  // }
+    // thông tin hàng lỗi
+    DSChamCong.data.map(x => {
+      if (x.thongtin === 'tienboiduong' && !x.thanhtoan) {
+        return totalBD += +x.tienbd;
+      }
+      if (x.thongtin === 'tienung' && !x.thanhtoan) {
+        return totalUng += +x.tienung;
+      }
+      if (x.thongtin === 'chamcong' && !x.thanhtoan) {
+        let getSunday = moment(x.ngaynhap, 'DD/MM/YYYY').isoWeekday();
+        
+        let gioTC = !!x.giotangca ? x.giotangca * CONFIG_MONEY.tangca : 0;
+        let thanhTien = getSunday === CONFIG_MONEY.sunday ? new Intl.NumberFormat('de-DE').format(x.giolam * luongGio * CONFIG_MONEY.cn) : new Intl.NumberFormat('de-DE').format(x.giolam * luongGio);
+        let sumTT = parseFloat(thanhTien) + gioTC;
+
+        return totalCountMoneyDay += sumTT;
+      }
+      return false;
+    });
+
+    arrMoneyAfterMinusAll = totalCountMoneyDay + +new Intl.NumberFormat('de-DE').format(totalBD) - +new Intl.NumberFormat('de-DE').format(totalUng);
+    
+  }
 
   // ====================================
   const [isShowConfirm, setIsShowConfirm] = useState(false);
@@ -332,7 +354,6 @@ const DanhSachThongTinTienLuong = (props) => {
   //   setIsShowConfirm(false);
   //   refreshSCS();
   // }
-  let getInfoTL = _.filter(DATA_SL, x => x.value === nameArr)[0];
 
   return (
     <>
@@ -384,7 +405,7 @@ const DanhSachThongTinTienLuong = (props) => {
                 <div className="datepicker-custom">
                   <DateRangePicker
                     className={`${formSearch.ngaynhap && !!formSearch.ngaynhap.length ? 'isValue' : ''}`}
-                    // onChange={onChangeDateSearch}
+                    onChange={onChangeDateSearch}
                     value={formSearch.ngaynhap && !!formSearch.ngaynhap.length ? formSearch.ngaynhap : null}
                     maxDate={new Date()}
                     format="dd/MM/y"
@@ -635,7 +656,7 @@ const DanhSachThongTinTienLuong = (props) => {
 
         </div>
         <div className="body-heading">
-          {DSThongTinTL.data && !!DSThongTinTL.data.length ?
+          {DSChamCong.data && !!DSChamCong.data.length ?
             <Table bordered responsive variant="dark" className="custom-table">
               <thead>
                 <tr>
@@ -648,23 +669,19 @@ const DanhSachThongTinTienLuong = (props) => {
                 </tr>
               </thead>
               <tbody>
-                {/* {formSearch.ngaynhap && !!formSearch.ngaynhap.length &&
+                {formSearch.ngaynhap && !!formSearch.ngaynhap.length &&
                   <tr>
-                    <td className="text-right td-bgd-purple" colSpan="12">
-                      Tổng tiền thanh toán <br />
+                    <td className="text-right td-bgd-purple" colSpan="5">
+                      Thanh toán tiền lương <br />
                       <Button variant="info" size="sm" className="mt-1" onClick={handleShowConfirm}>
                         Thanh toán
                       </Button>
                     </td>
                     <td className="text-center td-bgd-purple">
-                      {arrMoneyAfterMinusAll > 0 ? 
-                        FORMAT_MONEY.format(arrMoneyAfterMinusAll) 
-                        :
-                        FORMAT_MONEY.format(arrMoneyAfterMinusAll).replace(FORMAT_MONEY.format(arrMoneyAfterMinusAll).slice(1, 2), '')
-                      }
+                      {FORMAT_MONEY.format(arrMoneyAfterMinusAll).split(',').join('.')}
                     </td>
                   </tr>
-                } */}
+                }
                 <STLItem
                   data={DSTLGroupBy}
                   confirmDeleteTL={confirmDeleteTL}
@@ -735,4 +752,4 @@ const DanhSachThongTinTienLuong = (props) => {
   );
 };
 
-export default DanhSachThongTinTienLuong;
+export default DanhSachChamCong;

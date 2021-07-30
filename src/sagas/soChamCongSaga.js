@@ -1,17 +1,18 @@
-import { capNhatNgayLamApi, layDSTienLuongApi, themChamCongApi, xoaNgayLamApi } from 'api/soTienLuongApi';
+import { capNhatChamCongApi, filterChamCongApi, layDSChamCongApi, themChamCongApi, xoaChamCongApi } from 'api/soChamCongApi';
 import * as actionTypes from 'constant/actionTypes';
+import moment from 'moment';
 import { hideLoading, showLoading } from 'reducers/loadingReducer';
-import { capNhatTL, DSTL, themTL, xoaTL } from 'reducers/soTienLuongReducer';
+import { capNhatCC, DSCC, themCC, xoaCC } from 'reducers/soChamCongReducer';
 import { call, delay, put, takeLatest } from 'redux-saga/effects';
 
-export function* layDSTienLuong(action) {
+export function* layDSChamCong(action) {
   try {
     yield put(showLoading());
-    const result = yield call(layDSTienLuongApi, action.nameArr);
+    const result = yield call(layDSChamCongApi, action.nameArr);
     if (result.status === 200) {
       yield delay(1000);
       yield put(hideLoading());
-      yield put(DSTL(result.data));
+      yield put(DSCC(result.data));
     }
   } catch (error) {
     throw new Error(error);
@@ -24,75 +25,75 @@ export function* themChamCong(action) {
   try {
     yield put(showLoading());
     const result = yield call(themChamCongApi, payload.data, payload.nameArr);
-    const res = yield call(layDSTienLuongApi, payload.nameArr);
+    const res = yield call(layDSChamCongApi, payload.nameArr);
     if (result.status === 201) {
       yield delay(1000);
       yield put(hideLoading());
-      yield put(DSTL(res.data));
-      yield put(themTL());
+      yield put(DSCC(res.data));
+      yield put(themCC());
     }
   } catch (error) {
     throw new Error(error);
   }
 }
 
-export function* xoaNgayLam(action) {
+export function* xoaChamCong(action) {
   const { payload } = action;
 
   try {
     yield put(showLoading());
-    const result = yield call(xoaNgayLamApi, payload.id, payload.nameArr);
-    const res = yield call(layDSTienLuongApi, payload.nameArr);
+    const result = yield call(xoaChamCongApi, payload.id, payload.nameArr);
+    const res = yield call(layDSChamCongApi, payload.nameArr);
     if (result.status === 200) {
       yield delay(1000);
       yield put(hideLoading());
-      yield put(DSTL(res.data));
-      yield put(xoaTL());
+      yield put(DSCC(res.data));
+      yield put(xoaCC());
     }
   } catch (error) {
     throw new Error(error);
   }
 }
 
-export function* capNhatNgayLam(action) {
+export function* capNhatChamCong(action) {
   const { payload } = action;
 
   try {
     yield put(showLoading());
-    const result = yield call(capNhatNgayLamApi, payload.data, payload.nameArr);
-    const res = yield call(layDSTienLuongApi, payload.nameArr);
+    const result = yield call(capNhatChamCongApi, payload.data, payload.nameArr);
+    const res = yield call(layDSChamCongApi, payload.nameArr);
     if (result.status === 200) {
       yield delay(1000);
       yield put(hideLoading());
-      yield put(DSTL(res.data));
-      yield put(capNhatTL());
+      yield put(DSCC(res.data));
+      yield put(capNhatCC());
     }
   } catch (error) {
     throw new Error(error);
   }
 }
 
-// export function* filterThongTinSCS(action) {
-//   const { payload } = action;
-//   try {
-//     if (payload.arrDate === null) {
-//       return;
-//     }
-//     const convertData = {
-//       ngaynhap: payload.arrDate === null ? null : [moment(payload.arrDate[0]).format('DD/MM/YYYY'), moment(payload.arrDate[1]).format('DD/MM/YYYY')]
-//     };
-//     yield put(showLoading());
-//     const result = yield call(filterThongTinSCSApi, convertData, payload.nameArr);
+export function* filterChamCong(action) {
+  const { payload } = action;
+  try {
+    if (payload.arrDate === null) {
+      return;
+    }
+    const convertData = {
+      ngaynhap: payload.arrDate === null ? null : [moment(payload.arrDate[0]).format('DD/MM/YYYY'), moment(payload.arrDate[1]).format('DD/MM/YYYY')]
+    };
+    yield put(showLoading());
+    const result = yield call(filterChamCongApi, convertData, payload.nameArr);
 
-//     if (result.status === 200) {
-//       yield delay(1000);
-//       yield put(hideLoading());
-//       yield put(DSTTCSC(result.data));
-//     }
-//   } catch (error) {
-//     throw new Error(error);
-//   }
-// }
+    if (result.status === 200) {
+      yield delay(1000);
+      yield put(hideLoading());
+      yield put(DSCC(result.data));
+    }
+  } catch (error) {
+    throw new Error(error);
+  }
+}
 
 // export function* updateThongTinSCS(action) {
 //   const { payload } = action;
@@ -116,14 +117,13 @@ export function* capNhatNgayLam(action) {
 //   }
 // }
 
-export const watchSoTienLuong = [
-  takeLatest(actionTypes.DANH_SACH_TIEN_LUONG, layDSTienLuong),
+export const watchSoChamCong = [
+  takeLatest(actionTypes.DANH_SACH_CHAM_CONG, layDSChamCong),
   takeLatest(actionTypes.THEM_CHAM_CONG, themChamCong),
   takeLatest(actionTypes.THEM_TIEN_UNG_STL, themChamCong),
   takeLatest(actionTypes.THEM_TIEN_BOI_DUONG, themChamCong),
-  takeLatest(actionTypes.LUONG_CO_BAN, themChamCong),
-  takeLatest(actionTypes.XOA_NGAY_LAM, xoaNgayLam),
-  takeLatest(actionTypes.CAP_NHAT_NGAY_LAM, capNhatNgayLam),
-  // takeLatest(actionTypes.FILTER_THONG_TIN_SCS, filterThongTinSCS),
+  takeLatest(actionTypes.XOA_CHAM_CONG, xoaChamCong),
+  takeLatest(actionTypes.CAP_NHAT_CHAM_CONG, capNhatChamCong),
+  takeLatest(actionTypes.FILTER_CHAM_CONG, filterChamCong),
   // takeLatest(actionTypes.UPDATE_THONG_TIN_SCS, updateThongTinSCS)
 ]
