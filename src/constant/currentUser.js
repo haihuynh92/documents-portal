@@ -9,9 +9,12 @@ export const ROLE = {
 };
 export const CONFIG_MONEY = {
   default: 1000,
+  standar: 26,
+  totalHourPerDay: 9,
   tangca: 1.3,
   cn: 1.5,
-  sunday: 7
+  sunday: 7,
+  tiencom: 22000
 };
 export const DATA_KH = [
   {

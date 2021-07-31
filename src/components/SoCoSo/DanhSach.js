@@ -694,7 +694,7 @@ const DanhSachThongTinCS = (props) => {
             <thead>
               <tr>
                 <th className="text-center th-date">Ngày nhập</th>
-                <th className="text-center th-action-small">Hành <br />động</th>
+                <th className="text-center th-action">Hành <br />động</th>
                 <th className="th-ma text-center">Mã hàng</th>
                 <th className="th-min">Tên hàng</th>
                 <th className="th-gia text-center">{isTypeBook === ROLE.SO_KET ? 'Giá kết' : 'Giá may'} (VNĐ)</th>

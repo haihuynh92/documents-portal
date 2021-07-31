@@ -1,4 +1,4 @@
-import { capNhatChamCongApi, filterChamCongApi, layDSChamCongApi, themChamCongApi, xoaChamCongApi } from 'api/soChamCongApi';
+import { capNhatChamCongApi, filterChamCongApi, layDSChamCongApi, themChamCongApi, xacNhanChamCongApi, xoaChamCongApi } from 'api/soChamCongApi';
 import * as actionTypes from 'constant/actionTypes';
 import moment from 'moment';
 import { hideLoading, showLoading } from 'reducers/loadingReducer';
@@ -95,27 +95,27 @@ export function* filterChamCong(action) {
   }
 }
 
-// export function* updateThongTinSCS(action) {
-//   const { payload } = action;
-//   try {
-//     yield put(showLoading());
-//     for(let i = 0; i < payload.dataUpate.length; i++) {
-//       let dataPost = {
-//         ...payload.dataUpate[i],
-//         thanhtoan: true
-//       }
-//       yield call(updateThongTinSCSApi, dataPost, payload.nameArr);
-//     }
-//     const res = yield call(layDSThongTinSCSApi, payload.nameArr);
-//     if (res.status === 200) {
-//       yield delay(1000);
-//       yield put(hideLoading());
-//       yield put(DSTTCSC(res.data));
-//     }
-//   } catch (error) {
-//     throw new Error(error);
-//   }
-// }
+export function* xacNhanChamCong(action) {
+  const { payload } = action;
+  try {
+    yield put(showLoading());
+    for(let i = 0; i < payload.dataConfirm.length; i++) {
+      let dataPost = {
+        ...payload.dataConfirm[i],
+        thanhtoan: true
+      }
+      yield call(xacNhanChamCongApi, dataPost, payload.nameArr);
+    }
+    const res = yield call(layDSChamCongApi, payload.nameArr);
+    if (res.status === 200) {
+      yield delay(1000);
+      yield put(hideLoading());
+      yield put(DSCC(res.data));
+    }
+  } catch (error) {
+    throw new Error(error);
+  }
+}
 
 export const watchSoChamCong = [
   takeLatest(actionTypes.DANH_SACH_CHAM_CONG, layDSChamCong),
@@ -125,5 +125,5 @@ export const watchSoChamCong = [
   takeLatest(actionTypes.XOA_CHAM_CONG, xoaChamCong),
   takeLatest(actionTypes.CAP_NHAT_CHAM_CONG, capNhatChamCong),
   takeLatest(actionTypes.FILTER_CHAM_CONG, filterChamCong),
-  // takeLatest(actionTypes.UPDATE_THONG_TIN_SCS, updateThongTinSCS)
+  takeLatest(actionTypes.XAC_NHAN_CHAM_CONG, xacNhanChamCong)
 ]

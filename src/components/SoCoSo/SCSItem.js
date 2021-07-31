@@ -76,9 +76,13 @@ const SCSItem = (props) => {
             {j < 1 && <td className="text-center" rowSpan={count}>{sortDate[j]['ngaynhap']}</td>}
 
             {['GH', 'HL'].includes(isTT) && <td className={`text-center ${['HL'].includes(isTT) ? 'td-bgd-red' : ''}`}>
-              <Button variant="default" className="button-control reset-button btn-delete" onClick={() => confirmDeleteSCS(item)}>
-                <i className="fa fa-trash" aria-hidden="true"></i>
-              </Button>
+              {!item.thanhtoan ? 
+                <Button variant="default" className="button-control reset-button btn-delete" onClick={() => confirmDeleteSCS(item)}>
+                  <i className="fa fa-trash" aria-hidden="true"></i>
+                </Button>
+                :
+                "Đã thanh toán"
+              }
             </td>}
 
             {['TU'].includes(isTT) ? 
@@ -86,7 +90,7 @@ const SCSItem = (props) => {
                 <Button variant="default" className="button-control reset-button btn-delete btn-delete-ab" onClick={() => confirmDeleteTU(item.id)}>
                   <i className="fa fa-times" aria-hidden="true"></i>
                 </Button>
-                Tiền ứng
+                {!item.thanhtoan ? 'Tiền ứng' : 'Đã trừ tiền ứng'}
               </td> 
               : 
               <td className={`text-center ${['HL'].includes(isTT) ? 'td-bgd-red' : ''}`}>{detailMH.length && detailMH[0]?.mahang}</td>

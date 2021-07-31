@@ -20,6 +20,6 @@ export const filterChamCongApi = (convertData, nameArr) => {
   return axiosClient.get(`/${nameArr}?ngaynhap_gte=${convertData.ngaynhap[0]}&ngaynhap_lte=${convertData.ngaynhap[1]}&thanhtoan=false&_sort=ngaynhap&_order=desc`);
 };
 
-// export const updateThongTinSCSApi = (dataPost, nameArr) => {
-//   return axiosClient.put(`/${nameArr}/${dataPost.id}`, dataPost);
-// };
+export const xacNhanChamCongApi = (dataPost, nameArr) => {
+  return axiosClient.put(`/${nameArr}/${dataPost.id}`, dataPost);
+};

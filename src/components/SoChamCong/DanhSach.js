@@ -1,5 +1,5 @@
 import DateRangePicker from '@wojtekmaj/react-daterange-picker';
-import { capNhatChamCong, themChamCong, themTienBoiDuong, themTienUngSTL, xoaChamCong } from 'actions/sochamcong';
+import { capNhatChamCong, themChamCong, themTienBoiDuong, themTienUngSTL, xacNhanChamCong, xoaChamCong } from 'actions/sochamcong';
 import { DatePicker } from 'antd';
 import Empty from 'components/common/Empty/Empty';
 import ErrorMsg from 'components/common/ErrorMsg/ErrorMsg';
@@ -12,7 +12,6 @@ import CurrencyFormat from 'react-currency-format';
 import { useDispatch } from 'react-redux';
 import { FORMAT_MONEY } from 'services/common';
 import STLItem from './SCCItem';
-
 
 const DanhSachChamCong = (props) => {
   const { DSChamCong, DSTLGroupBy, nameArr, refreshSTL, filterDate } = props;
@@ -194,7 +193,6 @@ const DanhSachChamCong = (props) => {
     id: '',
     ngaynhap: '',
     tienbd: '',
-    ghichu: '',
     ngaytao: '',
     thongtin: 'tienboiduong',
     thanhtoan: false,
@@ -210,7 +208,6 @@ const DanhSachChamCong = (props) => {
       id: '',
       ngaynhap: '',
       tienbd: '',
-      ghichu: '',
       ngaytao: '',
       thongtin: 'tienboiduong',
       thanhtoan: false,
@@ -241,12 +238,6 @@ const DanhSachChamCong = (props) => {
       setIsErrorBD(true);
     }
   }
-  const handleChangeBD = (e) => {
-    setValDefaultBD({
-      ...valDefaultBD,
-      [e.target.name]: e.target.value
-    });
-  }
   const onValueChangeFormatBD = (nameInput, objVal) => {
     setValDefaultBD({
       ...valDefaultBD,
@@ -259,7 +250,6 @@ const DanhSachChamCong = (props) => {
   const [itemDelete, setItemDelete] = useState({});
   const handleCloseDelete = () => setIsShowDelete(false);
   const handleShowDelete = () => setIsShowDelete(true);
-  // let detailKH = _.filter(DSMaHang, (x) => {return x.id === itemDelete.mahangId});
 
   const confirmDeleteTL = (detail) => {
     setItemDelete(detail);
@@ -297,7 +287,9 @@ const DanhSachChamCong = (props) => {
   }
   
   let arrMoneyAfterMinusAll = 0;
-  let luongGio = getInfoTL.luongcoban/26/9;
+  let luongThang = getInfoTL.luongcoban;
+  let luongNgay = luongThang/CONFIG_MONEY.standar;
+  let luongGio = luongNgay/CONFIG_MONEY.totalHourPerDay;
   // tính tổng tiền trong ngày
   for(let k = 0; k < DSChamCong.data.length; k++) {
     let totalUng = 0;
@@ -315,16 +307,17 @@ const DanhSachChamCong = (props) => {
       if (x.thongtin === 'chamcong' && !x.thanhtoan) {
         let getSunday = moment(x.ngaynhap, 'DD/MM/YYYY').isoWeekday();
         
-        let gioTC = !!x.giotangca ? x.giotangca * CONFIG_MONEY.tangca : 0;
-        let thanhTien = getSunday === CONFIG_MONEY.sunday ? new Intl.NumberFormat('de-DE').format(x.giolam * luongGio * CONFIG_MONEY.cn) : new Intl.NumberFormat('de-DE').format(x.giolam * luongGio);
-        let sumTT = parseFloat(thanhTien) + gioTC;
+        let tiencom = x.tiencom ? CONFIG_MONEY.tiencom : 0;
+        let gioTC = !!x.giotangca ? (+x.giotangca * luongGio) * CONFIG_MONEY.tangca : 0;
+        let thanhTien = getSunday === CONFIG_MONEY.sunday ? +x.giolam * luongGio * CONFIG_MONEY.cn : +x.giolam * luongGio;
+        let sumTT = thanhTien + gioTC + tiencom;
 
         return totalCountMoneyDay += sumTT;
       }
       return false;
     });
 
-    arrMoneyAfterMinusAll = totalCountMoneyDay + +new Intl.NumberFormat('de-DE').format(totalBD) - +new Intl.NumberFormat('de-DE').format(totalUng);
+    arrMoneyAfterMinusAll = totalCountMoneyDay + totalBD - totalUng;
     
   }
 
@@ -346,45 +339,45 @@ const DanhSachChamCong = (props) => {
   }
 
   
-  // const confirmSuccessfull = () => {
-  //   dispatch(updateThongTinSCS(DSThongTinSCS.data, nameArr));
-  //   setFormSearch({
-  //     ngaynhap: null
-  //   });
-  //   setIsShowConfirm(false);
-  //   refreshSCS();
-  // }
+  const confirmSuccessfull = () => {
+    dispatch(xacNhanChamCong(DSChamCong.data, nameArr));
+    setFormSearch({
+      ngaynhap: null
+    });
+    setIsShowConfirm(false);
+    refreshSTL();
+  }
 
   return (
     <>
       <div className="list-default">
         <div className="title-heading d-flex-between">
           <p className="ttl-list">
-            <i className="fa fa-list-alt mr-2" aria-hidden="true"></i>
+            <i className="fa fa-question-circle mr-2" aria-hidden="true"></i>
             Thông tin lương - {getName(nameArr)}
           </p>
         </div>
         <div className="body-heading inner">
           <Row>
-            <Col sm="2">
+            <Col sm="3">
               <Form.Group>
                 <Form.Label>Lương cơ bản/tháng</Form.Label>
-                <p className="mt-2">{FORMAT_MONEY.format(getInfoTL.luongcoban)} vnđ</p>
+                <p className="mt-2">{FORMAT_MONEY.format(luongThang)} vnđ</p>
               </Form.Group>
             </Col>
-            <Col sm="2">
+            <Col sm="3">
               <Form.Group>
                 <Form.Label>Lương cơ bản/ngày</Form.Label>
-                <p className="mt-2">{parseFloat(FORMAT_MONEY.format(getInfoTL.luongcoban/26))} vnđ</p>
+                <p className="mt-2">{parseFloat(FORMAT_MONEY.format(luongNgay))} vnđ</p>
               </Form.Group>
             </Col>
-            <Col sm="2">
+            <Col sm="3">
               <Form.Group>
                 <Form.Label>Lương cơ bản/giờ</Form.Label>
-                <p className="mt-2">{parseFloat(FORMAT_MONEY.format(getInfoTL.luongcoban/26/9))} vnđ</p>
+                <p className="mt-2">{parseFloat(FORMAT_MONEY.format(luongGio))} vnđ</p>
               </Form.Group>
             </Col>
-            <Col sm="2">
+            <Col sm="3">
               <Form.Group>
                 <Form.Label>Tiền trong nhà</Form.Label>
                 <p className="mt-2">{FORMAT_MONEY.format(getInfoTL.tientrongnha)} vnđ</p>
@@ -628,22 +621,6 @@ const DanhSachChamCong = (props) => {
                     </Form.Group>
                   </Col>
                 </Row>
-                <Row>
-                  <Col>
-                    <Form.Group controlId="ghichu">
-                      <Form.Label>Ghi chú</Form.Label>
-                      <Form.Control
-                        as="textarea"
-                        placeholder="Nhập ghi chú..."
-                        name="ghichu"
-                        autoComplete="off"
-                        onChange={handleChangeBD}
-                        maxLength={250}
-                        defaultValue={valDefaultBD.ghichu}
-                      />
-                    </Form.Group>
-                  </Col>
-                </Row>
                 <div className="group-control text-right">
                   <Button variant="secondary" size="sm" onClick={handleCloseBD}>
                     Hủy
@@ -660,12 +637,13 @@ const DanhSachChamCong = (props) => {
             <Table bordered responsive variant="dark" className="custom-table">
               <thead>
                 <tr>
-                  <th className="text-center th-date">Ngày nhập</th>
-                  <th className="text-center th-action">Hành động</th>
-                  <th className="th-gia text-center">Giờ làm (giờ)</th>
-                  <th className="th-gia text-center">Tăng ca (giờ)</th>
-                  <th className="th-gia text-center">Tiền cơm</th>
-                  <th className="th-money text-center">Thành tiền (VNĐ)</th>
+                  <th className="text-center">Ngày nhập</th>
+                  <th className="text-center">Hành động</th>
+                  <th className="text-center">Giờ làm (giờ)</th>
+                  <th className="text-center">Tăng ca (giờ)</th>
+                  <th className="text-center">Tiền cơm</th>
+                  <th className="text-center">Thành tiền (VNĐ)</th>
+                  <th className="th-min">Ghi chú</th>
                 </tr>
               </thead>
               <tbody>
@@ -678,7 +656,7 @@ const DanhSachChamCong = (props) => {
                       </Button>
                     </td>
                     <td className="text-center td-bgd-purple">
-                      {FORMAT_MONEY.format(arrMoneyAfterMinusAll).split(',').join('.')}
+                      {FORMAT_MONEY.format(arrMoneyAfterMinusAll).split(',')[0]}
                     </td>
                   </tr>
                 }
@@ -687,7 +665,7 @@ const DanhSachChamCong = (props) => {
                   confirmDeleteTL={confirmDeleteTL}
                   confirmDeleteTUTBD={confirmDeleteTUTBD}
                   getDetailTL={getDetailTL}
-                  getInfoTL={getInfoTL}
+                  luongGio={luongGio}
                 />
               </tbody>
             </Table> : <Empty />
@@ -715,7 +693,7 @@ const DanhSachChamCong = (props) => {
         </Modal>
 
         {/* modal confirm */}
-        {/* <Modal
+        <Modal
           show={isShowConfirm}
           onHide={handleCloseConfirm}
           backdrop="static"
@@ -726,11 +704,12 @@ const DanhSachChamCong = (props) => {
             <Modal.Title>Xác nhận thanh toán</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <p>Tổng tiền cần thanh toán cho <span className="font-bold">"{getName(nameArr)}"</span></p>
+            <p>Tổng tiền lương của <span className="font-bold">"{getName(nameArr)}"</span></p>
             <p className="mt-1">
               {formSearch.ngaynhap && !!formSearch.ngaynhap.length && 
-                `Từ ngày "${moment(formSearch?.ngaynhap[0]).format('DD/MM/YYYY')}" đến ngày "${moment(formSearch?.ngaynhap[1]).format('DD/MM/YYYY')}" là: ${arrMoneyAfterMinusAll > 0 ? FORMAT_MONEY.format(arrMoneyAfterMinusAll) : FORMAT_MONEY.format(arrMoneyAfterMinusAll).replace(FORMAT_MONEY.format(arrMoneyAfterMinusAll).slice(1, 2), '')} vnđ.`
+                `Từ ngày "${moment(formSearch?.ngaynhap[0]).format('DD/MM/YYYY')}" đến ngày "${moment(formSearch?.ngaynhap[1]).format('DD/MM/YYYY')}": `
               }
+              <span className="font-bold">&nbsp;&nbsp;{FORMAT_MONEY.format(arrMoneyAfterMinusAll).split(',')[0]}</span> vnđ.
             </p>
             <Form.Group className="mt-3" controlId="agreeTT">
               <Form.Check 
@@ -745,7 +724,7 @@ const DanhSachChamCong = (props) => {
             <Button variant="secondary" size="sm" onClick={handleCloseConfirm}>Hủy</Button>
             <Button variant="info" size="sm" onClick={confirmSuccessfull} disabled={!isChecked}>Xác nhận thanh toán</Button>
           </Modal.Footer>
-        </Modal> */}
+        </Modal>
 
       </div>
     </>

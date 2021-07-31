@@ -191,6 +191,7 @@ input:disabled, button:disabled {
   &:hover {color: $color-orange;}
 }
 
+.d-block {display: block;}
 .d-flex-between {
   display: flex;
   justify-content: space-between;
@@ -396,6 +397,7 @@ input:disabled, button:disabled {
     align-items: center;
     .ttl-list {font-size: 18px;}
     .fa-list-alt {font-size: 30px;}
+    .fa-question-circle {font-size: 25px;}
   }
   .body-heading {
     background-color: $color-black-2;
@@ -434,7 +436,7 @@ input:disabled, button:disabled {
           padding-right: 10px;
           cursor: not-allowed;
         }
-        .btn-delete {display: none;}
+        .btn-delete, .btn-edit {display: none;}
       }
     }
     td {

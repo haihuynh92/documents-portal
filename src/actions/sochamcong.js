@@ -67,12 +67,12 @@ export const filterChamCong = (arrDate, nameArr) => {
   }
 }
 
-// export const updateThongTinSCS = (dataUpate, nameArr) => {
-//   return {
-//     type: actionTypes.UPDATE_THONG_TIN_SCS,
-//     payload: {
-//       dataUpate,
-//       nameArr
-//     }
-//   }
-// }
+export const xacNhanChamCong = (dataConfirm, nameArr) => {
+  return {
+    type: actionTypes.XAC_NHAN_CHAM_CONG,
+    payload: {
+      dataConfirm,
+      nameArr
+    }
+  }
+}
