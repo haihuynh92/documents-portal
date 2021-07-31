@@ -24,6 +24,24 @@ const QuanLyChamCong = () => {
   let nameArr = '';
   if (history.location.pathname === pathNameTypes.SO_TIEN_TRINH) {
     nameArr = 'sotienluongtrinhs';
+  } else if (history.location.pathname === pathNameTypes.SO_TIEN_DONG) {
+    nameArr = 'sotienluongdongs';
+  } else if (history.location.pathname === pathNameTypes.SO_TIEN_PHIEN) {
+    nameArr = 'sotienluongphiens';
+  } else if (history.location.pathname === pathNameTypes.SO_TIEN_SI) {
+    nameArr = 'sotienluongsis';
+  } else if (history.location.pathname === pathNameTypes.SO_TIEN_HANH) {
+    nameArr = 'sotienluonghanhs';
+  } else if (history.location.pathname === pathNameTypes.SO_TIEN_HOANG) {
+    nameArr = 'sotienluonghoangs';
+  } else if (history.location.pathname === pathNameTypes.SO_TIEN_NGUYET) {
+    nameArr = 'sotienluongnguyets';
+  } else if (history.location.pathname === pathNameTypes.SO_TIEN_QUE) {
+    nameArr = 'sotienluongques';
+  } else if (history.location.pathname === pathNameTypes.SO_TIEN_KY) {
+    nameArr = 'sotienluongkys';
+  } else if (history.location.pathname === pathNameTypes.SO_TIEN_DUONG) {
+    nameArr = 'sotienluongduongs';
   }
 
   const refreshSTL = () => {

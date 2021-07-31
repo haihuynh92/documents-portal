@@ -14,7 +14,8 @@
   overflow: hidden;
   > .outer {
     height: 100%;
-    overflow-x: scroll;
+    overflow-x: hidden;
+    overflow-y: auto;
     padding-bottom: 80px;
   }
   .sub-ttl {
@@ -43,14 +44,22 @@
     &:hover {background-color: $color-blue;}
   }
   .list-menu {
-    .fa {
-      min-width: 20px;
-      text-align: center;
+    .icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      padding: 0 8px;
+      border-radius: 50%;
+      background-color: $color-black-3;
+      font-size: 10px;
     }
     a {
       position: relative;
-      display: block;
-      padding: 15px 16px;
+      display: flex;
+      align-items: center;
+      padding: 10px;
       white-space: nowrap;
       transition-property: padding;
       &:before {
@@ -79,7 +88,7 @@
     width: 250px;
     .ttl-side-bar {padding: 15px 20px;}
     .sub-ttl {opacity: 1;}
-    .list-menu a {padding: 15px 30px;}
+    .list-menu a {padding: 10px 30px;}
     .accordion-custom {
       .ant-collapse-item {
         .ant-collapse-header {

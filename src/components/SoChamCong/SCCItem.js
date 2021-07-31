@@ -23,7 +23,7 @@ const SCCItem = (props) => {
 
         return (
           <tr key={item.id} className={item.thanhtoan ? 'tr-disabled' : ''}>
-            {j < 1 && <td className={`text-center ${GET_SUNDAY(item.ngaynhap) === CONFIG_MONEY.sunday ? 'td-bgd-red' : ''}`} rowSpan={count}>{item.ngaynhap}</td>}
+            {j < 1 && <td className="text-center" rowSpan={count}>{item.ngaynhap}</td>}
 
             {['CC'].includes(isTT) && <td className={`text-center ${GET_SUNDAY(item.ngaynhap) === CONFIG_MONEY.sunday ? 'td-bgd-red' : ''}`}>
               {!item.thanhtoan ? 
@@ -55,11 +55,11 @@ const SCCItem = (props) => {
 
             {['CC'].includes(isTT) && <td className={`text-center ${GET_SUNDAY(item.ngaynhap) === CONFIG_MONEY.sunday ? 'td-bgd-red' : ''}`}>{item.tiencom ? 'Có' : 'Không'}</td>}
 
-            <td className={`text-center ${GET_SUNDAY(item.ngaynhap) === CONFIG_MONEY.sunday ? 'td-bgd-red' : ''}`}>
+            <td className={`text-center ${GET_SUNDAY(item.ngaynhap) === CONFIG_MONEY.sunday ? 'td-bgd-red' : ''} ${isTT === 'TU' ? 'td-bgd-yellow' : isTT === 'BD' ? 'td-bgd-blue' : ''}`}>
               {isTT === 'TU' ? FORMAT_MONEY.format(item.tienung) : isTT === 'BD' ? FORMAT_MONEY.format(item.tienbd) : parseFloat(sumTT)}
             </td>
             
-            <td>{['TU'].includes(isTT) && item.ghichu}</td>
+            <td className={`${isTT === 'TU' ? 'td-bgd-yellow' : isTT === 'BD' ? 'td-bgd-blue' : ''} ${GET_SUNDAY(item.ngaynhap) === CONFIG_MONEY.sunday ? 'td-bgd-red' : ''}`}>{['TU'].includes(isTT) && item.ghichu}</td>
 
           </tr>
         );

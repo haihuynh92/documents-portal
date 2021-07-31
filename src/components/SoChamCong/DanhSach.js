@@ -317,7 +317,7 @@ const DanhSachChamCong = (props) => {
       return false;
     });
 
-    arrMoneyAfterMinusAll = totalCountMoneyDay + totalBD - totalUng;
+    arrMoneyAfterMinusAll = totalCountMoneyDay + totalBD - totalUng - getInfoTL.tientrongnha;
     
   }
 
@@ -658,6 +658,7 @@ const DanhSachChamCong = (props) => {
                     <td className="text-center td-bgd-purple">
                       {FORMAT_MONEY.format(arrMoneyAfterMinusAll).split(',')[0]}
                     </td>
+                    <td className="td-bgd-purple">Nhớ kiểm tra trước khi thanh toán nhé...</td>
                   </tr>
                 }
                 <STLItem

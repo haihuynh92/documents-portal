@@ -1,4 +1,5 @@
-import { Collapse } from 'antd';
+import { Collapse, Tooltip } from 'antd';
+import { CONFIG_SIDEBAR } from 'constant/currentUser';
 import * as pathNameTypes from 'constant/pathName';
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
@@ -17,31 +18,39 @@ const SideBar = (props) => {
         <span className="sub-ttl">XƯỞNG MAY</span>
       </h1>
       <div className="outer">
-        <Link to="/" className="link-dashboard" title="Dashboard">
-          <i className="fa fa-tachometer mr-2"></i>
-          <span className="sub-ttl">Dashboard</span>
-        </Link>
+        <Tooltip placement="rightBottom" title={CONFIG_SIDEBAR.DB[0]}>
+          <Link to="/" className="link-dashboard">
+            <i className="fa fa-tachometer mr-2"></i>
+            <span className="sub-ttl">{CONFIG_SIDEBAR.DB[0]}</span>
+          </Link>
+        </Tooltip>
         <div className="inner">
           <Collapse accordion className="accordion-custom">
             <Panel header="Quản lý tổng hợp" key="1">
               <ul className="list-menu">
                 <li className={`${history.location.pathname === pathNameTypes.DS_MA_HANG ? "active" : ""}`}>
-                  <Link to={pathNameTypes.DS_MA_HANG} title="Mã hàng">
-                    <i className="fa fa-id-card mr-2" aria-hidden="true"></i>
-                    <span className="sub-ttl">Mã hàng</span>
-                  </Link>
+                  <Tooltip placement="rightBottom" title={CONFIG_SIDEBAR.MH[0]}>
+                    <Link to={pathNameTypes.DS_MA_HANG}>
+                      <i className="icon mr-2">{CONFIG_SIDEBAR.MH[1]}</i>
+                      <span className="sub-ttl">{CONFIG_SIDEBAR.MH[0]}</span>
+                    </Link>
+                  </Tooltip>
                 </li>
                 <li className={`${history.location.pathname === pathNameTypes.DS_CO_SO_MAY ? "active" : ""}`}>
-                  <Link to={pathNameTypes.DS_CO_SO_MAY} title="Cơ sở may">
-                    <i className="fa fa-address-book mr-2"></i>
-                    <span className="sub-ttl">Cơ sở may</span>
-                  </Link>
+                  <Tooltip placement="rightBottom" title={CONFIG_SIDEBAR.CSM[0]}>
+                    <Link to={pathNameTypes.DS_CO_SO_MAY}>
+                      <i className="icon mr-2">{CONFIG_SIDEBAR.CSM[1]}</i>
+                      <span className="sub-ttl">{CONFIG_SIDEBAR.CSM[0]}</span>
+                    </Link>
+                  </Tooltip>
                 </li>
                 <li className={`${history.location.pathname === pathNameTypes.SO_CAT ? "active" : ""}`}>
-                  <Link to={pathNameTypes.SO_CAT} title="Sổ cắt">
-                    <i className="fa fa-book mr-2"></i>
-                    <span className="sub-ttl">Sổ cắt</span>
-                  </Link>
+                  <Tooltip placement="rightBottom" title={CONFIG_SIDEBAR.SC[0]}>
+                    <Link to={pathNameTypes.SO_CAT}>
+                      <i className="icon mr-2">{CONFIG_SIDEBAR.SC[1]}</i>
+                      <span className="sub-ttl">{CONFIG_SIDEBAR.SC[0]}</span>
+                    </Link>
+                  </Tooltip>
                 </li>
               </ul>
             </Panel>
@@ -52,6 +61,60 @@ const SideBar = (props) => {
                   <Link to={pathNameTypes.SO_TIEN_TRINH} title="sổ tiền Trinh">
                     <i className="fa fa-id-card mr-2" aria-hidden="true"></i>
                     <span className="sub-ttl">Trinh</span>
+                  </Link>
+                </li>
+                <li className={`${history.location.pathname === pathNameTypes.SO_TIEN_DONG ? "active" : ""}`}>
+                  <Link to={pathNameTypes.SO_TIEN_DONG} title="sổ tiền Đông">
+                    <i className="fa fa-id-card mr-2" aria-hidden="true"></i>
+                    <span className="sub-ttl">Đông</span>
+                  </Link>
+                </li>
+                <li className={`${history.location.pathname === pathNameTypes.SO_TIEN_PHIEN ? "active" : ""}`}>
+                  <Link to={pathNameTypes.SO_TIEN_PHIEN} title="sổ tiền Phiên">
+                    <i className="fa fa-id-card mr-2" aria-hidden="true"></i>
+                    <span className="sub-ttl">Phiên</span>
+                  </Link>
+                </li>
+                <li className={`${history.location.pathname === pathNameTypes.SO_TIEN_SI ? "active" : ""}`}>
+                  <Link to={pathNameTypes.SO_TIEN_SI} title="sổ tiền Sĩ">
+                    <i className="fa fa-id-card mr-2" aria-hidden="true"></i>
+                    <span className="sub-ttl">Sĩ</span>
+                  </Link>
+                </li>
+                <li className={`${history.location.pathname === pathNameTypes.SO_TIEN_HANH ? "active" : ""}`}>
+                  <Link to={pathNameTypes.SO_TIEN_HANH} title="sổ tiền Hạnh">
+                    <i className="fa fa-id-card mr-2" aria-hidden="true"></i>
+                    <span className="sub-ttl">Hạnh</span>
+                  </Link>
+                </li>
+                <li className={`${history.location.pathname === pathNameTypes.SO_TIEN_HOANG ? "active" : ""}`}>
+                  <Link to={pathNameTypes.SO_TIEN_HOANG} title="sổ tiền Hoàng">
+                    <i className="fa fa-id-card mr-2" aria-hidden="true"></i>
+                    <span className="sub-ttl">Hoàng</span>
+                  </Link>
+                </li>
+                <li className={`${history.location.pathname === pathNameTypes.SO_TIEN_NGUYET ? "active" : ""}`}>
+                  <Link to={pathNameTypes.SO_TIEN_NGUYET} title="sổ tiền Nguyệt">
+                    <i className="fa fa-id-card mr-2" aria-hidden="true"></i>
+                    <span className="sub-ttl">Nguyệt</span>
+                  </Link>
+                </li>
+                <li className={`${history.location.pathname === pathNameTypes.SO_TIEN_QUE ? "active" : ""}`}>
+                  <Link to={pathNameTypes.SO_TIEN_QUE} title="sổ tiền Quế">
+                    <i className="fa fa-id-card mr-2" aria-hidden="true"></i>
+                    <span className="sub-ttl">Quế</span>
+                  </Link>
+                </li>
+                <li className={`${history.location.pathname === pathNameTypes.SO_TIEN_KY ? "active" : ""}`}>
+                  <Link to={pathNameTypes.SO_TIEN_KY} title="sổ tiền Kỳ">
+                    <i className="fa fa-id-card mr-2" aria-hidden="true"></i>
+                    <span className="sub-ttl">Kỳ</span>
+                  </Link>
+                </li>
+                <li className={`${history.location.pathname === pathNameTypes.SO_TIEN_DUONG ? "active" : ""}`}>
+                  <Link to={pathNameTypes.SO_TIEN_DUONG} title="sổ tiền Dương">
+                    <i className="fa fa-id-card mr-2" aria-hidden="true"></i>
+                    <span className="sub-ttl">Dương</span>
                   </Link>
                 </li>
               </ul>

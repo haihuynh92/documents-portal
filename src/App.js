@@ -54,6 +54,15 @@ function App() {
           <Route path={pathNameTypes.SO_CHI_TIM} component={QuanLySoCoSo} />
 
           <Route path={pathNameTypes.SO_TIEN_TRINH} component={QuanLyChamCong} />
+          <Route path={pathNameTypes.SO_TIEN_DONG} component={QuanLyChamCong} />
+          <Route path={pathNameTypes.SO_TIEN_PHIEN} component={QuanLyChamCong} />
+          <Route path={pathNameTypes.SO_TIEN_SI} component={QuanLyChamCong} />
+          <Route path={pathNameTypes.SO_TIEN_HANH} component={QuanLyChamCong} />
+          <Route path={pathNameTypes.SO_TIEN_HOANG} component={QuanLyChamCong} />
+          <Route path={pathNameTypes.SO_TIEN_NGUYET} component={QuanLyChamCong} />
+          <Route path={pathNameTypes.SO_TIEN_QUE} component={QuanLyChamCong} />
+          <Route path={pathNameTypes.SO_TIEN_KY} component={QuanLyChamCong} />
+          <Route path={pathNameTypes.SO_TIEN_DUONG} component={QuanLyChamCong} />
           
           <Route component={NotFoundPage} />
         </Switch>

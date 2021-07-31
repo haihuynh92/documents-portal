@@ -35,3 +35,12 @@ export const SO_CHI_TIM = '/quanlysocoso/sochitim';
 
 // tiền lương
 export const SO_TIEN_TRINH = '/quanlytienluong/sotientring';
+export const SO_TIEN_DONG = '/quanlytienluong/sotiendong';
+export const SO_TIEN_PHIEN = '/quanlytienluong/sotienphien';
+export const SO_TIEN_SI = '/quanlytienluong/sotiensi';
+export const SO_TIEN_HANH = '/quanlytienluong/sotienhanh';
+export const SO_TIEN_HOANG = '/quanlytienluong/sotienhoang';
+export const SO_TIEN_NGUYET = '/quanlytienluong/sotiennguyet';
+export const SO_TIEN_QUE = '/quanlytienluong/sotienque';
+export const SO_TIEN_KY = '/quanlytienluong/sotienky';
+export const SO_TIEN_DUONG = '/quanlytienluong/sotienduong';

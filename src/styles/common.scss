@@ -781,3 +781,7 @@ input:disabled, button:disabled {
     .ant-collapse-content-box {padding: 0;}
   }
 }
+
+.ant-tooltip {
+  .ant-tooltip-arrow-content, .ant-tooltip-inner {background-color: $color-purple-1;}
+}
