@@ -20,7 +20,8 @@ const Dashboard = (props) => {
     sumSLGiaoInMonth: 0,
     sumLN1InMonth: 0,
     sumLN2InMonth: 0,
-    sumHangLoiInMonth: 0
+    sumSLFailInMonth: 0,
+    sumMoneyFailInMonth: 0
   }
 
   if (!!dataInMonth.length) {
@@ -32,7 +33,8 @@ const Dashboard = (props) => {
         objSumMonth.sumLN2InMonth += (detailMH[0].giagiao - detailMH[0].gianhap - CONFIG_MONEY.default) * dataInMonth[i].slgiao;
       }
       if(dataInMonth[i]['thongtin'] === 'hangloi') {
-        objSumMonth.sumHangLoiInMonth += +dataInMonth[i].slhu;
+        objSumMonth.sumSLFailInMonth += +dataInMonth[i].slhu;
+        objSumMonth.sumMoneyFailInMonth += +dataInMonth[i].slhu * detailMH[0].giagiao;
       }
     }
   }
@@ -46,7 +48,8 @@ const Dashboard = (props) => {
     sumSLGiaoInYear: 0,
     sumLN1InYear: 0,
     sumLN2InYear: 0,
-    sumHangLoiInYear: 0
+    sumSLFailInYear: 0,
+    sumMoneyFailInYear: 0
   }
 
   if (!!dataInYear.length) {
@@ -58,7 +61,8 @@ const Dashboard = (props) => {
         objSumYear.sumLN2InYear += (detailMH[0].giagiao - detailMH[0].gianhap - CONFIG_MONEY.default) * dataInYear[i].slgiao;
       }
       if(dataInYear[i]['thongtin'] === 'hangloi') {
-        objSumYear.sumHangLoiInYear += +dataInYear[i].slhu;
+        objSumYear.sumSLFailInYear += +dataInYear[i].slhu;
+        objSumYear.sumMoneyFailInYear += +dataInYear[i].slhu * detailMH[0].giagiao;
       }
     }
   }

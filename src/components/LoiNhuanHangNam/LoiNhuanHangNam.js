@@ -117,7 +117,11 @@ const LoiNhuanHangNam = (props) => {
             </li>
             <li>
               <span className="ttl-detail">Tổng số lượng hàng lỗi</span>
-              {FORMAT_MONEY.format(objSumYear.sumHangLoiInYear)} cái
+              {FORMAT_MONEY.format(objSumYear.sumSLFailInYear)} cái
+            </li>
+            <li>
+              <span className="ttl-detail">Tổng tiền hàng lỗi</span>
+              {FORMAT_MONEY.format(objSumYear.sumMoneyFailInYear)} vnđ
             </li>
             <li>
               <span className="ttl-detail">Tổng lợi nhuận 1</span>

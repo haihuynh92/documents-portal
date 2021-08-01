@@ -26,7 +26,7 @@ const SideBar = (props) => {
         </Tooltip>
         <div className="inner">
           <Collapse accordion className="accordion-custom">
-            <Panel header="Quản lý tổng hợp" key="1">
+            <Panel header="Tổng hợp" key="1">
               <ul className="list-menu">
                 <li className={`${history.location.pathname === pathNameTypes.DS_MA_HANG ? "active" : ""}`}>
                   <Tooltip placement="rightTop" title={CONFIG_SIDEBAR.MA_HANG[0]}>
@@ -55,7 +55,7 @@ const SideBar = (props) => {
               </ul>
             </Panel>
 
-            <Panel header="Quản lý sổ lương" key="2">
+            <Panel header="Sổ lương" key="2">
               <ul className="list-menu">
                 <li className={`${history.location.pathname === pathNameTypes.SO_LUONG_TRINH ? "active" : ""}`}>
                   <Tooltip placement="rightTop" title={CONFIG_SIDEBAR.SO_LUONG_TRINH[0]}>
@@ -140,7 +140,7 @@ const SideBar = (props) => {
               </ul>
             </Panel>
 
-            <Panel header="Quản lý sổ khách" key="3">
+            <Panel header="Sổ khách" key="3">
               <ul className="list-menu">
                 <li className={`${history.location.pathname === pathNameTypes.SO_HANG_THUY ? "active" : ""}`}>
                   <Tooltip placement="rightTop" title={CONFIG_SIDEBAR.SO_HANG_THUY[0]}>
@@ -193,7 +193,7 @@ const SideBar = (props) => {
               </ul>
             </Panel>
 
-            <Panel header="Quản lý sổ nội bộ" key="4">
+            <Panel header="Sổ nội bộ" key="4">
               <ul className="list-menu">
                 <li className={`${history.location.pathname === pathNameTypes.SO_NGHI ? "active" : ""}`}>
                   <Tooltip placement="rightTop" title={CONFIG_SIDEBAR.SO_NGHI[0]}>
@@ -222,7 +222,7 @@ const SideBar = (props) => {
               </ul>
             </Panel>
 
-            <Panel header="Quản lý sổ cơ sở" key="5">
+            <Panel header="Sổ cơ sở" key="5">
               <ul className="list-menu">
                 <li className={`${history.location.pathname === pathNameTypes.SO_NGUYET ? "active" : ""}`}>
                   <Tooltip placement="rightTop" title={CONFIG_SIDEBAR.SO_NGUYET[0]}>

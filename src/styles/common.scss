@@ -367,6 +367,7 @@ input:disabled, button:disabled {
 }
 
 .wrapper-container {
+  overflow: hidden;
   position: relative;
   min-width: 1200px;
 }
@@ -380,8 +381,8 @@ input:disabled, button:disabled {
   > .outer {padding: 20px 0;}
 
   &.full-content {
-    margin-left: 250px;
-    header, footer {left: 250px !important;}
+    margin-left: 200px;
+    header, footer {left: 200px !important;}
     header .btn-menu .fa:before {content: "\f00d";}
   }
 }
