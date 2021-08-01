@@ -7,13 +7,13 @@
   bottom: 0;
   z-index: 10;
   width: 50px;
-  background-color: $color-dark-gray;
   border-right: solid 1px $color-white;
   transition-duration: .3s;
   transition-property: width;
   overflow: hidden;
-  // background: url('../../../assets/images/bgd-sidebar.jpg') no-repeat center center;
-  // background-size: cover;
+  background: url('../../../assets/images/bgd-sidebar.jpg') no-repeat center center;
+  background-size: cover;
+  background-position: 0 0;
   > .outer {
     height: 100%;
     overflow-x: hidden;
@@ -27,7 +27,6 @@
   }
   .ttl-side-bar {
     white-space: nowrap;
-    background-color: $color-dark-gray;
     height: 60px;
     padding: 15px 10px;
     border-bottom: solid 1px $color-white;

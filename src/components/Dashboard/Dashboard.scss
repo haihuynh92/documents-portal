@@ -7,15 +7,6 @@
 .sumary-block {
   margin: 0;
   .bgd {
-    .inner {
-      position: relative;
-      overflow: hidden;
-      color: $color-white;
-      border-radius: 10px;
-      height: 100px;
-      padding: 10px;
-      margin: 0 5px
-    }
     .ttl {
       font-weight: bold;
       text-transform: uppercase;
@@ -25,7 +16,7 @@
       margin-top: 5px;;
       font-size: 16px;
     }
-    &.col-cut-book .inner {
+    &.bgd-1 .link-detail {
       background: #2d2587!important;
       background: linear-gradient(45deg,#4638c2,#2d2587)!important;
       border-color: #2d2587!important;
@@ -47,12 +38,14 @@
     }
   }
   .link-detail {
-    padding: 0 10px;
-    position: absolute;
-    right: 5px;
-    bottom: 5px;
-    z-index: 5;
-    transition-property: right;
+    position: relative;
+    overflow: hidden;
+    color: $color-white;
+    border-radius: 10px;
+    height: 100px;
+    padding: 10px;
+    margin: 0 5px;
+    display: block;
     &:hover {
       animation: moveTopRight .3s infinite alternate;
       -webkit-animation: moveTopRight .3s infinite alternate;

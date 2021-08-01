@@ -30,7 +30,7 @@ const HomePage = () => {
   }, [dispatch]);
 
   return !!currentUser && (
-    <div className="wrapper-container">
+    <div className="wrapper-container homepage">
       <SideBar classEle={`${showMenu ? 'full-sidebar' : ''}`} />
 
       <div className={`main-content ${showMenu ? 'full-content' : ''}`}>

@@ -75,16 +75,14 @@ const Dashboard = (props) => {
     <div className="dashboard-content">
       <Container fluid>
         <Row className="sumary-block">
-          <Col className="bgd col-cut-book" sm="2">
-            <div className="inner">
+          <Col className="bgd bgd-1" sm="2">
+            <Link to="/danhsachmahang" className="link-detail" title="Chi tiết">
               <p>
-                <span className="ttl">Tổng cơ sở</span>
-                <span className="number">9.832 người</span>
+                <span className="ttl">Tổng mã hàng hiện có</span>
+                <span className="number">9.832 mã</span>
               </p>
-              <Link to="/danhsachcosomay" className="link-detail" title="Chi tiết">
-                <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
-              </Link>
-            </div>
+              <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
+            </Link>
           </Col>
           <Col className="bgd bgd-2" sm="2">
             <div className="inner">
