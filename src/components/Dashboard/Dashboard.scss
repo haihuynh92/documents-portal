@@ -1,11 +1,10 @@
 @import './../../styles/variable.scss';
 
 @keyframes moveTopRight {
-  0% {right: 5px;}
-  100% {right: 0;}
+  0% {right: 20px;}
+  100% {right: 10px;}
 }
 .sumary-block {
-  margin: 0;
   .bgd {
     .ttl {
       font-weight: bold;
@@ -16,46 +15,52 @@
       margin-top: 5px;;
       font-size: 16px;
     }
-    &.bgd-1 .link-detail {
-      background: #2d2587!important;
-      background: linear-gradient(45deg,#4638c2,#2d2587)!important;
-      border-color: #2d2587!important;
-    }
-    &.bgd-2 .inner{
-      background: #4280b4!important;
-      background: linear-gradient(45deg,#4799eb,#4280b4)!important;
-      border-color: #4280b4!important;
-    }
-    &.bgd-3 .inner{
-      background: #dd9124!important;
-      background: linear-gradient(45deg,#e1a82d,#dd9124)!important;
-      border-color: #dd9124!important;
-    }
-    &.bgd-4 .inner {
-      background: #c14f4f!important;
-      background: linear-gradient(45deg,#d16767,#c14f4f)!important;
-      border-color: #c14f4f!important;
-    }
+  }
+  .bgd-1 .link-detail {
+    background: #2d2587!important;
+    background: linear-gradient(45deg,#4638c2,#2d2587)!important;
+    border-color: #2d2587!important;
+  }
+  .bgd-2 .link-detail {
+    background: #4280b4!important;
+    background: linear-gradient(45deg,#4799eb,#4280b4)!important;
+    border-color: #4280b4!important;
+  }
+  .bgd-3 .link-detail {
+    background: #dd9124!important;
+    background: linear-gradient(45deg,#e1a82d,#dd9124)!important;
+    border-color: #dd9124!important;
+  }
+  .bgd-4 .link-detail  {
+    background: #c14f4f!important;
+    background: linear-gradient(45deg,#d16767,#c14f4f)!important;
+    border-color: #c14f4f!important;
   }
   .link-detail {
     position: relative;
     overflow: hidden;
     color: $color-white;
     border-radius: 10px;
-    height: 100px;
+    height: 80px;
     padding: 10px;
-    margin: 0 5px;
     display: block;
     &:hover {
-      animation: moveTopRight .3s infinite alternate;
-      -webkit-animation: moveTopRight .3s infinite alternate;
+      .fa {
+        animation: moveTopRight .3s infinite alternate;
+        -webkit-animation: moveTopRight .3s infinite alternate;
+      }
+    }
+    .fa {
+      position: absolute;
+      bottom: 5px;
+      right: 10px;
+      z-index: 1;
     }
   }
 }
 
 .show-info-money {
   overflow: hidden;
-  margin-top: 20px;
   border-radius: 10px;
   background-color: $color-black-1;
   .title {

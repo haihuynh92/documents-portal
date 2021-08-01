@@ -374,12 +374,14 @@ input:disabled, button:disabled {
     height: 100vh;
     background: url('../assets/images/bgd-homepage.jpg') no-repeat center center;
     background-size: cover;
+    header, footer {background-color: transparent;}
     header {
-      background-color: transparent;
+      .ttl-help {display: none;}
     }
     footer {
-      background-color: transparent;
+      .author {color: $color-white;}
     }
+    .main-content {margin-top: 40px;}
   }
 }
 

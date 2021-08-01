@@ -6,7 +6,6 @@ import _ from 'lodash';
 import React from 'react';
 import { Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import './Dashboard.scss';
 
 const Dashboard = (props) => {
@@ -74,76 +73,9 @@ const Dashboard = (props) => {
   return (
     <div className="dashboard-content">
       <Container fluid>
-        <Row className="sumary-block">
-          <Col className="bgd bgd-1" sm="2">
-            <Link to="/danhsachmahang" className="link-detail" title="Chi tiết">
-              <p>
-                <span className="ttl">Tổng mã hàng hiện có</span>
-                <span className="number">9.832 mã</span>
-              </p>
-              <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
-            </Link>
-          </Col>
-          <Col className="bgd bgd-2" sm="2">
-            <div className="inner">
-              <p>
-                <span className="ttl">{`Số lượng cắt`}</span>
-                <span className="number">9.832 cái</span>
-              </p>
-              <Link to="/socat" className="link-detail" title="Chi tiết">
-                <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
-              </Link>
-            </div>
-          </Col>
-          <Col className="bgd bgd-3" sm="2">
-            <div className="inner">
-              <p>
-                <span className="ttl">Coming soon</span>
-                <span className="number">???</span>
-              </p>
-              <Link to="/" className="link-detail" title="Chi tiết">
-                <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
-              </Link>
-            </div>
-          </Col>
-          <Col className="bgd bgd-4" sm="2">
-            <div className="inner">
-              <p>
-                <span className="ttl">Coming soon</span>
-                <span className="number">???</span>
-              </p>
-              <Link to="/" className="link-detail" title="Chi tiết">
-                <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
-              </Link>
-            </div>
-          </Col>
-          <Col className="bgd bgd-4" sm="2">
-            <div className="inner">
-              <p>
-                <span className="ttl">Coming soon</span>
-                <span className="number">???</span>
-              </p>
-              <Link to="/" className="link-detail" title="Chi tiết">
-                <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
-              </Link>
-            </div>
-          </Col>
-          <Col className="bgd bgd-4" sm="2">
-            <div className="inner">
-              <p>
-                <span className="ttl">Coming soon</span>
-                <span className="number">???</span>
-              </p>
-              <Link to="/" className="link-detail" title="Chi tiết">
-                <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
-              </Link>
-            </div>
-          </Col>
-        </Row>
-
         {JSON.parse(currentUser)?.role === ROLE.ADMIN &&
-          <Row>
-            <Col sm="6">
+          <><Row>
+            <Col sm={{ span: 4, offset: 8 }}>
               <section className="show-info-money">
                 <h2 className="title">
                   <i className="fa fa-calendar-check-o mr-2" aria-hidden="true"></i>
@@ -158,9 +90,11 @@ const Dashboard = (props) => {
                 </div>
               </section>
             </Col>
+          </Row>
 
-            <Col sm="6">
-              <section className="show-info-money">
+          <Row>
+            <Col sm={{ span: 4, offset: 8 }}>
+              <section className="show-info-money mt-3 mb-3">
                 <h2 className="title">
                   <i className="fa fa-clipboard mr-2" aria-hidden="true"></i>
                   Kiểm tra lợi nhuận hàng năm
@@ -174,8 +108,23 @@ const Dashboard = (props) => {
                 </div>
               </section>
             </Col>
-          </Row>
+          </Row></>
         }
+
+        {/* <Row className="sumary-block">
+          <Col className="bgd bgd-2" sm={{ span: 2, offset: 10 }}>
+            <Link to="/danhsachmahang" className="link-detail">
+              <p>
+                <span className="ttl">Tổng mã hàng</span>
+                <span className="number">{dsmahang.length} mã</span>
+              </p>
+              <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
+            </Link>
+          </Col>
+        </Row> */}
+
+
+
       </Container>
     </div>
   );
