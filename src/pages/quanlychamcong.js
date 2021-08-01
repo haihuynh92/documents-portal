@@ -22,25 +22,25 @@ const QuanLyChamCong = () => {
   }
 
   let nameArr = '';
-  if (history.location.pathname === pathNameTypes.SO_TIEN_TRINH) {
+  if (history.location.pathname === pathNameTypes.SO_LUONG_TRINH) {
     nameArr = 'sotienluongtrinhs';
-  } else if (history.location.pathname === pathNameTypes.SO_TIEN_DONG) {
+  } else if (history.location.pathname === pathNameTypes.SO_LUONG_DONG) {
     nameArr = 'sotienluongdongs';
-  } else if (history.location.pathname === pathNameTypes.SO_TIEN_PHIEN) {
+  } else if (history.location.pathname === pathNameTypes.SO_LUONG_PHIEN) {
     nameArr = 'sotienluongphiens';
-  } else if (history.location.pathname === pathNameTypes.SO_TIEN_SI) {
+  } else if (history.location.pathname === pathNameTypes.SO_LUONG_SI) {
     nameArr = 'sotienluongsis';
-  } else if (history.location.pathname === pathNameTypes.SO_TIEN_HANH) {
+  } else if (history.location.pathname === pathNameTypes.SO_LUONG_HANH) {
     nameArr = 'sotienluonghanhs';
-  } else if (history.location.pathname === pathNameTypes.SO_TIEN_HOANG) {
+  } else if (history.location.pathname === pathNameTypes.SO_LUONG_HOANG) {
     nameArr = 'sotienluonghoangs';
-  } else if (history.location.pathname === pathNameTypes.SO_TIEN_NGUYET) {
+  } else if (history.location.pathname === pathNameTypes.SO_LUONG_NGUYET) {
     nameArr = 'sotienluongnguyets';
-  } else if (history.location.pathname === pathNameTypes.SO_TIEN_QUE) {
+  } else if (history.location.pathname === pathNameTypes.SO_LUONG_QUE) {
     nameArr = 'sotienluongques';
-  } else if (history.location.pathname === pathNameTypes.SO_TIEN_KY) {
+  } else if (history.location.pathname === pathNameTypes.SO_LUONG_KY) {
     nameArr = 'sotienluongkys';
-  } else if (history.location.pathname === pathNameTypes.SO_TIEN_DUONG) {
+  } else if (history.location.pathname === pathNameTypes.SO_LUONG_DUONG) {
     nameArr = 'sotienluongduongs';
   }
 

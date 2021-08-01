@@ -34,13 +34,13 @@ export const SO_THUY_KET_CHAU = '/quanlysocoso/sothuyketchau';
 export const SO_CHI_TIM = '/quanlysocoso/sochitim';
 
 // tiền lương
-export const SO_TIEN_TRINH = '/quanlytienluong/sotientring';
-export const SO_TIEN_DONG = '/quanlytienluong/sotiendong';
-export const SO_TIEN_PHIEN = '/quanlytienluong/sotienphien';
-export const SO_TIEN_SI = '/quanlytienluong/sotiensi';
-export const SO_TIEN_HANH = '/quanlytienluong/sotienhanh';
-export const SO_TIEN_HOANG = '/quanlytienluong/sotienhoang';
-export const SO_TIEN_NGUYET = '/quanlytienluong/sotiennguyet';
-export const SO_TIEN_QUE = '/quanlytienluong/sotienque';
-export const SO_TIEN_KY = '/quanlytienluong/sotienky';
-export const SO_TIEN_DUONG = '/quanlytienluong/sotienduong';
+export const SO_LUONG_TRINH = '/quanlytienluong/soluongtring';
+export const SO_LUONG_DONG = '/quanlytienluong/soluongdong';
+export const SO_LUONG_PHIEN = '/quanlytienluong/soluongphien';
+export const SO_LUONG_SI = '/quanlytienluong/soluongsi';
+export const SO_LUONG_HANH = '/quanlytienluong/soluonghanh';
+export const SO_LUONG_HOANG = '/quanlytienluong/soluonghoang';
+export const SO_LUONG_NGUYET = '/quanlytienluong/soluongnguyet';
+export const SO_LUONG_QUE = '/quanlytienluong/soluongque';
+export const SO_LUONG_KY = '/quanlytienluong/soluongky';
+export const SO_LUONG_DUONG = '/quanlytienluong/soluongduong';
