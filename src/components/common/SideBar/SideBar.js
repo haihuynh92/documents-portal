@@ -18,8 +18,8 @@ const SideBar = (props) => {
         <span className="sub-ttl">XƯỞNG MAY</span>
       </h1>
       <div className="outer">
-        <Tooltip placement="rightBottom" title={CONFIG_SIDEBAR.DASHBOARDB[0]}>
-          <Link to="/" className="link-dashboard">
+        <Tooltip placement="rightTop" title={CONFIG_SIDEBAR.DASHBOARDB[0]}>
+          <Link to="/" className={`link-dashboard ${history.location.pathname === '/' ? "active" : ""}`}>
             <i className="fa fa-tachometer mr-2"></i>
             <span className="sub-ttl">{CONFIG_SIDEBAR.DASHBOARDB[0]}</span>
           </Link>

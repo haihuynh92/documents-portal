@@ -370,6 +370,7 @@ input:disabled, button:disabled {
   overflow: hidden;
   position: relative;
   min-width: 1200px;
+  min-height: 800px;
   &.homepage {
     height: 100vh;
     background: url('../assets/images/bgd-homepage.jpg') no-repeat center center;
@@ -382,6 +383,10 @@ input:disabled, button:disabled {
       .author {color: $color-white;}
     }
     .main-content {margin-top: 40px;}
+    .side-bar-block {
+      background: none;
+      border-right: 0;
+    }
   }
 }
 
@@ -759,8 +764,8 @@ input:disabled, button:disabled {
 }
 
 .ant-back-top {
-  right: 16px;
-  bottom: 80px;
+  right: 5px;
+  bottom: 70px;
   .ant-back-top-content {
     background-color: $color-purple;
     .anticon {vertical-align: 0;}

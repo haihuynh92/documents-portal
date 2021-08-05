@@ -37,12 +37,32 @@
     .fa-industry {font-size: 30px;}
   }
   .link-dashboard {
+    position: relative;
     white-space: nowrap;
     display: block;
     padding: 12px 15px 15px;
     background-color: hsla(0, 0%, 100%, .5);
+    &.active {background-color: $color-blue;}
+    i, span {
+      position: relative;
+      z-index: 2;
+    }
     .fa-tachometer:before {font-size: 20px;}
-    &:hover {background-color: $color-blue;}
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 100%;
+      bottom: 0;
+      z-index: 1;
+      transition-duration: .3s;
+      transition-property: right;
+      background-color: $color-blue;
+    }
+    &:hover {
+      &:after {right: 0;}
+    }
   }
   .list-menu {
     .icon {
@@ -64,21 +84,31 @@
       padding: 10px;
       white-space: nowrap;
       transition-property: padding;
-      &:before {
+      i, span {
+        position: relative;
+        z-index: 2;
+      }
+      &:after, &:before {
         content: '';
         position: absolute;
         left: 0;
         right: 100%;
-        bottom: 0;
         z-index: 1;
-        height: 1px;
-        background-color: $color-white;
         transition-duration: .3s;
         transition-property: right;
       }
-      &:hover {
+      &:after {
+        top: 0;
+        bottom: 1px;
         background-color: $color-blue;
-        &:before {right: 0;}
+      }
+      &:before {
+        bottom: 0;
+        height: 1px;
+        background-color: $color-white;
+      }
+      &:hover {
+        &:before, &:after {right: 0;}
       }
     }
     .active a {
